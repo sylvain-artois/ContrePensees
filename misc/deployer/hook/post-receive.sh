@@ -22,6 +22,8 @@ echo " - Starting code update"
 GIT_WORK_TREE="$DEPLOYDIR" git checkout -f
 echo " - Finished code update"
 
+#chown -R git:www-data $DEPLOYDIR
+
 ##Update node modules
 echo " - Starting npm install"
 cd "$DEPLOYDIR"
