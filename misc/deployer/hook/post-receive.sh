@@ -26,13 +26,13 @@ echo " - Finished code update"
 echo " - Starting npm install"
 cd "$DEPLOYDIR"
 npm install;
-echo " - Finished composer update"
+echo " - Finished npm update"
 
 ##Update bower deps
 echo " - Starting bower install"
 cd "$DEPLOYDIR"
 bower install;
-echo " - Finished composer update"
+echo " - Finished bower update"
 
 cd -
 echo "Finished Deploy" >> $LOGFILE
