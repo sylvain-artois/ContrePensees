@@ -1,79 +1,121 @@
 {% import "templates/mixins/flash-messages.html" as FM %}
 
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 
-		<title>{{ title|default("Contre Pensées") }}</title>
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		{# Customise the stylesheet for your site by editing /public/styles/site.sass #}
-		<link href="/styles/site.css" rel="stylesheet">
+    <title>{{ title|default("Contre Pensées") }}</title>
 
-		{# This file provides the default styling for the KeystoneJS Content Editor #}
-		{% if user and user.canAccessKeystone %}
-			<link href="/keystone/styles/content/editor.min.css" rel="stylesheet">
-		{% endif %}
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
-		{# HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-		   Safely remove this block if you are not targeting IE8 #}
-		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" type="text/css">
 
-		{# Include template-specific stylesheets by extending the css block #}
-		{% block css %}{% endblock %}
+    {# Customise the stylesheet for your site by editing /public/styles/site.sass #}
+	<link href="/styles/styles-blog-two-dark.css" rel="stylesheet">
 
-		{# Add any other template-specific HEAD tags by extending the head block #}
-		{% block head %}{% endblock %}
-	</head>
-	<body>
+    {# This file provides the default styling for the KeystoneJS Content Editor #}
+    {% if user and user.canAccessKeystone %}
+    <link href="/keystone/styles/content/editor.min.css" rel="stylesheet">
+    {% endif %}
 
-		{# HEADER #}
-		<div id="header" class="container">
+    {# HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+        Safely remove this block if you are not targeting IE8 #}
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
 
-			{# Customise your site"s navigation by changing the navLinks Array in ./routes/middleware.js
-			   ... or completely change this header to suit your design. #}
-			<div role="navigation" class="navbar navbar-default">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="/">Contre Pensées</a>
-					</div>
-					<div class="collapse navbar-collapse">
-						<ul class="nav navbar-nav navbar-left">
-							{% for link in navLinks %}
-								<li class="{{ 'active' if link.key == section else '' }}">
-									<a href="{{ link.href }}">{{ link.label }}</a>
-								</li>
-							{% endfor %}
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							{% if user %}
-								{% if user.canAccessKeystone %}
-								<li><a href="/keystone">Open Keystone</a></li>
-								{% endif %}
-								<li><a href="/keystone/signout">Sign Out</a></li>
-							{% else %}
-								<li><a href="/keystone/signin">Sign In</a></li>
-							{% endif %}
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+    {# Include template-specific stylesheets by extending the css block #}
+    {% block css %}{% endblock %}
 
-		{# BODY #}
-		<div id="body">
+    {# Add any other template-specific HEAD tags by extending the head block #}
+    {% block head %}{% endblock %}
+</head>
+<body class="responsive " id="demo-blog-two">
+
+    <!-- Dima-loading -->
+    <div class="dima-loading">
+        <span class="loading-top"></span>
+        <span class="loading-bottom"></span>
+        <span class="spin-2"><p>LOADING</p></span>
+        <a href="#" class="load-close">X</a>
+    </div>
+    <!--! Dima-loading -->
+
+    {# HEADER #}
+    <header role="banner">
+        <div class="dima-navbar-wrap">
+            <div class="dima-navbar dima-navbar-top">
+
+                <!-- LOGO -->
+                <div class="logo">
+                    <h1>
+                        <a data-animated-link="fadeOut" href="demo-blog-two.html" title="PixelDima.com logo">
+                            <span class="vertical-middle"></span>
+                            <img src="/images/logo_blog_2_dark.png" alt="PixelDima Logo" title="PixelDima">
+                        </a>
+                    </h1>
+                </div>
+                <!--! LOGO -->
+
+                <!-- MENU -->
+                <nav role="navigation" class="clearfix">
+                    <div class="container">
+                        <!-- NAVBAR BUTTON -->
+                        <a class="dima-btn-nav" href="#"><i class="fa fa-bars"></i></a>
+                        <!--! NAVBAR BUTTON -->
+
+                        <ul class="dima-nav sf-menu">
+                            {% for link in navLinks %}
+                            <li class="{{ 'active' if link.key == section else '' }}">
+                                <a href="{{ link.href }}">{{ link.label }}</a>
+                            </li>
+                            {% endfor %}
+                            {% if user %}
+                            {% if user.canAccessKeystone %}
+                            <li><a href="/keystone">Open Keystone</a></li>
+                            {% endif %}
+                            <li><a href="/keystone/signout">Sign Out</a></li>
+                            {% else %}
+                            <li><a href="/keystone/signin">Sign In</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+                <!--! MENU -->
+
+                <!-- SEARCH BOX -->
+                <div id="search-box">
+                    <div class="container">
+                        <form>
+                            <input type="text" placeholder="Start Typing...">
+                        </form>
+                        <div id="close">
+                            <a data-animated-link="fadeOut" href="#">
+                                <i class="di-close"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--! SEARCH BOX -->
+                <div class="dima"></div>
+            </div>
+        </div>
+    </header>
+    <!--! HEADER -->
+
+    {# BODY #}
+    <div id="body">
 			{# NOTE:
 			   There is no .container wrapping class around body blocks to allow more flexibility in design.
 			   Remember to include it in your templates when you override the intro and content blocks! #}
@@ -87,36 +129,51 @@
 
 			{# The content block should contain the body of your template"s content #}
 			{% block content %}{% endblock %}
-		</div>
+    </div>
 
+    {# FOOTER #}
+    <footer role="contentinfo" class="top-footer landing-footer">
+        <div class="container page-section text-center">
 
-		{# FOOTER #}
-		<div id="footer" class="container">
-			{# You don"t _have_ to include a link saying your site is powered by KeystoneJS, but we appreciate it! #}
-			<p>Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.</p>
-		</div>
+            <!-- SOCIAL ICONS -->
+            <div class="social-media dima-social-footer social-medium">
+                <ul class="inline whait-border clearfix">
+                    <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-google-plus"></i></a>
+                    </li>
+                    <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-instagram"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <!--! SOCIAL ICONS -->
 
+            <div class="double-clear"></div>
 
-		{# JAVASCRIPT #}
+            <!-- COPYRIGHT -->
+            <div class="copyright undertitle ">
+                <p class="undertitle ">© 2015 Okab. Created by
+                    <a data-animated-link="fadeOut" href="http://themeforest.net/user/PixelDima" target="_blank">PixelDima</a>
+                </p>
+            </div>
+            <!--! COPYRIGHT -->
 
-		{# jQuery 1.11.1 is included by default, and required by both Bootstrap
-			and the KeystoneJS Content Editor. If you are not targeting IE8,
-			you can upgrade to 2.1.3 (also bundled) for better performance. #}
-		<script src="/js/jquery/jquery-1.11.2.min.js"></script>
+        </div>
+    </footer>
 
-		{# Customise which Bootstrap javascript files are served by including
-			them specifically here, instead of bootstrap-3.3.4.min.js #}
-		<script src="/js/bootstrap/bootstrap-3.3.4.min.js"></script>
+    {# JAVASCRIPT #}
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/js/okab/core/load.js"></script>
+    <script src="/js/okab/core/jquery.easing.1.3.js"></script>
+    <script src="/js/okab/core/modernizr-2.8.2.min.js"></script>
+    <script src="/js/okab/core/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/okab/core/respond.src.js"></script>
 
-		{# The KeystoneJS Content Editor provides support for ks-editable data attributes,
-			which generate links to edit content for users who can access Keystone #}
-		{% if user and user.canAccessKeystone %}
-			<script src="/keystone/js/content/editor.js"></script>
-		{% endif %}
+    <script src="/js/okab/libs.min.js"></script>
 
-		{# Add scripts that are globally required by your site here. #}
-
-		{# Include template-specific javascript files by extending the js block #}
-		{% block js %}{% endblock %}
-	</body>
+    {# Include template-specific javascript files by extending the js block #}
+    {% block js %}{% endblock %}
+</body>
 </html>
