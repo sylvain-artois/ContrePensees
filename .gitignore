@@ -25,7 +25,8 @@ build/Release
 node_modules
 
 #Javascript deps
-bower_components
+public/vendor/*
+!public/vendor/.gitkeep
 
 # Ignore .env configuration files
 .env
