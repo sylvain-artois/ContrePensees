@@ -1,5 +1,6 @@
-var keystone = require('keystone');
-var Types = keystone.Field.Types;
+var keystone   = require('keystone');
+var textSearch = require('mongoose-text-search');
+var Types      = keystone.Field.Types;
 
 /**
  * Post Model
@@ -19,13 +20,32 @@ Post.add({
 	image: { type: Types.CloudinaryImage },
 	content: {
 		brief: { type: Types.Html, wysiwyg: true, height: 150 },
-		extended: { type: Types.Html, wysiwyg: true, height: 400 }
+		briefText: { type: String, hidden: true },
+		extended: { type: Types.Html, wysiwyg: true, height: 400 },
+		extendedText: { type: String, hidden: true }
 	},
-	categories: { type: Types.Relationship, ref: 'PostCategory', many: true }
+	category: { type: Types.Relationship, ref: 'PostCategory', index: true },
+	tags: { type: [String] },
+	pinned: { type: Boolean }
 });
 
 Post.schema.virtual('content.full').get(function() {
 	return this.content.extended || this.content.brief;
+});
+
+Post.schema.pre('save', function(next) {
+	this._doc.briefText = this._doc.brief.replace(/(<([^>]+)>)/ig, "");
+	this._doc.extendedText = this._doc.extended.replace(/(<([^>]+)>)/ig, "");
+});
+
+Post.schema.plugin(textSearch);
+
+// add a text index to the tags array
+Post.schema.index({
+	tags: 'text',
+	title: 'text',
+	briefText: 'text',
+	extendedText: 'text'
 });
 
 Post.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
