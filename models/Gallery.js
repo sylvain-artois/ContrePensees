@@ -1,18 +1,22 @@
-var keystone = require('keystone');
-var Types = keystone.Field.Types;
+var keystone   = require('keystone'),
+	textSearch = require('mongoose-text-search'),
+	decode     = require('ent/decode');
 
-/**
- * Gallery Model
- * =============
- */
+var Types      = keystone.Field.Types,
+	removeTagsRegex = /(<([^>]+)>)/ig;
 
 var Gallery = new keystone.List('Gallery', {
-	autokey: { from: 'name', path: 'key', unique: true }
+	map: { name: 'title' },
+	autokey: { path: 'slug', from: 'title', unique: true }
 });
 
 Gallery.add({
-	name: { type: String, required: true },
-	publishedDate: { type: Date, default: Date.now },
+	title: { type: String, required: true },
+	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
+	pinned: { type: Boolean },
+	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
+	updatedAt: { type: Types.Date, index: true,  noedit: true },
+
 	heroImage: { type: Types.CloudinaryImage },
 	images: { type: Types.CloudinaryImages }
 });

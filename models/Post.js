@@ -1,12 +1,9 @@
-var keystone   = require('keystone');
-var textSearch = require('mongoose-text-search');
-var Types      = keystone.Field.Types;
-var removeTagsRegex = /(<([^>]+)>)/ig;
+var keystone   = require('keystone'),
+	textSearch = require('mongoose-text-search'),
+	decode     = require('ent/decode');
 
-/**
- * Post Model
- * ==========
- */
+var Types      = keystone.Field.Types,
+	removeTagsRegex = /(<([^>]+)>)/ig;
 
 var Post = new keystone.List('Post', {
 	map: { name: 'title' },
@@ -19,7 +16,7 @@ Post.add({
 	isQuote: { type: Boolean },
 	pinned: { type: Boolean },
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
-	updatedAt: { type: Types.Date, index: true, dependsOn: { state: 'published' }, noedit: true },
+	updatedAt: { type: Types.Date, index: true, noedit: true },
 	image: { type: Types.CloudinaryImage },
 	content: {
 		brief: { type: Types.Html, wysiwyg: true, height: 150 },
@@ -29,22 +26,30 @@ Post.add({
 	},
 	author: { type: Types.Relationship, ref: 'User', index: true },
 	category: { type: Types.Relationship, ref: 'PostCategory', index: true },
-	tags: { type: [String] }
+	tags: { type: Types.Text }
 });
 
 Post.schema.virtual('content.full').get(function() {
 	return this.content.extended || this.content.brief;
 });
 
-Post.schema.pre('save', function() {
-	this._doc.content.briefText = this._doc.brief.replace(removeTagsRegex, "");
-	this._doc.content.extendedText = this._doc.extended.replace(removeTagsRegex, "");
+//Index data for full text search
+Post.schema.pre('save', function(next) {
+	if (this.content && this.content.brief) {
+		this.content.briefText = decode(this.content.brief.replace(removeTagsRegex, ""));
+	}
+	if (this.content && this.content.extended) {
+		this.content.extendedText = tdecode(this.content.extended.replace(removeTagsRegex, ""));
+	}
+	next();
 });
 
+//Populate the updatedAt field
 Post.schema.pre('update', function() {
 	this.update({}, { $set: { updatedAt: new Date() } });
 });
 
+//Enable fullText search
 Post.schema.plugin(textSearch);
 Post.schema.index({
 	tags: 'text',
