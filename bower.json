@@ -42,5 +42,8 @@
   },
   "resolutions": {
     "jquery": ">=1.8.0"
+  },
+  "devDependencies": {
+    "modular-scale": "~2.1.1"
   }
 }

@@ -34,6 +34,11 @@ module.exports = function(grunt) {
 		'watch'
 	]);
 
+    grunt.registerTask('front', [
+        'compass',
+        'postcss'
+    ]);
+
 	// default option to connect server
 	grunt.registerTask('serve', [
 		'jshint',
