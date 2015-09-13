@@ -1,11 +1,12 @@
 
 # Set this to the root of your project when deployed:
 http_path= "/"
-css_dir= 'css'
-sass_dir= 'styles'
-javascripts_dir= 'js'
-images_dir= 'images'
-fonts_dir= 'fonts'
+project_path="public"
+css_dir="css"
+sass_dir="styles/front"
+javascripts_dir="js"
+images_dir="images"
+fonts_dir="fonts"
 relative_assets= true
 boring= true
 debug_info= false

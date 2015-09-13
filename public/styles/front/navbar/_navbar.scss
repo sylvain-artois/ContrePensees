@@ -36,14 +36,16 @@
             z-index: 1;
             @include transition(all .2s ease-in);
             h1 {
-                margin-bottom: 0;   
-                height: 100%;  
-                @include font-size(0,0);
+                margin-bottom: 0;
+                height: 100%;
+                font-size: 3rem;
+                line-height: 6rem;
+                letter-spacing: 0;
        
-            img {
+            img, span {
                 display: inline-block;
                 vertical-align: middle;
-                max-width: 225px;
+                //max-width: 225px;
                 width:auto;
                 max-height: 150px;
                 height:auto\9;

@@ -1,7 +1,7 @@
 module.exports = {
     front: {
         options: {
-            config: 'config.rb'
+            config: 'public/config.rb'
         }
     }
 };

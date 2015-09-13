@@ -1,5 +1,3 @@
-{% import "templates/mixins/flash-messages.html" as FM %}
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -9,37 +7,33 @@
 <!--<![endif]-->
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>{{ title|default("Contre Pensées") }}</title>
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    {% import "templates/mixins/flash-messages.html" as FM %}
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-    {# Customise the stylesheet for your site by editing /public/styles/site.sass #}
-	<link href="/styles/styles-blog-two-dark.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
 
-    {# This file provides the default styling for the KeystoneJS Content Editor #}
-    {% if user and user.canAccessKeystone %}
-    <link href="/keystone/styles/content/editor.min.css" rel="stylesheet">
+    <link href="/css/front.css" rel="stylesheet" />
+
+    {% block css %}{% endblock %}
+
+    {% if user and user.canAccessKeystone %}{# default styling for the KeystoneJS Content Editor #}
+    <link href="/keystone/styles/content/editor.min.css" rel="stylesheet" />
     {% endif %}
 
-    {# HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-        Safely remove this block if you are not targeting IE8 #}
+    {% block head %}{% endblock %}
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 
-    {# Include template-specific stylesheets by extending the css block #}
-    {% block css %}{% endblock %}
-
-    {# Add any other template-specific HEAD tags by extending the head block #}
-    {% block head %}{% endblock %}
 </head>
 <body class="responsive " id="demo-blog-two">
 
@@ -49,18 +43,17 @@
         {% include "templates/mixins/header-menu.html" %}
     </header>
 
-    {# BODY #}
     <div id="body">
 
         {% block intro %}{% endblock %}
-		{{ FM.flashMessages(messages) }}
+        {{ FM.flashMessages(messages) }}
 
-		{% block content %}{% endblock %}
+        {% block content %}{% endblock %}
     </div>
 
     {# FOOTER #}
     <footer role="contentinfo" class="top-footer landing-footer">
-
+        {% include "templates/mixins/footer.html" %}
     </footer>
 
     {# JAVASCRIPT #}
@@ -70,10 +63,8 @@
     <script src="/js/okab/core/modernizr-2.8.2.min.js"></script>
     <script src="/js/okab/core/imagesloaded.pkgd.min.js"></script>
     <script src="/js/okab/core/respond.src.js"></script>
-
     <script src="/js/okab/libs.min.js"></script>
 
-    {# Include template-specific javascript files by extending the js block #}
     {% block js %}{% endblock %}
 </body>
 </html>

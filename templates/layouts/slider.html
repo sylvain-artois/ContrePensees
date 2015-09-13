@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ title|default("Contre Pensées") }}</title>
+
+    {% import "templates/mixins/flash-messages.html" as FM %}
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
+
+    <link href="/css/front.css" rel="stylesheet" />
+    <link href="/js/okab/revolution-slider/css/settings.css" rel="stylesheet" />
+
+    {# HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    Safely remove this block if you are not targeting IE8 #}
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    {# Include template-specific stylesheets by extending the css block #}
+    {% block css %}{% endblock %}
+
+    {# Add any other template-specific HEAD tags by extending the head block #}
+    {% block head %}{% endblock %}
+</head>
+<body class="responsive">
+
+    <div class="all_content">
+
+        {% include "templates/mixins/loader.html" %}
+
+        {# Slider #}
+        <div class="tp-banner-container">
+            {% block slider %}{% endblock %}
+        </div>
+
+        <header role="banner">
+            <div class="dima-navbar-wrap">
+                {% include "templates/mixins/header-menu.html" %}
+            </div>
+        </header>
+
+        {# Sub slider content #}
+        <div class="dima-main">
+            {% block content %}{% endblock %}
+        </div>
+
+        <div class="top-footer">
+            <div class="container">
+                {% include "templates/mixins/top-footer.html" %}
+            </div>
+        </div>
+
+        <footer role="contentinfo" class="dima-footer">
+            <div class="container">
+                <div class="di_1_of_3 first no-bottom-margin">
+                    <div class="copyright dima-center-full">
+                        <p>&copy; 2015 Sylvain Artois. Base theme by <a data-animated-link="fadeOut" href="http://www.PixelDima.com">PixelDima</a></p>
+                    </div>
+                </div>
+                <div class="di_2_of_3 hidden-tm">
+                    <ul class="dima-menu">
+                        {% for link in navLinks %}
+                        <li class="{{ 'active' if link.key == section else '' }}">
+                            <a data-animated-link="fadeOut" href="{{ link.href }}">{{ link.label }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if user %}
+                        {% if user.canAccessKeystone %}
+                        <li>
+                            <a data-animated-link="fadeOut" href="/keystone">Open Keystone</a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a data-animated-link="fadeOut" href="/keystone/signout">Sign Out</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a data-animated-link="fadeOut" href="/keystone/signin">Sign In</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    {# JAVASCRIPT #}
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/js/okab/core/load.js"></script>
+    <script src="/js/okab/core/jquery.easing.1.3.js"></script>
+    <script src="/js/okab/core/modernizr-2.8.2.min.js"></script>
+    <script src="/js/okab/core/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/okab/core/respond.src.js"></script>
+    <script src="/js/okab/libs.min.js"></script>
+    <script src="/js/okab/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/js/okab/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/js/okab/main.js"></script>
+
+    {% block js %}{% endblock %}
+</body>
+</html>
