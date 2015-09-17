@@ -39,7 +39,7 @@ Post.schema.pre('save', function(next) {
 		this.content.briefText = decode(this.content.brief.replace(removeTagsRegex, ""));
 	}
 	if (this.content && this.content.extended) {
-		this.content.extendedText = tdecode(this.content.extended.replace(removeTagsRegex, ""));
+		this.content.extendedText = decode(this.content.extended.replace(removeTagsRegex, ""));
 	}
 	next();
 });
