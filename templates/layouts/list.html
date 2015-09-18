@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ title|default("Contre Pensées") }}</title>
+
+    {% import "templates/mixins/flash-messages.html" as FM %}
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
+
+    <link href="/css/front.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    {# Include template-specific stylesheets by extending the css block #}
+    {% block css %}{% endblock %}
+
+    {# Add any other template-specific HEAD tags by extending the head block #}
+    {% block head %}{% endblock %}
+</head>
+<body class="responsive">
+
+    <div class="all_content">
+
+        <header role="banner">
+            <div class="dima-navbar-wrap">
+                {% include "templates/mixins/header-menu.html" %}
+            </div>
+        </header>
+
+        <div class="dima-main">
+
+            <section class="section">
+                {% block intro %}{% endblock %}
+                {% block content %}{% endblock %}
+            </section>
+
+            {% block pinned %}{% endblock %}
+            <section class="section " id="twitter">
+                <div class="page-section-content">
+                    <div class="background-image-hide parallax-background">
+                        <img class="background-image" alt="Background Image" src="/images/frontSlider/2015-07-20-5.jpg" />
+                    </div>
+                    <div class="dima-section-cover"></div>
+                    <div class="container page-section text-center">
+
+                        <h2 class="uppercase  ">recent works</h2>
+                        <div class="topaz-line no-bottom-margin">
+                            <i class="di-separator"></i>
+                        </div>
+                        <div class="clear-section"></div>
+
+                        <div style="position: relative; height: 367.75px;" class="container isotope column_3 with-margin">
+                            <section class="boxed-protfolio">
+                                {% for x in [0,1,2] %}
+                                <div style="position: absolute; left: 0px; top: 0px; opacity: 1;" class="isotope-item  di_1_of_3 photographer web-designe">
+                                    <div class="work-item ">
+                                        <div class="dima-masonry-100"></div>
+                                        <img src="images/works/work-1.jpg" alt="Brand Consulting">
+                                        <div class="link_overlay">
+                                            <ul class="icons-media">
+                                                <li><a data-animated-link="fadeOut" href="images/works/work-1@2x.jpg" data-lightbox="image"><i class="fa fa-search"></i></a>
+                                                </li>
+                                                <li><a data-animated-link="fadeOut" href="single-project-v1.html"><i class="fa fa-link"></i></a>
+                                                </li>
+                                            </ul>
+                                            <div style="bottom: 99px;" class="work-info">
+                                                <div class="work-teitel text-center">
+                                                    <p>brand identity</p>
+                                                </div>
+                                            </div>
+                                            <span class="topaz-hover"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <div class="top-footer">
+            <div class="container">
+                {% include "templates/mixins/top-footer.html" %}
+            </div>
+        </div>
+
+        <footer role="contentinfo" class="dima-footer">
+            <div class="container">
+                {% include "templates/mixins/second-footer.html" %}
+            </div>
+        </footer>
+
+    </div>
+
+{# JAVASCRIPT #}
+<script src="/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/js/okab/core/load.js"></script>
+<script src="/js/okab/core/jquery.easing.1.3.js"></script>
+<script src="/js/okab/core/modernizr-2.8.2.min.js"></script>
+<script src="/js/okab/core/imagesloaded.pkgd.min.js"></script>
+<script src="/js/okab/core/respond.src.js"></script>
+<script src="/js/okab/libs.min.js"></script>
+<script src="/js/okab/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
+<script src="/js/okab/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+<script src="/js/okab/main.js"></script>
+
+{% block js %}{% endblock %}
+</body>
+</html>
