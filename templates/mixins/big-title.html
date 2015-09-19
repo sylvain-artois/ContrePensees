@@ -1,0 +1,16 @@
+{% set title = ( title if title else "Welcome" ) %}
+{% set title_bkg = ( title_bkg if title_bkg else "/images/frontSlider/2015-07-20-4.jpg" ) %}
+
+<section class="title_container">
+    <div class="page-section-content">
+        <div class="background-image-hide parallax-background">
+            <img class="background-image" alt="Background Image" src="{{ title_bkg }}" />
+        </div>
+        <div class="container page-section text-center">
+            <h1 class="uppercase undertitle">{{ title }}</h1>
+            <div class="topaz-line">
+                <i class="di-separator"></i>
+            </div>
+        </div>
+    </div>
+</section>

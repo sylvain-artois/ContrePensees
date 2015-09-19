@@ -1,0 +1,41 @@
+<div class="page-section-content">
+    <div class="background-image-hide parallax-background">
+        <img class="background-image" alt="Background Image" src="/images/frontSlider/2015-07-20-5.jpg" />
+    </div>
+    <div class="dima-section-cover"></div>
+    <div class="container page-section text-center">
+
+        <h2 class="uppercase  ">recent works</h2>
+        <div class="topaz-line no-bottom-margin">
+            <i class="di-separator"></i>
+        </div>
+        <div class="clear-section"></div>
+
+        <div style="position: relative; height: 367.75px;" class="container isotope column_3 with-margin">
+            <section class="boxed-protfolio">
+                {% for x in [0,1,2] %}
+                <div style="position: absolute; left: 0px; top: 0px; opacity: 1;" class="isotope-item  di_1_of_3 photographer web-designe">
+                    <div class="work-item ">
+                        <div class="dima-masonry-100"></div>
+                        <img src="images/works/work-1.jpg" alt="Brand Consulting">
+                        <div class="link_overlay">
+                            <ul class="icons-media">
+                                <li><a data-animated-link="fadeOut" href="images/works/work-1@2x.jpg" data-lightbox="image"><i class="fa fa-search"></i></a>
+                                </li>
+                                <li><a data-animated-link="fadeOut" href="single-project-v1.html"><i class="fa fa-link"></i></a>
+                                </li>
+                            </ul>
+                            <div style="bottom: 99px;" class="work-info">
+                                <div class="work-teitel text-center">
+                                    <p>brand identity</p>
+                                </div>
+                            </div>
+                            <span class="topaz-hover"></span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+</div>

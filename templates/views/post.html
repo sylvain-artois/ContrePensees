@@ -1,42 +1,374 @@
-{% extends "templates/layouts/default.html" %}
+{% extends "templates/layouts/content.html" %}
 
-{% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                <article>
-                    <p>
-                        <a href="/blog">&larr; back to the blog</a>
-                    </p>
-                    <hr>
-                    {% if not data.post %}
-                        <h2>Invalid Post.</h2>
-                    {% else %}
-                        <header>
-                            <h1>{{ data.post.title }}</h1>
-                            <h5>Posted</h5>
-                            {% if data.post.publishedDate %}
-                                on {{ data.post._.publishedDate.format("MMMM Do, YYYY") }}
-                            {% endif %}
-                            {% if data.post.categories and data.post.categories.length %}
-                                in
-                                {% for cat in data.post.categories %}<a href="/blog/{{ cat.key }}">{{ cat.name }}</a>{% if loop.index < data.post.categories.length %}, {% endif %}{% endfor %}
-                                            {% endif %}
-                            {% if data.post.author %}
-                                by {{ data.post.author.name.first }}
-                            {% endif %}
-                        </header>
-                        <div class="post">
-                            {% if data.post.image.exists %}
-                                <div class="image-wrap">
-                                    <img src="{{ data.post._.image.fit(750,450) }}" class="img-responsive">
-                                </div>
-                            {% endif %}
-                            {{ data.post.content.full|safe }}
-                        </div>
-                    {% endif %}
-                </article>
-            </div>
+{% block page_title %}
+{% set title = ( data.post.title if data.post else "Oops" ) %}
+{% include "templates/mixins/big-title.html" %}
+{% endblock %}
+
+{% block content_navigation %}
+<nav role="navigation" class="nav-slit">
+    <a data-animated-link="fadeOut" class="prev" href="#">
+        <span class="slit-wrap">
+            <i class="fa fa-angle-left"></i>
+        </span>
+        <div>
+            <h6>Previous Post</h6>
+            <img src="images/posts/next.jpg" alt="Previous thumb">
+        </div>
+    </a>
+    <a data-animated-link="fadeOut" class="next" href="#">
+        <span class="slit-wrap">
+            <i class="fa fa-angle-right"></i>
+        </span>
+        <div>
+            <h6>Next Post</h6>
+            <img src="images/posts/next.jpg" alt="Next thumb">
+        </div>
+    </a>
+</nav>
+{% endblock %}
+
+{% block post_content %}
+<article class="post">
+
+    <div class="post-img">
+        {% if data.post.image.exists %}
+        <img src="{{ data.post._.image.lfit(1200, 400) }}" />
+        {% else %}
+        <img src="{{ data.post.randomPhoto }}" />
+        {% endif %}
+    </div>
+
+    <div class="post-meta box">
+        <ul>
+            <li class="post-on">Posted on {{ data.post._.publishedDate.format("MMMM Do, YYYY") }}</li>
+            {% if data.post.category %}<li class="post-view"><i class="fa fa-eye"></i> <a href="/blog/{{ data.post.category.key }}">{{ data.post.category.name }}</a></li>{% endif %}
+            <li class="post-comments"><i class="fa fa-comments"></i> 12 Comments</li>
+        </ul>
+    </div>
+
+    <div class="post-content box">
+        <h1><a data-animated-link="fadeOut" href="#">{{ data.post.title }}</a></h1>
+
+        {{ data.post.content.full|safe }}
+
+        <div class="social-media dima-social-post social-medium">
+            <ul class="inline clearfix">
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-google-plus"></i></a></li>
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-instagram"></i></a></li>
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-pinterest"></i></a></li>
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-reddit"></i></a></li>
+            </ul>
         </div>
     </div>
+</article>
+{% endblock %}
+
+{% block post_author %}
+<section class="dima-author-box box clearfix">
+    <div class="dima-about-image overlay">
+        <a data-animated-link="fadeOut" href="author.html">
+            <img src="images/posts/author.jpg" alt="">
+        </a>
+    </div>
+
+    <div class="dima-author-info">
+        <h5 class="dima-author-name"><a data-animated-link="fadeOut" href="author.html">RICHARD ROGERS</a></h5>
+        <p>Lorem Ipsum. psum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit.</p>
+
+        <div class="social-media dima-social-author social-small">
+            <ul class="inline clearfix">
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-google-plus"></i></a>
+                </li>
+                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-instagram"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block post_related %}
+<section class="related-posts box clearfix">
+    <h5 class="related-posts-title ">Related Posts</h5>
+
+    <!-- POST (1) -->
+    <article role="article" class="related-entry  di_1_of_4 first">
+        <div class="related-entry-media">
+            <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
+                <div class="related-entry-thumbnail overlay">
+                    <img src="images/posts/related-1.jpg" alt="Super Cool Photography Tricks" width="650" height="450">
+                </div>
+            </a>
+        </div>
+        <div class="related-entry-content">
+            <div class="related-entry-title">
+                <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
+                    <h6>psychology in branding</h6>
+                </a>
+                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+            </div>
+        </div>
+    </article>
+    <!--! POST (1) -->
+
+    <!-- POST (2) -->
+    <article role="article" class="related-entry  di_1_of_4 ">
+        <div class="related-entry-media">
+            <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
+                <div class="related-entry-thumbnail overlay">
+                    <img src="images/posts/related-2.jpg" alt="Super Cool Photography Tricks" width="650" height="450">
+                </div>
+            </a>
+        </div>
+        <div class="related-entry-content">
+            <div class="related-entry-title">
+                <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
+                    <h6>Process of Prototyping</h6>
+                </a>
+                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+            </div>
+        </div>
+    </article>
+    <!--! POST (2) -->
+
+    <!-- POST (3) -->
+    <article role="article" class="related-entry  di_1_of_4 ">
+        <div class="related-entry-media">
+            <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
+                <div class="related-entry-thumbnail overlay">
+                    <img src="images/posts/related-3.jpg" alt="Super Cool Photography Tricks" width="650" height="450">
+
+                </div>
+            </a>
+        </div>
+        <div class="related-entry-content">
+            <div class="related-entry-title">
+                <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
+                    <h6>Responsive web design</h6>
+                </a>
+                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+            </div>
+        </div>
+    </article>
+    <!--! POST (3) -->
+
+    <!-- POST (4) -->
+    <article role="article" class="related-entry  di_1_of_4 ">
+        <div class="related-entry-media">
+            <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
+                <div class="related-entry-thumbnail overlay">
+                    <img src="images/posts/related-2.jpg" alt="Super Cool Photography Tricks" width="650" height="450">
+
+                </div>
+            </a>
+        </div>
+        <div class="related-entry-content">
+            <div class="related-entry-title">
+                <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
+                    <h6>Responsive web design</h6>
+                </a>
+                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+            </div>
+        </div>
+    </article>
+    <!--! POST (4) -->
+
+</section>
+{% endblock %}
+
+{% block post_comment %}
+<div class="dima-comments-list box">
+    <h5 class="h-comment">
+                                    <span>
+                                        <small>(03)</small>COMMENTS</span>
+    </h5>
+
+    <!-- COMMENTS -->
+    <ol class="dima-comment">
+
+        <!-- COMMENT (1) -->
+        <li>
+            <div class="content-comment">
+                <div class="dima-comment-img ">
+                    <a data-animated-link="fadeOut" href=""><img src="images/posts/user-3.jpg" alt="">
+                    </a>
+                </div>
+                <div class="dima-comment-entry">
+                    <ul class="user-comment-titel">
+                        <li><a data-animated-link="fadeOut" href=""><h6>Frank Sanders</h6></a>
+                        </li>
+                        <li>
+                            <time class="comment-time">11 Jul 2014 at 15:32</time>
+                        </li>
+                        <li>
+                            <div class="dima-reply">&#160;/&#160;
+                                <a data-animated-link="fadeOut" href="#" class="dima-reply-link">Reply</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <section class="comment-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, quis vero fuga libero tempora quod dolores quae est amet quam.</p>
+                    </section>
+                </div>
+            </div>
+        </li>
+        <!--! COMMENT (1) -->
+
+        <!-- COMMENT (2) -->
+        <li>
+            <div class="content-comment">
+                <div class="dima-comment-img">
+                    <a data-animated-link="fadeOut" href=""><img src="images/posts/user-1.jpg" alt="">
+                    </a>
+                </div>
+                <div class="dima-comment-entry">
+                    <ul class="user-comment-titel">
+                        <li><a data-animated-link="fadeOut" href=""><h6>Robert Hamilton</h6></a>
+                        </li>
+                        <li>
+                            <time class="comment-time">11 Jul 2014 at 15:32</time>
+                        </li>
+                        <li>
+                            <div class="dima-reply">&#160;/&#160;
+                                <a data-animated-link="fadeOut" href="#" class="dima-reply-link">Reply</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <section class="comment-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, quis vero fuga libero tempora quod dolores quae est amet quam.</p>
+                    </section>
+                </div>
+            </div>
+
+            <ol class="children">
+
+                <!-- REPLY (1) -->
+                <li>
+                    <div class="content-comment">
+                        <div class="dima-comment-img">
+                            <a data-animated-link="fadeOut" href=""><img src="images/posts/user-2.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="dima-comment-entry">
+                            <ul class="user-comment-titel">
+                                <li><a data-animated-link="fadeOut" href=""><h6>Willis Pearson</h6></a>
+                                </li>
+                                <li>
+                                    <time class="comment-time">11 Jul 2014 at 15:32</time>
+                                </li>
+                                <li>
+                                    <div class="dima-reply">&#160;/&#160;
+                                        <a data-animated-link="fadeOut" href="#" class="dima-reply-link">Reply</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <section class="comment-content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, quis vero fuga libero tempora quod dolores quae est amet quam.</p>
+                            </section>
+                        </div>
+                    </div>
+                </li>
+                <!--! REPLY (1) -->
+
+                <!-- REPLY (2) -->
+                <li>
+                    <div class="content-comment">
+                        <div class="dima-comment-img">
+                            <a data-animated-link="fadeOut" href=""><img src="images/posts/user-1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="dima-comment-entry">
+                            <ul class="user-comment-titel">
+                                <li><a data-animated-link="fadeOut" href=""><h6>Frank Sanders</h6></a>
+                                </li>
+                                <li>
+                                    <time class="comment-time">11 Jul 2014 at 15:32</time>
+                                </li>
+                                <li>
+                                    <div class="dima-reply">&#160;/&#160;
+                                        <a data-animated-link="fadeOut" href="#" class="dima-reply-link">Reply</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <section class="comment-content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, quis vero fuga libero tempora quod dolores quae est amet quam.</p>
+                            </section>
+                        </div>
+                    </div>
+                </li>
+                <!--! REPLY (2) -->
+
+            </ol>
+        </li>
+        <!--! COMMENT (2) -->
+
+        <!-- COMMENT (3) -->
+        <li>
+            <div class="content-comment">
+                <div class="dima-comment-img">
+                    <a data-animated-link="fadeOut" href=""><img src="images/posts/user-4.jpg" alt="">
+                    </a>
+                </div>
+                <div class="dima-comment-entry">
+                    <ul class="user-comment-titel">
+                        <li><a data-animated-link="fadeOut" href=""><h6>Robert Hamilton</h6></a>
+                        </li>
+                        <li>
+                            <time class="comment-time">11 Jul 2014 at 15:32</time>
+                        </li>
+                        <li>
+                            <div class="dima-reply">&#160;/&#160;
+                                <a data-animated-link="fadeOut" href="#" class="dima-reply-link">Reply</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <section class="comment-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, quis vero fuga libero tempora quod dolores quae est amet quam.</p>
+                    </section>
+                </div>
+            </div>
+        </li>
+        <!--! COMMENT (3) -->
+
+    </ol>
+    <!--! COMMENTS -->
+
+    <!-- LEAVE A REPLY -->
+    <h5 class="leave-reply">Leave a Reply</h5>
+    <form action="#" class="form-small form" id="comment" novalidate="novalidate">
+        <div class=" di_1_of_3 first">
+            <div class="field">
+                <input id="name" name="name" type="text" placeholder="Name*" required="" aria-required="true">
+            </div>
+        </div>
+        <div class=" di_1_of_3 ">
+            <div class="field">
+                <input id="email" name="email" type="email" placeholder="Email*" required="" aria-required="true">
+            </div>
+        </div>
+        <div class=" di_1_of_3 ">
+            <div class="field">
+                <input id="wbsite" name="subject" type="text" placeholder="Your WebSite">
+            </div>
+        </div>
+        <div class="field">
+            <textarea id="message" name="message" class="textarea" placeholder="Comment" required="" aria-required="true"></textarea>
+        </div>
+
+        <!-- BUTTON -->
+        <div class="text-center">
+            <input type="submit" value="POST COMMENT" class="button fill">
+        </div>
+        <!--! BUTTON -->
+    </form>
+    <!--! LEAVE A REPLY -->
+
+</div>
 {% endblock %}

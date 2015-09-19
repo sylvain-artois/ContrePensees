@@ -42,12 +42,21 @@
         <div class="dima-main">
 
             <section class="section">
-                {% block intro %}{% endblock %}
-                {% block content %}{% endblock %}
-            </section>
+                {% block page_title %}{% endblock %}
 
-            <section class="section" id="twitter">
-                {% block pinned %}{% endblock %}
+                {% block content_navigation %}{% endblock %}
+
+                <section class="section">
+                    <div class="page-section-content boxed-blog blog-list">
+                        <div class="container blog">
+                            {% block post_content %}{% endblock %}
+                            {% block post_author %}{% endblock %}
+                            {% block post_related %}{% endblock %}
+                            {% block post_comment %}{% endblock %}
+                        </div>
+                    </div>
+                </section>
+
             </section>
 
         </div>
