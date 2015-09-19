@@ -12742,6 +12742,8 @@ a .dima-callout {
     color: #dedcd6; }
     .boxed-blog .post .post-content h4 a:hover, .boxed-blog .post .post-content h5 a:hover, .boxed-blog .post .post-content .posted_in label a:hover, .posted_in .boxed-blog .post .post-content label a:hover {
       color: #ff5733; }
+  .boxed-blog .post .post-content p img {
+    width: auto; }
 .boxed-blog .post .pad {
   padding: 20px;
   border: 1px solid #5e5d57;
