@@ -4,13 +4,13 @@ var keystone   = require('keystone'),
     commonlib  = require('./lib/common');
 
 var Types      = keystone.Field.Types,
-    Gallery = new keystone.List('Gallery', {
+    Medium     = new keystone.List('Medium', {
         defaultSort: '-createdAt'
     });
 
-Gallery.add({
+Medium.add({
     pinned: { type: Boolean },
-    images: { type: Types.CloudinaryImages },
+    content: { type: Types.Html, wysiwyg: true, height: 400 },
     caption: { type: Types.Html, wysiwyg: true, height: 200 },
     captionText: { type: String, hidden: true },
     tags: { type: Types.Text },
@@ -19,7 +19,7 @@ Gallery.add({
 });
 
 //Index data for full text search
-Gallery.schema.pre('save', function(next) {
+Medium.schema.pre('save', function(next) {
     if (this.caption) {
         this.captionText = decode(
             this.caption.replace(commonlib.removeTagsRegex(), "")
@@ -28,18 +28,18 @@ Gallery.schema.pre('save', function(next) {
     next();
 });
 
-Gallery.schema.virtual('tagsArray').get(function() {
+Medium.schema.virtual('tagsArray').get(function() {
     return (this.tags) ? this.tags.split(',') : [];
 });
 
-Gallery.schema.plugin(textSearch);
-Gallery.schema.index({
+Medium.schema.plugin(textSearch);
+Medium.schema.index({
     tags: 'text',
     captionText: 'text'
 }, {
     default_language:'fr'
 });
 
-Gallery.defaultColumns = 'caption|30%, category, createdAt';
+Medium.defaultColumns = 'caption|30%, category, createdAt';
 
-Gallery.register();
+Medium.register();
