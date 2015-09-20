@@ -18,7 +18,7 @@ Quote.add({
     captionText: { type: String, hidden: true },
     tags: { type: Types.Text },
     category: { type: Types.Relationship, ref: 'Category', index: true },
-    author: { type: Types.Relationship, ref: 'User', index: true },
+    author: { type: Types.Relationship, ref: 'User', index: true }
 });
 
 Quote.schema.virtual('randomPhoto').get(function() {
