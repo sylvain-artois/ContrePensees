@@ -5,10 +5,12 @@ var keystone   = require('keystone'),
 
 var Types      = keystone.Field.Types,
     Gallery = new keystone.List('Gallery', {
-        defaultSort: '-createdAt'
+        defaultSort: '-publishedDate'
     });
 
 Gallery.add({
+    state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
+    publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
     pinned: { type: Boolean },
     images: { type: Types.CloudinaryImages },
     caption: { type: Types.Html, wysiwyg: true, height: 200 },
@@ -40,6 +42,6 @@ Gallery.schema.index({
     default_language:'fr'
 });
 
-Gallery.defaultColumns = 'caption|30%, category, createdAt';
+Gallery.defaultColumns = 'caption|30%, category, publishedDate';
 
 Gallery.register();

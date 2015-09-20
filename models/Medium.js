@@ -5,10 +5,12 @@ var keystone   = require('keystone'),
 
 var Types      = keystone.Field.Types,
     Medium     = new keystone.List('Medium', {
-        defaultSort: '-createdAt'
+        defaultSort: '-publishedDate'
     });
 
 Medium.add({
+    state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
+    publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
     pinned: { type: Boolean },
     content: { type: Types.Html, wysiwyg: true, height: 400 },
     caption: { type: Types.Html, wysiwyg: true, height: 200 },
@@ -40,6 +42,6 @@ Medium.schema.index({
     default_language:'fr'
 });
 
-Medium.defaultColumns = 'caption|30%, category, createdAt';
+Medium.defaultColumns = 'caption|30%, category, publishedDate';
 
 Medium.register();

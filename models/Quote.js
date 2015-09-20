@@ -5,10 +5,12 @@ var keystone   = require('keystone'),
 
 var Types = keystone.Field.Types,
     Quote = new keystone.List('Quote', {
-        defaultSort: '-createdAt'
+        defaultSort: '-publishedDate'
     });
 
 Quote.add({
+    state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
+    publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
     pinned: { type: Boolean },
     quote: { type: Types.Html, wysiwyg: true, height: 400 },
     caption: { type: Types.Html, wysiwyg: true, height: 200 },
@@ -51,5 +53,5 @@ Quote.schema.index({
     default_language: 'fr'
 });
 
-Quote.defaultColumns = 'quote|40%, category, createdAt';
+Quote.defaultColumns = 'quote|40%, category, publishedDate';
 Quote.register();
