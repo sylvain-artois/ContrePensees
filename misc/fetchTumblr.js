@@ -9,16 +9,18 @@ var fs = require('fs'),
     cheerio = require('cheerio'),
     ent = require('ent'),
     async = require('async'),
-    //process = require('process'),
+    cloudinary = require('cloudinary');
     mongoose = require('/Users/sartois/Documents/PersonalWork/ContrePensees/node_modules/keystone/node_modules/mongoose/index');
 
 var tumblrKey = "THLnV1lBF0gHjRMX2CdoYtftD0u1RQSlPiZ9gq7wn6J0qwW7PA",
     tumblrSiteUrl = 'd-pop-2-xport.tumblr.com',
     debugOutputfile = false,
+    postFunctionFormat =  "handle[POST-TYPE]Post"
+    authorEmail = "dye.pop@contrepensees.fr"
     queryParams = {
-        offset: 0,
-        limit: 30,
-        type:'photo'
+        offset: 1,
+        limit: 15,
+        type:'video'
     },
     client = tumblr.createClient({
         consumer_key: tumblrKey
@@ -44,20 +46,33 @@ keystone.import('../models');
 
 var Post = keystone.list('Post'),
     User = keystone.list('User'),
-    Gallery = keystone.list('Gallery');
+    Quote = keystone.list('Quote'),
+    Gallery = keystone.list('Gallery'),
+    Medium = keystone.list('Medium'),
+    Photo = keystone.list('Photo');
 
 mongoose.connect('localhost', 'contre-pensees');
 var db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
+cloudinary.config({
+    cloud_name: 'contre-pensees',
+    api_key: '533917263842595',
+    api_secret: 'pLS_Hi4hBqUcSqduiBekHJRTBEk'
+});
+
+db.on('error', function(){
+    console.error('connection error:', arguments);
+    process.exit(2);
+});
+
+db.once('open', function() {
     async.waterfall([
         //Get author
         function(callback) {
             User.model.findOne()
-                .where('email', 'sylvain.artois@gmail.com')
+                .where('email', authorEmail)
                 .exec()
-                .then(function (user) {
+                .then(function(user) {
                     if (user === null) {
                         callback("User not found");
                     } else {
@@ -73,147 +88,215 @@ db.once('open', function (callback) {
                 queryParams,
                 function(err, data) {
                     if (err || ! data) {
-                        callback(err);
+                        callback(err ? err : "Can't find any post");
                     } else {
                         callback(null, data, user);
                     }
                 }
             );
         },
-        //Parse tumblr data
-        handleTumblrApiResults
+        //Parse tumblr data and populate a post array
+        async.apply(handleTumblrApiResults),
+        //Save post to db
+        function(posts, waterfallCallback){
 
-    ], function (err, result) {
+            async.each(posts, function(post, callback) {
+                if (! "save" in post) {
+                    console.error(post);
+                    callback("No save method");
+                    return;
+                }
+                console.log("Call save");
+                post.save(callback);
+            }, function(err) {
+                if (err) {
+                    waterfallCallback(err);
+                } else {
+                    waterfallCallback(null);
+                }
+            });
+        }
+
+    ], function(err) {
         if (err) {
             console.error(err);
             process.exit(1);
+        } else {
+            console.log("Success");
+            process.exit(0);
         }
-        console.log(result);
-        process.exit(0);
     });
 });
 
 /**
- * @param data
- * @param author
+ * @param {Object} data JSON Tumblr api answer
+ * @param {Object} author User keystone document
+ * @param {Fucntion} callback Async waterfall callback
  */
 function handleTumblrApiResults(data, author, callback) {
 
-    data.posts.forEach(function(tpost) {
+    var postTosave = [];
 
-        if (tpost.state === 'published') {
-
-            console.log(tpost.slug);
-
-            var handlePostCallbackName = "handle" + capitalizeFirstLetter(tpost.type) + "Post";
-            console.log(handlePostCallbackName);
-            var post = thandler[handlePostCallbackName](tpost, author);
-
-            if (post && "title" in post && post.title) {
-                post.save(function(err) {
-                    if (err) {
-                        callback(err);
-                    }
-                });
+    async.forEachOfSeries(
+        data.posts,
+        function(tpost, i, postcallback) {
+            if (tpost.state === 'published') {
+                console.log("Fetch tumblr data");
+                var handlePostCallbackName = postFunctionFormat.replace(
+                        "[POST-TYPE]",
+                        capitalizeFirstLetter(tpost.type)
+                    );
+                thandler[handlePostCallbackName](tpost, author, postcallback, postTosave);
+            } else {
+                console.log("Not published", i, tpost.body);
+                postcallback();
+            }
+        },
+        function(err) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, postTosave);
             }
         }
-    });
-
-    //callback(null, "done");
+    );
 }
 
 var thandler = {
     /**
      * @param post
      * @param author
+     * @param postcallback
+     * @param postTosave
      */
-    handlePhotoPost: function(post, author) {
+    handlePhotoPost: function(post, author,  postcallback, postTosave) {
 
-        var slug = (post.slug) ? post.slug : post.id;
+        if (post.photos.length === 1) {
+            thandler.handleSinglePhotoPost(post, author, postcallback, postTosave);
+        } else if (post.photos.length > 1) {
 
-        mkdirp('/Users/sartois/Documents/PersonalWork/ContrePensees/misc/tumblr_data/photo/media/'+slug, function(err) {
-            if (err) {
-                console.error(err);
-            } else {
-                for (var i = 0 ; i < post.photos.length ; i++) {
-                    var photo = post.photos[i];
-                    var filename = '/Users/sartois/Documents/PersonalWork/ContrePensees/misc/tumblr_data/photo/media/' + slug + '/' + slug + "-" + i + ".jpg";
-                    download(photo.original_size.url, filename, function(){
-                        console.log('done', arguments)
+            var photos = [],
+                cloudinaryPhotos = [];
+
+            post.photos.forEach(function(p){
+                photos.push(p.original_size.url);
+            });
+
+            async.eachSeries(
+                photos,
+                function(url, callback) {
+                    cloudinary.uploader.upload(url, function(result) {
+                        cloudinaryPhotos.push(result);
+                        callback();
                     });
+                },
+                function(err) {
+                    if( err ) {
+                        console.log('Something goes wrong with Photos');
+                        postcallback(err);
+                    } else {
+                        var gallery = new Gallery.model({
+                            pinned: false,
+                            publishedDate: moment.unix(post.timestamp),
+                            state: 'published',
+                            tags: post.tags,
+                            author: author,
+                            images: cloudinaryPhotos,
+                            caption: removeEOL(unescapeQuote(post.caption))
+                        });
 
+                        postTosave.push(gallery);
+                        postcallback();
+                    }
                 }
-            }
+            );
+        } else {
+            postcallback("Photo post bad format");
+        }
+    },
+    /**
+     * @param post
+     * @param author
+     * @param postcallback
+     * @param postTosave
+     */
+    handleSinglePhotoPost: function(post, author, postcallback, postTosave) {
+        cloudinary.uploader.upload(post.photos[0].original_size.url, function(result) {
+
+            var photo = new Photo.model({
+                pinned: false,
+                publishedDate: moment.unix(post.timestamp),
+                state: 'published',
+                tags: post.tags,
+                author: author,
+                image: result,
+                caption: removeEOL(unescapeQuote(post.caption))
+            });
+            postTosave.push(photo);
+            postcallback();
         });
-
-        /*post = new Gallery.model({
-
-         publishedDate: moment.unix(tpost.timestamp),
-         state: 'published',
-         tags: tpost.tags,
-         author: author
-
-         });*/
     },
     /**
      * @param post
      * @param author
      * @returns Post
      */
-    handleTextPost: function(post, author) {
+    handleTextPost: function(post, author, postcallback, postTosave) {
 
-        return new Post.model({
-            publishedDate: moment.unix(tpost.timestamp),
+        var postDoc =  new Post.model({
+            publishedDate: moment.unix(post.timestamp),
             state: 'published',
-            tags: tpost.tags,
+            tags: post.tags,
             author: author,
             isQuote: false,
-            title: tpost.title,
-            content: {
-                brief: "",
-                extended: tpost.body.replace(/\\"/g, '"').replace(/\\'/g, "&apos;").replace(/\r?\n|\r/g, "")
-            }
+            pinned: false,
+            title: post.title,
+            brief: "",
+            extended: removeEOL(unescapeQuote(post.body))
         });
+
+        if (! (postDoc && "title" in postDoc && postDoc.title)) {
+            console.log("No title", i, post.body);
+            postcallback("No title");
+        } else {
+            postTosave.push(postDoc);
+            postcallback();
+        }
     },
     /**
      * @param post
      * @param author
-     * @returns {*}
+     * @returns Quote
      */
-    handleQuotePost: function(post, author) {
+    handleQuotePost: function(post, author, postcallback, postTosave) {
 
-        var quoteTitle = [];
-        var uniciser = 1;
-        var title = cleanQuoteTitle(tpost.source);
-
-        if (! title) {
-            return;
-        }
-
-        if (quoteTitle.indexOf(title) != -1) {
-            title = title + " 0" + uniciser;
-            uniciser++;
-        }
-
-        quoteTitle.push(title);
-
-        outputfile(
-            "misc/tumblr_data/quote/" + (tpost.slug) ? tpost.slug : tpost.id + ".json",
-            tpost
-        );
-
-        return new Post.model({
-            publishedDate: moment.unix(tpost.timestamp),
+        var quote = new Quote.model({
+            publishedDate: moment.unix(post.timestamp),
             state: 'published',
-            tags: tpost.tags,
+            tags: post.tags,
             author: author,
-            isQuote: true,
-            title: title,
-            content: {
-                brief: tpost.text,
-                extended: tpost.source.replace(/\\"/g, '"').replace(/\\'/g, "&apos;").replace(/\r?\n|\r/g, "")
-            }
+            pinned: false,
+            quote: post.text,
+            caption: removeEOL(unescapeQuote(post.source))
         });
+
+        postTosave.push(quote);
+        postcallback();
+    },
+    handleVideoPost: function(post, author, postcallback, postTosave) {
+
+        var medium = new Medium.model({
+            publishedDate: moment.unix(post.timestamp),
+            state: 'published',
+            tags: post.tags,
+            author: author,
+            pinned: false,
+            content: unescapeQuote(post.player[2].embed_code),
+            caption: removeEOL(unescapeQuote(post.caption))
+        });
+
+        postTosave.push(medium);
+        postcallback();
     }
 };
 
@@ -265,3 +348,28 @@ function download(uri, filename, callback){
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+/**
+ * @param string
+ * @returns String
+ */
+function removeEOL(string) {
+    if (! string ) {
+        return "";
+    } else {
+        return string.replace(/\r?\n|\r/g, "")
+    }
+}
+
+/**
+ * @param string
+ * @returns String
+ */
+function unescapeQuote(string) {
+    if (! string ) {
+        return "";
+    } else {
+        return string.replace(/\\'/g, "&apos;").replace(/\\"/g, '"')
+    }
+}
+
