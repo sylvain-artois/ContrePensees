@@ -1,49 +1,56 @@
-<div class="dima-navbar-wrap">
-    <div class="dima-navbar fix-one">
-        <div class="clearfix dima-nav-fixed"></div>
+<div class="dima-navbar fix-one">
 
-        <div class="relative full-wrapper">
-            <div class="logo">
-                <h1>
-                    <a data-animated-link="fadeOut" href="/" title="Contre-Pensées">
-                        <span>Contre Pensées</span>
-                    </a>
-                </h1>
-            </div>
-            <a class="dima-btn-nav" href="#"><i class="fa fa-bars"></i></a>
-            <nav role="navigation">
-                <ul class="dima-nav dima-onepage sf-menu">
-                    {% for link in navLinks %}
-                    <li class="{{ 'current' if link.key == section else '' }}">
-                        <a href="{{ link.href }}">{{ link.label }}</a>
-                    </li>
-                    {% endfor %}
-                    {% if user %}
-                    {% if user.canAccessKeystone %}
-                    <li><a href="/keystone">Open Keystone</a></li>
-                    {% endif %}
-                    <li><a href="/keystone/signout">Sign Out</a></li>
-                    {% else %}
-                    <li><a href="/keystone/signin">Sign In</a></li>
-                    {% endif %}
-                    <li class="search-btn">
-                        <a data-animated-link="fadeOut" href="#"><i class="fa fa-search"></i></a>
-                    </li>
-                </ul>
-            </nav>
+    <div class="clearfix dima-nav-fixed"></div>
+
+    <div class="container">
+
+        <div class="logo">
+            <h1>
+                <a data-animated-link="fadeOut" href="/" title="Contre-Pensées">
+                    <span>Contre Pensées</span>
+                </a>
+            </h1>
         </div>
-        <div id="search-box">
-            <div class="container">
-                <form>
-                    <input placeholder="Start Typing..." type="text">
-                </form>
-                <div id="close">
-                    <a data-animated-link="fadeOut" href="#">
-                        <i class="di-close"></i>
-                    </a>
-                </div>
+
+        <!-- NAV BAR BUTTON-->
+        <a class="dima-btn-nav" href="#"><i class="fa fa-bars"></i></a>
+        <!--! NAV BAR BUTTON-->
+
+        <nav role="navigation">
+            <ul class="dima-nav dima-onepage sf-menu">
+                {% for link in navLinks %}
+                <li class="{{ 'active' if link.key == section else '' }}">
+                    <a href="{{ link.href }}">{{ link.label }}</a>
+                </li>
+                {% endfor %}
+                {% if user %}
+                {% if user.canAccessKeystone %}
+                <li><a href="/keystone">Open Keystone</a></li>
+                {% endif %}
+                <li><a href="/keystone/signout">Sign Out</a></li>
+                {% else %}
+                <li><a href="/keystone/signin">Sign In</a></li>
+                {% endif %}
+                <li class="search-btn">
+                    <a data-animated-link="fadeOut" href="#"><i class="fa fa-search"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- SEARCH BOX -->
+    <div id="search-box">
+        <div class="container">
+            <form>
+                <input type="text" placeholder="Rechercher un article" />
+            </form>
+            <div id="close">
+                <a data-animated-link="fadeOut" href="#">
+                    <i class="di-close"></i>
+                </a>
             </div>
         </div>
     </div>
-    <div class="dima"></div>
+
 </div>
+<div class="dima"></div>
