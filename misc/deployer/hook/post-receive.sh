@@ -27,7 +27,7 @@ echo " - Finished code update"
 ##Update node modules
 echo " - Starting npm install"
 cd "$DEPLOYDIR"
-npm install;
+npm install --production;
 echo " - Finished npm update"
 
 ##Update bower deps
