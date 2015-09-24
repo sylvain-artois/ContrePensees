@@ -37,13 +37,13 @@ public/vendor/*
 #Jetbrains
 .idea
 
-#Experiment json files with tumblr posts
-tumblr_data
-
 #In dev, mongodb data path
 data
 
 #In dev, sass private dir
 .sass-cache
+
+#Mongo dump
+misc/backup
 
 
