@@ -20,7 +20,7 @@ Post.add({
     briefText: { type: String, hidden: true },
     extendedText: { type: String, hidden: true },
     author: { type: Types.Relationship, ref: 'User', index: true },
-    category: { type: Types.Relationship, ref: 'Category', index: true },
+    categories: { type: Types.Relationship, ref: 'Category', many: true },
     tags: { type: Types.Text }
 });
 

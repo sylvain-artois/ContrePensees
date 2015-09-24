@@ -15,9 +15,9 @@ Photo.add({
     image: { type: Types.CloudinaryImage },
     caption: { type: Types.Html, wysiwyg: true, height: 200 },
     captionText: { type: String, hidden: true },
-    tags: { type: Types.Text },
     author: { type: Types.Relationship, ref: 'User', index: true },
-    category: { type: Types.Relationship, ref: 'Category', index: true }
+    categories: { type: Types.Relationship, ref: 'Category', many: true },
+    tags: { type: Types.Text }
 });
 
 //Index data for full text search

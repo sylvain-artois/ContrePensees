@@ -16,9 +16,9 @@ Quote.add({
     caption: { type: Types.Html, wysiwyg: true, height: 200 },
     quoteText: { type: String, hidden: true },
     captionText: { type: String, hidden: true },
-    tags: { type: Types.Text },
-    category: { type: Types.Relationship, ref: 'Category', index: true },
-    author: { type: Types.Relationship, ref: 'User', index: true }
+    author: { type: Types.Relationship, ref: 'User', index: true },
+    categories: { type: Types.Relationship, ref: 'Category', many: true },
+    tags: { type: Types.Text }
 });
 
 Quote.schema.virtual('randomPhoto').get(function() {
