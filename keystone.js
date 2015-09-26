@@ -17,7 +17,7 @@ keystone.init({
     'user model': 'User',
     'cookie secret': process.env.COOKIE_SECRET,
     'compress':true,
-    'logger': true,
+    'logger': ":method :url :status :response-time ms",
     //logger options:
     'session store':'mongo',
     'wysiwyg images': true,
