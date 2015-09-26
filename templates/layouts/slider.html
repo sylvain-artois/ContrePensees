@@ -65,40 +65,12 @@
 
         <footer role="contentinfo" class="dima-footer">
             <div class="container">
-                <div class="di_1_of_3 first no-bottom-margin">
-                    <div class="copyright dima-center-full">
-                        <p>&copy; 2015 Sylvain Artois. Base theme by <a data-animated-link="fadeOut" href="http://www.PixelDima.com">PixelDima</a></p>
-                    </div>
-                </div>
-                <div class="di_2_of_3 hidden-tm">
-                    <ul class="dima-menu">
-                        {% for link in navLinks %}
-                        <li class="{{ 'active' if link.key == section else '' }}">
-                            <a data-animated-link="fadeOut" href="{{ link.href }}">{{ link.label }}</a>
-                        </li>
-                        {% endfor %}
-                        {% if user %}
-                        {% if user.canAccessKeystone %}
-                        <li>
-                            <a data-animated-link="fadeOut" href="/keystone">Open Keystone</a>
-                        </li>
-                        {% endif %}
-                        <li>
-                            <a data-animated-link="fadeOut" href="/keystone/signout">Sign Out</a>
-                        </li>
-                        {% else %}
-                        <li>
-                            <a data-animated-link="fadeOut" href="/keystone/signin">Sign In</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
+                {% include "templates/mixins/second-footer.html" %}
             </div>
         </footer>
 
     </div>
 
-    {# JAVASCRIPT #}
     <script src="/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/js/okab/core/load.js"></script>
     <script src="/js/okab/core/jquery.easing.1.3.js"></script>

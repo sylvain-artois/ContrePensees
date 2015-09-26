@@ -1,16 +1,23 @@
 {% extends "templates/layouts/list.html" %}
 
 {% macro blogPost(post) %}
-<article role="article" class="post">
+<article role="article" class="post" itemscope itemType="http://schema.org/BlogPosting">
     <div class="post-meta box">
         <ul>
-            <li class="post-on">Posted {% if post.author %}by {{ post.author.name.first }}{% endif %} {% if post.publishedDate %}on {{ post._.publishedDate.format("MMMM Do, YYYY") }}{% endif %}</li>
-            <li class="post-view"><i class="fa fa-eye"></i> {% if post.category %}<a href="/blog/{{ post.category.key }}">{{ post.category.name }}</a>{% endif %}</li>
-            <li class="post-comments"><i class="fa fa-comments"></i> 12 Comments</li>
+            <li class="post-on">{% if post.author %}{{ post.author.name.full }}{% endif %}</li>
+            <li>{% if post.publishedDate %}{{ post._.publishedDate.format("MMMM Do, YYYY") }}{% endif %}</li>
+            <li>
+                {% if post.categories and post.categories.length %}
+                {% for cat in post.categories %}
+                <a href="/blog/{{ cat.key }}">{{ cat.name }}</a>
+                {% if loop.index < post.categories.length %}, {% endif %}
+                {% endfor %}
+                {% endif %}
+            </li>
         </ul>
     </div>
     <div class="post-content text-start box">
-        <h4><a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a></h4>
+        <h4 itemprop="headline"><a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a></h4>
         <p>{{ post.content.brief|safe }}</p>
         {% if post.content.extended %}
         <p class="read-more">
