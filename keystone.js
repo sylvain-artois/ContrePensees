@@ -1,36 +1,28 @@
-// Simulate config options from your production environment by
-// customising the .env file in your project's root folder.
 require('dotenv').load();
 
 // Require keystone
 var keystone = require('keystone');
 var cons = require('consolidate');
-var nunjucks = require('nunjucks');
-
-// Initialise Keystone with your project's configuration.
-// See http://keystonejs.com/guide/config for available options
-// and documentation.
 
 keystone.init({
-
     'name': 'Contre Pensées',
     'brand': 'Contre Pensées',
-
-    'sass': 'public',
     'static': 'public',
-    'favicon': 'public/favicon.ico',
     'views': 'templates/views',
     'view engine': 'html',
     'custom engine': cons.nunjucks,
-
     'emails': 'templates/emails',
-
-    'auto update': true,
     'session': true,
     'auth': true,
     'user model': 'User',
-    'cookie secret': '&C=:4,`XEOaLc9m]F{?q!$PR0F/5R[5%C%AaQe<TQ[[4E&d5E?Eo?%HN?DGiWOSa'
-
+    'cookie secret': process.env.COOKIE_SECRET,
+    'compress':true,
+    'logger': true,
+    //logger options:
+    'session store':'mongo',
+    'wysiwyg images': true,
+    'wysiwyg cloudinary images': true,
+    'wysiwyg menubar': true
 });
 
 // Load your project's Models
