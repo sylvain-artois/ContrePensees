@@ -2,28 +2,77 @@
 
 {% macro blogPost(post) %}
 <article role="article" class="post" itemscope itemType="http://schema.org/BlogPosting">
+
+    {% if post.type == 'quote' %}
+    <blockquote class="blog-style">
+        <div class="topaz-border"></div>
+        <p>“{{ post.quote }}”</p>
+    </blockquote>
+    {% elif post.type == 'medium' %}
+    <div class="post-img pad">
+        {{ post.content|safe }}
+    </div>
+    {% else %}
+    <div class="post-img">
+        {% if post.type == 'gallery' %}
+        <div class="flexslider sample-slide small-control" data-animation="fade" data-loop="true">
+            <ul class="slides">
+                {% for image in post.images %}
+                <li class="slide-item">
+                    <div class="flex-img">
+                        <img src="{{ image.url }}" />
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% elif post.image.exists %}
+        <img src="{{ post._.image.fit(1200,300) }}" alt="Post illustration" />
+        {% else %}
+        <img src="{{ post.randomPhoto }}" alt="Post illustration" />
+        {% endif %}
+    </div>
+    {% endif %}
+
     <div class="post-meta box">
         <ul>
             <li class="post-on">{% if post.author %}{{ post.author.name.full }}{% endif %}</li>
-            <li>{% if post.publishedDate %}{{ post._.publishedDate.format("MMMM Do, YYYY") }}{% endif %}</li>
+            <li>{{ post._.publishedDate.format("Do MMMM YYYY") }}</li>
+            {% if post.categories and post.categories.length %}
             <li>
-                {% if post.categories and post.categories.length %}
                 {% for cat in post.categories %}
                 <a href="/blog/{{ cat.key }}">{{ cat.name }}</a>
                 {% if loop.index < post.categories.length %}, {% endif %}
                 {% endfor %}
-                {% endif %}
             </li>
+            {% endif %}
+            {% if post.tagsArray and post.tagsArray.length %}
+            <li>
+                {% for tag in post.tagsArray %}
+                <span>{{ tag }}</span>
+                {% endfor %}
+            </li>
+            {% endif %}
         </ul>
     </div>
+
     <div class="post-content text-start box">
-        <h4 itemprop="headline"><a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a></h4>
-        <p>{{ post.content.brief|safe }}</p>
-        {% if post.content.extended %}
+
+        {% if post.type == 'text' %}
+        <h4 itemprop="headline">
+            <a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
+        </h4>
+        <p>{{ post.brief|safe }}</p>
         <p class="read-more">
             <a href="/blog/post/{{ post.slug }}">Read more...</a>
         </p>
+        {% else %}
+        <p>{{ post.caption|safe }}</p>
+        <p class="read-more">
+            <a href="/blog/post/{{ post.slug }}">Voir en grand</a>
+        </p>
         {% endif %}
+
     </div>
 </article>
 {% endmacro %}
@@ -40,7 +89,7 @@
             <div class="row">
                 <div class="col-sm-8 col-md-9">
                     {% if filters.category and not data.category %}
-                            <h3 class="text-muted">Invalid Category.</h3>
+                        <h3 class="text-muted">Invalid Category.</h3>
                     {% else %}
                         {% if data.posts.results.length %}
 

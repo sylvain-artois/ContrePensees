@@ -40,7 +40,6 @@ exports = module.exports = function(app) {
     app.get('/blog/post/:post', routes.views.post);
     app.get('/sylvain-artois/resume', routes.views.resume);
     app.get('/dye-pop/portfolio', routes.views.portfolio);
-    //app.get('/gallery', routes.views.gallery);
     app.all('/contact', routes.views.contact);
     app.all('/search/:query?',  routes.views.search);
 };
