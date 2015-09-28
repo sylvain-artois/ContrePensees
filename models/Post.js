@@ -12,14 +12,14 @@ var Types = keystone.Field.Types,
 
 Post.add({
 
-    key: { type: String, required: true,  initial: true },
+    key: { type: Types.Text, required: true,  initial: true },
     type: { type: Types.Select, options: 'text, quote, photo, gallery, medium', default: 'photo', index: true, initial: true },
 
     state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
     publishedDate: { type: Types.Datetime, index: true, dependsOn: { state: 'published' } },
-    pinned: { type: Boolean, default: false },
+    pinned: { type: Types.Boolean, default: false },
 
-    title: { type: String, dependsOn: { type: 'text' } },
+    title: { type: Types.Text, dependsOn: { type: 'text' } },
     image: { type: Types.CloudinaryImage, dependsOn: { type: ['text', 'photo'] } },
     medium: { type: Types.Html, wysiwyg: true, height: 150,  dependsOn: { type: 'medium' }  },
     brief: { type: Types.Html, wysiwyg: true, height: 150,  dependsOn: { type: 'text' }  },
@@ -83,9 +83,10 @@ Post.schema.plugin(textSearch);
 Post.schema.index({
     tags: 'text',
     title: 'text',
+    quote: 'text',
     briefText: 'text',
-    extendedText: 'text',
-    quote: 'text'
+    contentText: 'text',
+    captionText: 'text'
 }, {
     default_language:'fr'
 });
