@@ -14,34 +14,29 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.4",
     "bootstrap-sass-official": "~3.3.5",
-    "Easey": "~1.0.0",
+    "flexslider": "~2.5.0",
     "imagesloaded": "~3.1.8",
-    "ajaxchimp": "~1.3.0",
-    "jquery.scrollTo": "~2.1.1",
+    "jquery": "~2.1.4",
+    "jquery-infinite-scroll": "~2.1.0",
+    "jquery-instagram": "~0.3.1",
+    "jquery.easing": "~1.3.1",
     "jquery.localScroll": "~1.4.0",
-    "twitter-fetcher": "~13.1.0",
-    "jquery-validation": "~1.14.0",
-    "jquery-ui": "~1.11.4",
+    "jquery.scrollTo": "~2.1.1",
+    "magnific-popup": "~1.0.0",
+    "modernizr": "~3.0.0",
     "perfect-scrollbar": "~0.6.4",
-    "responsive-tabs": "~1.4.5",
+    "respond": "~1.4.2",
+    "retina.js": "~1.3.0",
     "skrollr": "~0.6.30",
     "sly": "~1.6.0",
-    "jquery-hoverintent": "~1.8.1",
-    "jquery-instagram": "~0.3.1",
-    "flat-shadow": "https://github.com/peachananr/flat-shadow",
-    "flexslider": "~2.5.0",
-    "jquery-infinite-scroll": "~2.1.0",
-    "magnific-popup": "~1.0.0",
-    "owl.carousel": "~2.0.0-beta.3",
-    "superfish": "~1.7.5",
+    "twitter-fetcher": "~13.1.0",
     "waypoints": "~3.1.1",
-    "respond": "~1.4.2",
-    "retina.js": "~1.3.0"
+    "smooth-scroll": "~1.0.1",
+    "owl.carousel": "~2.0.0-beta.3"
   },
   "resolutions": {
-    "jquery": ">=1.8.0"
+    "jquery": ">= 1.8.3"
   },
   "devDependencies": {
     "modular-scale": "~2.1.1"

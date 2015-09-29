@@ -1,81 +1,13 @@
 /***********************************************************************************************/
-/* PROTFOLIO /
+/* PORTFOLIO
 /***********************************************************************************************/
 
 $protfolio-border:0px;
 $over-icon-color:#fff;
 
-.isotope-item{
-    overflow: hidden;
-    @include border-start($protfolio-border solid #fff);  
-    border-bottom: $protfolio-border solid #fff;    
-    cursor: pointer;
-    @include box-sizing(content-box);
-
-  .work-item{
-   	    width: 100%;
-        z-index: 45;
-        position: relative;
-   	    img{
-          @include box-shadow(inset 0px -10px 0px #fff);
-          width: 100%;
-          @if($border-radius!=0) {
-            @include border-radius($border-radius);
-          }
-        }
-  }
-
-   .work-info{
-     position: absolute; 
-     bottom: -82px; 
-     opacity: 0;
-     width: 100%;
-     @include transition(all .2s ease-in);
-     z-index: 10;
-
-     .work-teitel{
- 	      width: 100%;
- 	      display: inline-block;
- 	     
- 	      p{
- 		       font-size: 18px;
- 		       font-weight: 700; 
- 		       padding-bottom:3px;	
-           color: #fff;	
-           text-transform: uppercase;
- 	      }
-
- 	      span{
-           font-size: 14px;
- 		       font-weight: 300; 
-           color: #fff;
- 	      }
-     }
-  }
-  .post-img{
-    &:hover{
-    .icons-media{
-        margin-top: -30px !important;
-     }
-    .work-info{
-      bottom: 15%; 
-      opacity:1;
-      -webkit-transform: scale(0.8);
-      transform: scale(0.8);
-    }
-
-    .link_overlay{
-      background: $theme-color;
-      opacity: 1;
-    }
-   }
-  }
-}
-
 /**
  * Ajax Portfolio
  */
-
 .portfolio-ajax-expanded {
     position: relative;
     display: none;
@@ -128,29 +60,27 @@ text-align: center;
 /*   Cases 4 Column Portfolio    */
 /*********************************/
 
-.column_4{
-
-	 display:block;
-
-	 .work-info{
-		 padding: 10px;
-
-	   .work-teitel{
- 	      p   { @include font-size(16,18); }
- 	      span{  display: none; }
-     }
-
-     .work-love{ 
+.column_4 {
+  display:block;
+  .work-info {
+    padding: 10px;
+    .work-teitel {
+      p   {
+        @include font-size(16,18);
+      }
+      span{  display: none; }
+    }
+    .work-love {
        width: 20%;
- 	    .heart{
- 	     color: $theme-color;
- 		   font: 18px/32px $FontAwesome;
- 	   }
-
- 	 span{ color:$theme-color; }
-
-   }
-	}
+      .heart {
+        color: $theme-color;
+        font: 18px/32px $FontAwesome;
+      }
+      span {
+        color:$theme-color;
+      }
+    }
+  }
 }
 
 

@@ -17,7 +17,7 @@
         <!--! NAV BAR BUTTON-->
 
         <nav role="navigation">
-            <ul class="dima-nav dima-onepage sf-menu">
+            <ul class="dima-nav sf-menu">
                 {% for link in navLinks %}
                 <li class="{{ 'active' if link.key == section else '' }}">
                     <a href="{{ link.href }}">{{ link.label }}</a>

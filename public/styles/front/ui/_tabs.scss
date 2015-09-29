@@ -4,34 +4,7 @@
 
 .dima-tabs {
     display: block;
-    &.responsive-tab{
-    .dima-tab-nav {
-        > li {
-            > a.tab-control, span.tab-control-spacer {
-            	@include float_start();
-                width: 20px;
-                height: 42px;
-                font-size: 30px;
-                font-weight: 400;
-                line-height: 34px;
-                color: $tab-nav-border-color;
-                &.right {
-                    @include float_end();
-                }
-            }
-            span.tab-control-spacer {
-                line-height: 28px;
-                color: transparent;
-                background: transparent;
-            }
-            > a.tab-control {
-                &:hover {
-                    color: $theme-color;
-                }
-            }
-        }
-    }
-  }
+
 }
 /*1-Header*/
 

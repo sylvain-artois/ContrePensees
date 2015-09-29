@@ -271,11 +271,7 @@
          margin-bottom: 30px;
          width: 100% !important;
      }
-     .responsive .isotope-item.no-margin {
-         width: 100% !important;
-         @include margin-start(0);
-         margin-bottom: 0px;
-     }
+
      .responsive .offset-by-1, .responsive .offset-by-2, .responsive .offset-by-3, .responsive .offset-by-4, .responsive .offset-by-5, .responsive .offset-by-6, .responsive .offset-by-7, .responsive .offset-by-8, .responsive .offset-by-9, .responsive .offset-by-10, .responsive .offset-by-11 {
          @include margin-start(0);
      }

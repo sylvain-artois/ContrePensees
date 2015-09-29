@@ -34,12 +34,12 @@
 
     {# Add any other template-specific HEAD tags by extending the head block #}
     {% block head %}{% endblock %}
+
+    <script src="/vendor/modernizr/dist/modernizr-build.js"></script>
 </head>
 <body class="responsive">
 
     <div class="all_content">
-
-        {% include "templates/mixins/loader.html" %}
 
         {# Slider #}
         <div class="tp-banner-container">
@@ -68,20 +68,13 @@
                 {% include "templates/mixins/second-footer.html" %}
             </div>
         </footer>
-
     </div>
 
-    <script src="/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="/js/okab/core/load.js"></script>
-    <script src="/js/okab/core/jquery.easing.1.3.js"></script>
-    <script src="/js/okab/core/modernizr-2.8.2.min.js"></script>
-    <script src="/js/okab/core/imagesloaded.pkgd.min.js"></script>
-    <script src="/js/okab/core/respond.src.js"></script>
-    <script src="/js/okab/libs.min.js"></script>
-    <script src="/js/okab/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
-    <script src="/js/okab/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
-    <script src="/js/okab/main.js"></script>
+    {% include "templates/mixins/javascript.html" %}
 
-    {% block js %}{% endblock %}
+    {% block js %}
+    {% endblock %}
+
+    <script src="/js/okab/main.js"></script>
 </body>
 </html>

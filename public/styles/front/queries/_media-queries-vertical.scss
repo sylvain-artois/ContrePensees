@@ -3,17 +3,7 @@ $menuW: $navbar-vertical-w;
     .vertical-menu {
         @include hide-on(TP);
         @include visible-on(TP);
-        //--->Protfolio        
-        .isotope-item {
-            .link_overlay:hover .work-info {
-                bottom: 6%;
-            }
-        }
-        .with-margin{
-            .isotope-item {
-               padding: 0 0.7% 10px 0.7% !important;
-            }
-        }
+
         /*Pricing Table*/
         
         div {

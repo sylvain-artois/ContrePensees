@@ -1,8 +1,6 @@
-/*global window */
-(function($) {
+;(function($) {
     "use strict";
 
-    /*-------------VARIABLES--------------*/
     var w = $(window),
         doc = $(document),
         windowWidth = w.width(),
@@ -10,14 +8,12 @@
         windowHeight = w.height(),
         tw = $("#tweet"),
         prefix,
-        /*Modernizr Var*/
-        isTouch = Modernizr.touch, //detect touch devices
-        isTransitions = Modernizr.csstransitions, //detect if brwoesr support transitions
-        isFirefox = typeof InstallTrigger !== 'undefined', //detect Firefox version
-        //isIE = /*@cc_on!@*/ false || !!document.documentMode, //detect IE version
-        isChrome = !!window.chrome, //detect chrome version
-        isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0; ////detect chrome isSafari
-    /*!------------VARIABLES--------------*/
+        isTouch = Modernizr.touch,
+        isTransitions = Modernizr.csstransitions,
+        isFirefox = typeof InstallTrigger !== 'undefined',
+        //isIE = /*@cc_on!@*/ false || !!document.documentMode,
+        isChrome = !!window.chrome,
+        isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 
     window.PIXELDIMA = {};
 
@@ -29,16 +25,13 @@
          * [ Main Module (Okab) ]
          */
         PIXELDIMA.NAV = function() {
-            /**
-             * Our Private Functions
-             **/
 
             var myMenu = function() {
                 mobileNav();
                 fixNav();
-                subMenu();
+                //subMenu();
                 searchBox();
-                onePage();
+                //onePage();
             };
 
             var mobileNav = function() {
@@ -138,29 +131,7 @@
                     });
                 };
             };
-            var subMenu = function() {
 
-                $("ul.sf-menu").superfish({
-                    delay: 650,
-                    animation: {
-                        opacity: 'show',
-                        height: 'show'
-                    },
-                    hoverClass: 'sfHover',
-                    pathClass: 'overrideThisToUse',
-                    pathLevels: 1,
-                    animationOut: {
-                        opacity: 'hide',
-                        height: 'hide'
-                    },
-                    speed: 'normal',
-                    eventType: 'toggle',
-                    speedOut: 'fast',
-                    disableHI: false,
-                    autoArrows: 'false'
-
-                });
-            };
             var searchBox = function() {
                 //search box event
                 var bool = true;
@@ -186,58 +157,15 @@
                     bool = true;
                 });
             };
-            var onePage = function() {
-                $('.dima-onepage').onePageNav({
-                    currentClass: 'current',
-                    changeHash: true,
-                    scrollSpeed: 750,
-                    scrollThreshold: 0.5,
 
-                    filter: '',
-                    easing: 'swing',
-                    begin: function() {                        
-                        //I get fired when the animation is starting
-                        $('body').append('<div id="device-dummy" style="height: 1px;"></div>');
-                    },
-                    end: function() {
-                        //I get fired when the animation is ending
-                        $('#device-dummy').remove();
-                    },
-                    scrollChange: function() {
-                        //I get fired when you enter a section and I pass the list item of the section
-                    }
-                });
-
-                $("a[data-scrollto]").click(function(event) {
-                    
-                    event.preventDefault();
-                    var divScrollToAnchor = $(this).attr('data-scrollto');
-
-                    var topOffsetScroll = 0;
-
-                    $('html, body').stop().animate({
-                        'scrollTop': $(divScrollToAnchor).offset().top - topOffsetScroll
-                    }, 750, 'easeOutQuint');
-                    return false;
-                });
-
+            return {
+                init: function () {
+                    myMenu();
+                    $("html").imagesLoaded();
+                }
             };
-            /**
-             * Setup Function
-             */
-            var init = function() {
-                myMenu();
-                $("html").imagesLoaded(); // Detect when images have been loaded.
-            };
-
-            /**
-             * [Our Public Function Here]
-             */
-            var build = {
-                init: init,
-            };
-            return build;
         }();
+
         // Handles twitter,instagram,flickr API
         PIXELDIMA.API = function() {
             var twitter = function() {
@@ -342,130 +270,17 @@
                 }
             };
 
-            var flickr = function() {
-                $(".flkr-cont").each(function() {
-                    var lem = $(this),
-                        Val = lem.attr("data-limit"),
-                        id_val = lem.attr("data-id")
-                    lem.jflickrfeed({
-                        limit: Val,
-                        qstrings: {
-                            id: id_val
-                        },
-                        itemTemplate: '<li>' +
-                            '<a rel="colorbox" href="{{image}}" title="{{title}}">' +
-                            '<img src="{{image_s}}" alt="{{title}}" />' +
-                            '</a>' +
-                            '</li>'
-                    });
-                });
+            return {
+                init: function() {
+                    twitter();
+                    instagram();
+                }
             };
-            var init = function() {
-                twitter();
-                flickr();
-                instagram();
-            };
-            var build = {
-                init: init,
-            };
-            return build;
-        }();
-
-        PIXELDIMA.SHOP = function() {
-            var toggleBox = function() {
-                $('a.show-box').click(function() {
-                    var Val = $(this).attr("data-show");
-                    $(Val).slideToggle();
-                    return false;
-                });
-                $('.radio').click(function() {
-                    var Val = $(this).attr("data-show");
-                    $('.toHide').hide();
-                    $(Val).slideToggle();
-                });
-                $('.checkbox').click(function() {
-                    var Val = $(this).attr("data-show");
-                    $(Val).slideToggle();
-                });
-            };
-
-            var zoom = function() {
-                $('.zoom-it').imagezoomsl({
-                    classmagnifier: window.external ? window.navigator.vendor === 'Yandex' ? "" : 'round-loope' : "",
-                    zoomrange: [2, 8],
-                });
-            };
-            var showShopList = function() {
-
-                $(".di-grids").click(function() {
-                    $("#rows").fadeOut(1000, function() {
-                        $("#rows").removeClass('products-list').addClass('products-grids');
-                        $("#rows").fadeIn(1000);
-                    });
-                });
-                $(".di-list").click(function() {
-                    $("#rows").fadeOut(1000, function() {
-                        $("#rows").removeClass('products-grids').addClass('products-list');
-                        $("#rows").fadeIn(1000);
-                    });
-                });
-            };
-            var shopBtn = function() {
-
-                $(".minus").click(function() {
-                    var inputEl = $(this).parent().children().next();
-                    var qty = inputEl.val();
-                    if ($(this).parent().hasClass("minus"))
-                        qty++;
-                    else
-                        qty--;
-                    if (qty < 0)
-                        qty = 0;
-                    inputEl.val(qty);
-                });
-
-
-                $(".plus").click(function() {
-                    var inputEl = $(this).parent().children().next();
-                    var qty = inputEl.val();
-                    if ($(this).hasClass("plus"))
-                        qty++;
-                    else
-                        qty--;
-                    if (qty < 0)
-                        qty = 0;
-                    inputEl.val(qty);
-                });
-            };
-            var sliderRange = function() {
-                $("#slider-range").slider({
-                    range: true,
-                    min: 0,
-                    max: 40,
-                    values: [5, 30],
-                    slide: function(event, ui) {
-                        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                    }
-                });
-                $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-                    " - $" + $("#slider-range").slider("values", 1));
-            };
-
-            var init = function() {
-                showShopList();
-                toggleBox();
-                shopBtn();
-                sliderRange();
-                zoom();
-            };
-            var build = {
-                init: init,
-            };
-            return build;
         }();
 
         // Handles scrollable contents using jQuery sly and perfect scrollbar  
         PIXELDIMA.SCROLL = function() {
+
             var localScroll = function() {
                 $(".dima-nav").localScroll({
                     target: "body",
@@ -475,8 +290,9 @@
                     offset: -(nav - 13)
                 });
             };
+
             var callingSly = function() {
-                var slyOptions = {
+                /*var slyOptions = {
                     scrollBy: 200,
                     speed: 600,
                     smart: 0,
@@ -496,12 +312,8 @@
                     cycleInterval: 4000
                 };
                 var d = new Sly('#framee', slyOptions);
-                d.init();
+                d.init();*/
             };
-            var perfectScrollbar = function() {
-                $(".quick-view-content").perfectScrollbar();
-                $('.quick-view-content').perfectScrollbar('update');
-            }
 
             var parallax = function() {
 
@@ -536,20 +348,18 @@
                     skr.refresh($(".homeSlide"));
                 }
             };
-            var init = function() {
-                localScroll();
-                parallax();
-                perfectScrollbar();
-                callingSly();
-                $.scrollToTop();
-            }
-            var build = {
-                init: init,
+
+            return {
+                init: function() {
+                    localScroll();
+                    parallax();
+                    callingSly();
+                }
             };
-            return build;
         }();
 
         PIXELDIMA.ANIMATION = function() {
+
             var animations = function() {
                 var elm = $("[data-animate]");
                 elm.each(function() {
@@ -574,6 +384,7 @@
 
                 })
             };
+
             var notAnimations = function() {
                 var elm = $("[data-animate]");
                 elm.each(function() {
@@ -604,6 +415,7 @@
 
                 })
             };
+
             var twoLinesHover = function() {
                 $('.link_overlay.two_lines').each(function() {
                     var h = $(this).width();
@@ -625,6 +437,7 @@
                     })
                 });
             };
+
             var init = function() {
                 if (!Modernizr.mq('only all and (max-width: 480px)')) {
                     if (isTransitions) {
@@ -635,12 +448,12 @@
                 }
 
                 twoLinesHover();
-            }
-            var build = {
-                init: init,
-                twoLinesHover: twoLinesHover,
             };
-            return build;
+
+            return {
+                init: init,
+                twoLinesHover: twoLinesHover
+            };
         }();
 
         PIXELDIMA.SLIDE = function() {
@@ -842,7 +655,7 @@
                     fullScreenOffsetContainer: ""
                 });
 
-                i = $(".fullscreen").show().revolution({
+                /*i = $(".fullscreen").show().revolution({
                     dottedOverlay: "none",
                     delay: 16000,
                     startwidth: 1140,
@@ -913,6 +726,7 @@
                     startWithSlide: 0,
                     fullScreenOffsetContainer: "header"
                 });
+
                 m = jQuery('.minfullwidth').show().revolution({
                     delay: 15000,
                     dottedOverlay: "none",
@@ -931,6 +745,7 @@
                     navigationVOffset: 35,
                     fullScreenOffsetContainer: "header"
                 });
+
                 a = jQuery('.boxedcontainer').show().revolution({
                     delay: 15000,
                     startwidth: 1170,
@@ -949,6 +764,7 @@
                     navigationVOffset: 35,
                     fullScreenOffsetContainer: ""
                 });
+
                 p = jQuery('.photoslide').show().revolution({
                     delay: 4000,
                     startwidth: 1170,
@@ -978,19 +794,18 @@
                     navigationHOffset: 0,
                     navigationVOffset: 35,
                     fullScreenOffsetContainer: ""
-                });
+                });*/
             };
-            var init = function() {
-                flexSlider();
-                owlSlider();
-                revolution();
-            }
-            var build = {
-                init: init,
+
+            return {
+                init: function() {
+                    flexSlider();
+                    owlSlider();
+                    revolution();
+                },
                 flexSlider: flexSlider,
-                revolution: revolution,
+                revolution: revolution
             };
-            return build;
         }();
 
         PIXELDIMA.LIGHTBOX = function() {
@@ -1067,7 +882,7 @@
                             PIXELDIMA.SLIDE.flexSlider();
                             PIXELDIMA.SHOP.init();
                             PIXELDIMA.UI.init();
-                            PIXELDIMA.SCROLL.init();
+                            //PIXELDIMA.SCROLL.init();
                         }
                     }
                 });
@@ -1087,35 +902,12 @@
 
         PIXELDIMA.MEDIA = function() {
             return {
-                init: $.noop,
+                init: $.noop
             };
         }();
 
         PIXELDIMA.UI = function() {
-            var flatShadow = function() {
-                $(".flat-icon").flatshadow({
-                    color: "#FFF",
-                    angle: "SE",
-                    fade: true,
-                    boxShadow: false // Accept full 6 digit hex color (#000000)
-                });
-            };
-            var countUp = function() {
-                $(".countUp").each(function() {
 
-                    $(this).waypoint({
-                        handler: function() {
-                            $(this).find("span").countTo({
-                                formatter: function(e) {
-                                    return e = e.toFixed(), e = e.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                }
-                            });
-                        },
-                        offset: "100%",
-                        triggerOnce: true
-                    });
-                });
-            };
             var progress = function() {
                 //progress bar animation
                 setTimeout(function() {
@@ -1144,76 +936,19 @@
                             elm.find('span').css('border-top-color', color);
                         });
 
-                        //circular                
-                        $('.dial').each(function() {
-
-                            var elm = $(this),
-                                width = elm.attr("data-width"),
-                                perc = elm.attr("value");
-
-                            elm.knob({
-                                'value': 0,
-                                'min': 0,
-                                'max': 100,
-                                "skin": "tron",
-                                "readOnly": true,
-                                "thickness": 0.09,
-                                "displayInput": false,
-                                "bgColor": "rgba(255,255,255,0)",
-                                "linecap": ""
-                            });
-
-                            $({
-                                value: 0
-                            }).animate({
-                                value: perc
-                            }, {
-                                duration: 1000,
-                                easing: 'swing',
-                                progress: function() {
-                                    elm.val(Math.ceil(this.value)).trigger('change');
-                                }
-                            });
-
-                            //circular progress bar color
-                            $(this).append(function() {
-                                elm.parent().parent().find('.circular-bar-content').css('top', -(width / 2 + 10));
-                                elm.parent().parent().find('.circular-bar-content label').text(perc + '%');
-                            });
-
-                        });
                     }, {
                         offset: "100%",
                         triggerOnce: true
                     });
                 }, 300);
             };
-            var tabs = function() {
 
-                $("body").tooltip({
-                    selector: "[data-toggle=tooltip]",
-                    animation: true,
-                    html: true
-                });
-
-                $(".collapse").collapse({
-                    toggle: false
-                });
-
-
-                $("#dima-tab-nav a:first").tab("show"); // Select first tab
-                $("#dima-tab-nav a").click(function(e) {
-                    e.preventDefault();
-                    $(this).tab("show");
-                });
-
-                $(".dima-tabs.responsive-tab").responsiveTabs();
-            };
             var notification = function() {
                 $(".dima-alert button.close").click(function() {
                     $(this).parent().fadeOut(200, "easeOutExpo");
                 });
             };
+
             var element_bg = function() {
                 var elm = $("[data-element-bg]");
                 var b = elm.attr("data-element-bg");
@@ -1224,23 +959,18 @@
                 });
             };
 
-            var init = function() {
-                flatShadow();
-                countUp();
-                progress();
-                tabs();
-                notification();
-                element_bg();
-            }
-            var build = {
-                init: init,
+            return {
+                init: function() {
+                    progress();
+                    notification();
+                    element_bg();
+                }
             };
-            return build;
         }();
 
         PIXELDIMA.EVENT = function() {
             var event = function() {
-                $('input, textarea').placeholder();
+
                 //Fix The Navbar 
                 if (windowWidth > 960) {
                     if ($('.dima-navbar').hasClass('fix-one')) {
@@ -1250,11 +980,13 @@
                         $(".fix-two").show_navbar();
                     }
                 }
+
                 if (windowWidth < 980) {
                     $('.dima-nav-end ul').css("top", "-1000px");
                 } else {
                     $('.dima-nav-end ul').css("top", "100px");
                 }
+
                 //Set parent height
                 if (windowWidth > 767) {
                     $('.set-parent-height').each(function() {
@@ -1272,13 +1004,12 @@
                 });
 
             };
-            var init = function() {
-                event();
-            }
-            var build = {
-                init: init,
+
+            return {
+                init: function() {
+                    event();
+                }
             };
-            return build;
         }();
 
         // handle the layout reinitialization on window resize
@@ -1308,6 +1039,7 @@
                     $('.flexslider').height(windowHeight);
                 }
             };
+
             var parentSize = function() {
                 if (windowWidth > 767) {
                     $('.set-parent-height').each(function() {
@@ -1317,361 +1049,38 @@
                 }
             };
 
-            var init = function() {
-                nav();
-                parentSize();
-                PIXELDIMA.ANIMATION.twoLinesHover();
-                responsiveFlexSlider();
-            };
-            var READY = {
-                init: init,
-            };
-            return READY;
-        }();
-        // Handles portfolio AJAX and filter using jQuery isotope
-        PIXELDIMA.PORTFOLIO = function() {
-            //AJAX
-            var openAjax = function() {
-                $(".ajax-portfolio .isotope-item a[data-load]").click(function(d) {
-                    var id = $(this).parents(".isotope-item").attr("id");
-                    var url = $(this).attr("href");
-                    d.preventDefault()
-                    if ($(".portfolio-ajax-expanded").is(":visible")) {
-                        closeAjax();
-                        setTimeout(function() {
-                            loadAjax(url, id);
-                        }, 700);
-                    } else
-                        loadAjax(url, id);
-
-
-                })
-            };
-            var loadAjax = function(url, id) {
-                /*var s = getNextItem(id),
-                    n = getPrevItem(id);*/
-
-                $.ajax({
-                    url: url,
-                    type: "get",
-                    cache: false,
-                    data: {},
-                    beforeSend: function() {
-                        $("#ajax-loader").fadeIn();
-                    },
-                    success: function(data) {
-                        $('.portfolio-ajax-expanded').html(data);
-                    },
-                    complete: function() {
-                        PIXELDIMA.SLIDE.flexSlider();
-                        PIXELDIMA.LIGHTBOX.init();
-                        initAjax(id);
-                        openItem();
-                    }
-                });
-            }
-            var closeAjax = function() {
-                $(".portfolio-ajax-expanded")
-                    .find(".portfolio-ajax-content").slideUp(600, function() {
-                        $(".portfolio-ajax-expanded").css({
-                            display: "none"
-                        });
-                    });
-            };
-            var openItem = function() {
-                $("#ajax-loader").fadeOut();
-                setTimeout(function() {
-
-                    $.when($(".portfolio-ajax-expanded").slideDown(900, "easeOutQuad"))
-                        .then(
-                            $("html,body").stop(!0).animate({
-                                scrollTop: $(".portfolio-ajax-expanded").offset().top - 150
-                            }, 900, "easeOutQuad")
-                        );
-                }, 400);
-            };
-            var initAjax = function() {
-
-                $("#next-portfolio, #prev-portfolio").click(function(d) {
-                    var id = $(this).attr("data-id");
-                    var url = $("#" + id).find("a[data-load]").attr("href");
-                    closeAjax();
-                    setTimeout(function() {
-                        loadAjax(url, id);
-                    }, 700);
-                    d.preventDefault()
-                });
-
-                $(".close-ajax-portfolio").click(function(d) {
-                    $(".portfolio-ajax-expanded")
-                        .find(".portfolio-ajax-content").slideUp(600, function() {
-                            $(".portfolio-ajax-expanded").css({
-                                display: "none"
-                            });
-                        });
-                    d.preventDefault();
-                })
-            };
-            //!AJAX
-
-
-            var filterIsotop = function() {
-
-                var $container = $('.isotope')
-                var $containers = $('#infinite');
-
-                $container.imagesLoaded(function() {
-                    $container.isotope({
-                        filter: '*',
-                        itemSelector: '.isotope-item',
-                        layoutMode: "masonry",
-                        transitionDuration: '0.8s'
-                    })
-                });
-
-                $('.filters a').click(function() {
-                    var li_p = $(this).parent()
-                    $('.filters  .current').removeClass('current')
-                    $(li_p).addClass('current')
-                        //for columns protfolio without margin
-                    var selector = $(this).attr('data-filter')
-                    $container.isotope({
-                        filter: selector,
-                    })
-                    return false
-                });
-
-                // Infinite Scroll
-                $containers.infinitescroll({
-                        navSelector: '#page_nav', // selector for the paged navigation 
-                        nextSelector: '#page_nav a', // selector for the NEXT link (to page 2)
-                        itemSelector: '.isotope-item',
-                        bufferPx: 200,
-                        loading: {
-                            finishedMsg: 'We\'re done here.',
-                            msgText: "<em>Loading the next set of posts...</em>",
-
-                        }
-                    },
-                    // Infinite Scroll Callback
-                    function(newElements) {
-                        PIXELDIMA.LIGHTBOX.lightBox();
-                        PIXELDIMA.ANIMATION.twoLinesHover();
-                        PIXELDIMA.SLIDE.init();
-                        var $newElems = jQuery(newElements).hide();
-                        $newElems.imagesLoaded(function() {
-                            $newElems.fadeIn();
-                            $container.isotope('appended', $newElems);
-                        });
-                    });
-
-            };
-
-
-            var init = function() {
-                openAjax();
-                filterIsotop();
-
-            };
-            var READY = {
-                init: init,
-                filterIsotop: filterIsotop,
-            };
-
-            return READY;
-        }();
-        // Handles Ajax Contact validation  
-        PIXELDIMA.CONTACT = function() {
-            var contect = function() {
-                var contact = $("#contact"),
-                    url = contact.attr("action");
-                contact.validate({
-                    //Callback when the form is valid.
-                    submitHandler: function() {
-                        $("#contact").addClass('loading-form')
-
-                        // Ajax Submit
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            datatype: "json",
-                            data: {
-                                "name": $("#contact #name").val(),
-                                "email": $("#contact #email").val(),
-                                "subject": $("#contact #subject").val(),
-                                "message": $("#contact #message").val()
-                            },
-                            success: function(data) {
-                                if (data === "success") {
-                                    $("#contactSuccess").removeClass("hide").addClass("show animated bounceIn");
-                                    $("#contactError").addClass("hide").removeClass("show animated bounceIn");
-                                } else {
-                                    $("#contactError").removeClass("hide").addClass("show animated bounceIn");
-                                    $("#contactSuccess").addClass("hide").removeClass("show animated bounceIn");
-                                }
-                            },
-
-                            complete: function() {
-
-                                $("#contact").removeClass('loading-form');
-                                // Reset Form                            
-                                $("#contact")
-                                    .find('.field')
-                                    .removeClass("success")
-                                    .removeClass("error")
-                                    .find("input")
-                                    .val("");
-                            }
-                        });
-                    },
-
-                    rules: {
-                        name: {
-                            required: true
-                        },
-                        email: {
-                            required: true,
-                            email: true
-                        },
-                        subject: {
-                            required: true
-                        },
-                        message: {
-                            required: true
-                        }
-                    },
-
-                    //error input 
-                    highlight: function(element) {
-                        $(element)
-                            .parent()
-                            .removeClass("success")
-                            .addClass("error");
-                    },
-
-                    //success input 
-                    success: function(element) {
-                        $(element)
-                            .parent()
-                            .removeClass("error")
-                            .addClass("success")
-                            .find("label.error")
-                            .remove();
-                    },
-                });
-            };
-
-            var newsletter = function() {
-                var newsletter = $("#newsletter-form");
-
-                function mailchimpCallback(response) {
-                    if (response.result === 'success') {
-                        $("#newsletteSuccess").removeClass("hide").addClass("show animated bounceIn");
-                        $("#newsletteError").addClass("hide").removeClass("show animated bounceIn");
-
-                    } else if (response.result === 'error') {
-                        $("#newsletteError").removeClass("hide").addClass("show animated bounceIn");
-                        $("#newsletteSuccess").addClass("hide").removeClass("show animated bounceIn");
-                    }
-
+            return {
+                init: function() {
+                    nav();
+                    parentSize();
+                    PIXELDIMA.ANIMATION.twoLinesHover();
+                    responsiveFlexSlider();
                 }
-                newsletter.ajaxChimp({
-                    callback: mailchimpCallback,
-                    url: 'http://pixeldima.us8.list-manage.com/subscribe/post?u=c6d8aa2f0a313299db3b338b8&id=847c491668'
-                });
-
             };
-            var init = function() {
-                contect();
-                newsletter();
-            };
-            var build = {
-                init: init,
-            };
-            return build;
         }();
 
         // runs callback functions
         PIXELDIMA.OKABREADY = function() {
+            return {
+                init: function() {
+                    //Please don't change the order
+                    PIXELDIMA.SLIDE.init();
+                    PIXELDIMA.LIGHTBOX.init();
+                    PIXELDIMA.MEDIA.init();
+                    PIXELDIMA.ANIMATION.init();
+                    PIXELDIMA.NAV.init();
+                    //PIXELDIMA.SCROLL.init();
+                    PIXELDIMA.UI.init();
+                    PIXELDIMA.API.init();
+                    PIXELDIMA.EVENT.init();
 
-            var init = function() {
-                //Please don't change the order
-                PIXELDIMA.SLIDE.init();
-                PIXELDIMA.LIGHTBOX.init();
-                PIXELDIMA.MEDIA.init();
-                PIXELDIMA.ANIMATION.init();
-                PIXELDIMA.NAV.init();
-                PIXELDIMA.SCROLL.init();
-                PIXELDIMA.SHOP.init();
-                PIXELDIMA.UI.init();
-                PIXELDIMA.API.init();
-                PIXELDIMA.CONTACT.init();
-
-                PIXELDIMA.PORTFOLIO.init();
-                PIXELDIMA.EVENT.init();
-                w.resize(function() {
-                    PIXELDIMA.DOCONRESIZE.init();
-                });
-            };
-
-            var READY = {
-                init: init,
-            };
-
-            return READY;
-        }();
-        /**
-         * Call Our Setups Functions
-         */
-        PIXELDIMA.OKABREADY.init();
-
-    });
-
-
-}($));
-
-(function($) {
-    /*
-    Plugin Name: scrollToTop for jQuery.
-    */
-    $.extend({
-
-        scrollToTop: function() {
-            var _isScrolling = false;
-            // Append Button
-            $("body").append($("<a />")
-                .addClass("scroll-to-top off")
-                .attr({
-                    "href": "#",
-                    "id": "scrollToTop"
-                })
-                .append(
-                    $("<i />")
-                    .addClass("fa  fa-angle-up")
-                ));
-            $("#scrollToTop").click(function(e) {
-                e.preventDefault();
-                $("body, html").animate({
-                    scrollTop: 0
-                }, 500);
-                return false;
-            });
-            // Show/Hide Button on Window Scroll event.
-            $(window).scroll(function() {
-
-                if (!_isScrolling) {
-                    _isScrolling = true;
-                    if ($(window).scrollTop() > 150) {
-                        $("#scrollToTop").stop(true, true).removeClass("off");
-                        $("#scrollToTop").stop(true, true).addClass("on");
-                        _isScrolling = false;
-                    } else {
-                        $("#scrollToTop").stop(true, true).removeClass("on");
-                        $("#scrollToTop").stop(true, true).addClass("off");
-                        _isScrolling = false;
-                    }
+                    w.resize(function() {
+                        PIXELDIMA.DOCONRESIZE.init();
+                    });
                 }
-            });
-        }
+            };
+        }();
+
+        PIXELDIMA.OKABREADY.init();
     });
 }($));
