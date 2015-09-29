@@ -102,117 +102,36 @@
             <div class="container">
 
                 <!-- TITLE -->
-                <h2 class="uppercase text-center" data-delay="0">LAST POST</h2>
+                <h2 class="uppercase text-center" data-delay="0">Derniers articles</h2>
                 <div class="topaz-line">
                     <i class="di-separator"></i>
                 </div>
-                <p class="text-center" data-delay="100">Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis
-                    <br>bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-                <!--! TITLE -->
-
                 <div class="clear-section"></div>
-
                 <div class="container">
-
                     <section class="boxed-blog">
-
-                        <!-- POST (1) -->
-                        <article role="article" class="post  di_1_of_3 first" data-delay="50">
-                            <div class="post-img ">
-                                <img src="images/posts/post-2.jpg" alt="Brand Consulting">
-                                <div class="link_overlay  ">
-                                    <ul class="icons-media">
-                                        <li><a data-animated-link="fadeOut" href="single-post-right-sidebar.html"><i class="fa fa-link"></i></a>
-                                        </li>
-                                    </ul>
-                                    <span class="topaz-hover"></span>
-                                </div>
-                            </div>
-
-                            <div class="post-meta box">
-                                <ul>
-                                    <li class="post-on">11 Jul 2014</li>
-                                    <li class="post-view"><i class="fa fa-eye"></i> 122</li>
-                                    <li class="post-comments"><i class="fa fa-comments"></i> 12</li>
-                                </ul>
-
-                            </div>
-
+                        {% for post in data.lastposts %}
+                        <article role="article" class="post  di_1_of_3 {% if loop.first %}first{% endif %}" data-delay="50">
+                            {% include "templates/mixins/post-meta.html" %}
                             <div class="post-content text-start box">
-                                <h5><a data-animated-link="fadeOut"  class="uppercase" href="single-post-right-sidebar.html">Psychology in Branding</a>
-                                </h5>
-
-                                <p>Lorem ipsum gravida nibh vel auctor est aliquet, aenean sollicitudin lorem quis dum auctor. Gravida nibh vel velit lorem quis dum auctor...</p>
+                                {% if post.type == 'text' %}
+                                <h4 itemprop="headline">
+                                    <a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
+                                </h4>
+                                <p>{{ post.brief|safe }}</p>
+                                <p class="read-more">
+                                    <a href="/blog/post/{{ post.slug }}">Read more...</a>
+                                </p>
+                                {% else %}
+                                <p>{{ post.caption|safe }}</p>
+                                <p class="read-more">
+                                    <a href="/blog/post/{{ post.slug }}">Voir en grand</a>
+                                </p>
+                                {% endif %}
                             </div>
                         </article>
-                        <!--! POST (1) -->
-
-                        <!-- POST (2) -->
-                        <article role="article" class="post  di_1_of_3" data-delay="150">
-                            <div class="post-img ">
-                                <img src="images/posts/post-1.jpg" alt="Brand Consulting">
-
-                                <div class="link_overlay">
-                                    <ul class="icons-media">
-                                        <li><a data-animated-link="fadeOut" href="single-post-right-sidebar.html"><i class="fa fa-link"></i></a>
-                                        </li>
-                                    </ul>
-                                    <span class="topaz-hover"></span>
-                                </div>
-                            </div>
-
-                            <div class="post-meta box">
-                                <ul>
-                                    <li class="post-on">11 Jul 2014</li>
-                                    <li class="post-view"><i class="fa fa-eye"></i> 122</li>
-                                    <li class="post-comments"><i class="fa fa-comments"></i> 12</li>
-                                </ul>
-
-                            </div>
-
-                            <div class="post-content text-start box">
-                                <h5><a data-animated-link="fadeOut"  class="uppercase" href="single-post-right-sidebar.html">Responsive web design</a>
-                                </h5>
-                                <p>Lorem ipsum gravida nibh vel auctor est aliquet, aenean sollicitudin lorem quis dum auctor. Gravida nibh vel velit lorem quis dum auctor...</p>
-                            </div>
-                        </article>
-                        <!--! POST (2) -->
-
-                        <!-- POST (3) -->
-                        <article role="article" class="post  di_1_of_3"  data-delay="250">
-                            <div class="post-img ">
-                                <img src="images/posts/post-3.jpg" alt="Brand Consulting">
-
-                                <div class="link_overlay  ">
-                                    <ul class="icons-media">
-                                        <li><a data-animated-link="fadeOut" href="single-post-right-sidebar.html"><i class="fa fa-comments"></i></a>
-                                        </li>
-                                    </ul>
-                                    <span class="topaz-hover"></span>
-                                </div>
-                            </div>
-
-                            <div class="post-meta box">
-                                <ul>
-                                    <li class="post-on">11 Jul 2014</li>
-                                    <li class="post-view"><i class="fa fa-eye"></i> 122</li>
-                                    <li class="post-comments"><i class="fa fa-comments"></i> 12</li>
-                                </ul>
-
-                            </div>
-
-                            <div class="post-content text-start box">
-                                <h5><a data-animated-link="fadeOut"  class="uppercase" href="single-post-right-sidebar.html">Process of Prototyping</a>
-                                </h5>
-                                <p>Lorem ipsum gravida nibh vel auctor est aliquet, aenean sollicitudin lorem quis dum auctor. Gravida nibh vel velit lorem quis dum auctor...</p>
-                            </div>
-                        </article>
-                        <!--! POST (3) -->
-
+                        {% endfor %}
                     </section>
-
                 </div>
-
             </div>
         </div>
     </section>
@@ -229,7 +148,7 @@
                     <i class="fa fa-twitter"></i>
                 </div>
                 <div class="di_2_of_3 offset_1_of_6" data-delay="0">
-                    <div id="tweet" data-id="620872628526579712" data-count="1" data-type="quote">
+                    <div id="tweet" data-id="410447789689040896" data-count="1" data-type="quote">
                         <p>Please wait...</p>
                     </div>
                 </div>

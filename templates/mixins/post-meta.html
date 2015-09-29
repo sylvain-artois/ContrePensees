@@ -1,0 +1,21 @@
+<div class="post-meta box">
+    <ul>
+        <li class="post-on">{% if post.author %}{{ post.author.name.full }}{% endif %}</li>
+        <li>{{ post._.publishedDate.format("Do MMMM YYYY") }}</li>
+        {% if post.categories and post.categories.length %}
+        <li>
+            {% for cat in post.categories %}
+            <a href="/blog/{{ cat.key }}">{{ cat.name }}</a>
+            {% if loop.index < post.categories.length %}, {% endif %}
+            {% endfor %}
+        </li>
+        {% endif %}
+        {% if post.tagsArray and post.tagsArray.length %}
+        <li>
+            {% for tag in post.tagsArray %}
+            <span>{{ tag }}</span>
+            {% endfor %}
+        </li>
+        {% endif %}
+    </ul>
+</div>

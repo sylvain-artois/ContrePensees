@@ -23,17 +23,20 @@
 
     {% block css %}{% endblock %}
 
-    {% if user and user.canAccessKeystone %}{# default styling for the KeystoneJS Content Editor #}
+    {% if user and user.canAccessKeystone %}
+    {# default styling for the KeystoneJS Content Editor #}
     <link href="/keystone/styles/content/editor.min.css" rel="stylesheet" />
     {% endif %}
-
-    {% block head %}{% endblock %}
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 
+
+    <script src="/vendor/modernizr/dist/modernizr-build.js"></script>
+
+    {% block head %}{% endblock %}
 </head>
 <body class="responsive " id="demo-blog-two">
 
@@ -51,20 +54,15 @@
         {% block content %}{% endblock %}
     </div>
 
-    {# FOOTER #}
     <footer role="contentinfo" class="top-footer landing-footer">
         {% include "templates/mixins/footer.html" %}
     </footer>
 
-    {# JAVASCRIPT #}
-    <script src="/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="/js/okab/core/load.js"></script>
-    <script src="/js/okab/core/jquery.easing.1.3.js"></script>
-    <script src="/js/okab/core/modernizr-2.8.2.min.js"></script>
-    <script src="/js/okab/core/imagesloaded.pkgd.min.js"></script>
-    <script src="/js/okab/core/respond.src.js"></script>
-    <script src="/js/okab/libs.min.js"></script>
+    {% include "templates/mixins/javascript.html" %}
 
-    {% block js %}{% endblock %}
+    {% block js %}
+    {% endblock %}
+
+    <script src="/js/okab/main.js"></script>
 </body>
 </html>

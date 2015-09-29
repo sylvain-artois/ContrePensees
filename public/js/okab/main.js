@@ -6,7 +6,6 @@
         windowWidth = w.width(),
         nav = $(".dima-nav").outerHeight(),
         windowHeight = w.height(),
-        tw = $("#tweet"),
         prefix,
         isTouch = Modernizr.touch,
         isTransitions = Modernizr.csstransitions,
@@ -168,6 +167,7 @@
 
         // Handles twitter,instagram,flickr API
         PIXELDIMA.API = function() {
+            var tw = $("#tweet");
             var twitter = function() {
                 tw.each(function() {
                     var lem = $(this),
