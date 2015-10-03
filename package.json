@@ -9,6 +9,7 @@
     "dotenv": "^1.1.0",
     "ent": "^2.2.0",
     "keystone": "^0.3.11",
+    "keystone-express-sitemap": "^1.2.0",
     "mongoose-text-search": "0.0.2",
     "node-sass": "^2.1.1",
     "node-sass-middleware": "^0.5.0",
