@@ -18,11 +18,7 @@ User.schema.virtual('canAccessKeystone').get(function() {
     return this.isAdmin;
 });
 
-User.relationship({ ref: 'Gallery', path: 'author' });
-User.relationship({ ref: 'Medium',  path: 'author' });
-User.relationship({ ref: 'Photo',   path: 'author' });
 User.relationship({ ref: 'Post',    path: 'author' });
-User.relationship({ ref: 'Quote',   path: 'author' });
 
 User.defaultColumns = 'name, avatar, email, isAdmin';
 
