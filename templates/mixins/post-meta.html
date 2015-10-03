@@ -1,21 +1,36 @@
 <div class="post-meta box">
-    <ul>
-        <li class="post-on">{% if post.author %}{{ post.author.name.full }}{% endif %}</li>
-        <li>{{ post._.publishedDate.format("Do MMMM YYYY") }}</li>
-        {% if post.categories and post.categories.length %}
-        <li>
-            {% for cat in post.categories %}
-            <a href="/blog/{{ cat.key }}">{{ cat.name }}</a>
-            {% if loop.index < post.categories.length %}, {% endif %}
-            {% endfor %}
-        </li>
-        {% endif %}
-        {% if post.tagsArray and post.tagsArray.length %}
-        <li>
-            {% for tag in post.tagsArray %}
-            <span>{{ tag }}</span>
-            {% endfor %}
-        </li>
-        {% endif %}
-    </ul>
+    <section class="dima-author-box box clearfix">
+        <div class="dima-about-image overlay">
+            <a data-animated-link="fadeOut" href="">
+                <img src="{{ post.author._.avatar.fit(100,100) }}" />
+            </a>
+        </div>
+        <div class="dima-author-info">
+            <h5 class="dima-author-name">
+                <a data-animated-link="fadeOut" href="">{{ post.author.name.full }}</a>
+            </h5>{{ post._.publishedDate.format("Do MMM YYYY") }}</p>
+            <div class="social-media dima-social-author social-small">
+                <ul class="inline clearfix">
+                    {% if post.categories and post.categories.length %}
+                    <li>
+                        {% for cat in post.categories %}
+                        <a href="/blog/{{ cat.key }}">{{ cat.name }}</a>
+                        {% if loop.index < post.categories.length %}, {% endif %}
+                        {% endfor %}
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <ul class="tags">
+                {% if post.tagsArray and post.tagsArray.length %}
+                <li>
+                    {% for tag in post.tagsArray %}
+                    <a data-animated-link="fadeOut" href="#">
+                        <i class="fa fa-tag"></i>{{ tag }}</a>
+                    {% endfor %}
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </section>
 </div>

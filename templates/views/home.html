@@ -43,7 +43,7 @@
             <div class="pattern-slider"></div>
         </li>
 
-        <li data-transition="fade" data-slotamount="7" data-masterspeed="500" data-saveperformance="on" data-title="Intro Slide">
+        {#<li data-transition="fade" data-slotamount="7" data-masterspeed="500" data-saveperformance="on" data-title="Intro Slide">
             <img alt="slidebg3" src="/images/dummy.png"
                  data-lazyload="/images/frontSlider/2015-07-20-3.jpg"
                  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" />
@@ -59,7 +59,7 @@
                     <br>browsing your site on many different devices and browsers</p>
             </div>
             <div class="pattern-slider"></div>
-        </li>
+        </li>#}
 
     </ul>
 </div>
@@ -71,17 +71,17 @@
     <section class="section" id="quote">
         <div class="page-section-content">
 
-            <div class="background-image-hide parallax-background">
+            <div class="background-image-hide" style="top:10px;">
                 <img class="background-image" alt="Background Image" src="/images/frontSlider/2015-07-20-6.jpg" />
             </div>
 
             <div class="dima-section-cover"></div>
 
-            <div class="container page-section text-center" data-delay="0">
+            <div class="container page-section text-center">
                 <div class="topaz-line quote">
                     <i class="fa fa-quote-left"></i>
                 </div>
-                <div class="di_2_of_3 offset_1_of_6" data-delay="0">
+                <div class="di_2_of_3 offset_1_of_6">
                     <div class="owl-carousel">
                         <div class="dima-testimonial quote-style">
                             <blockquote>
@@ -100,36 +100,16 @@
     <section class="section section-colored" id="blog" data-bg="#3d3d39">
         <div class="page-section-content">
             <div class="container">
-
-                <!-- TITLE -->
-                <h2 class="uppercase text-center" data-delay="0">Derniers articles</h2>
+                <h2 class="uppercase text-center">Derniers articles</h2>
                 <div class="topaz-line">
                     <i class="di-separator"></i>
                 </div>
-                <div class="clear-section"></div>
+                <div class="clear-section" style="padding-bottom: 0"></div>
                 <div class="container">
                     <section class="boxed-blog">
-                        {% for post in data.lastposts %}
-                        <article role="article" class="post  di_1_of_3 {% if loop.first %}first{% endif %}" data-delay="50">
-                            {% include "templates/mixins/post-meta.html" %}
-                            <div class="post-content text-start box">
-                                {% if post.type == 'text' %}
-                                <h4 itemprop="headline">
-                                    <a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
-                                </h4>
-                                <p>{{ post.brief|safe }}</p>
-                                <p class="read-more">
-                                    <a href="/blog/post/{{ post.slug }}">Read more...</a>
-                                </p>
-                                {% else %}
-                                <p>{{ post.caption|safe }}</p>
-                                <p class="read-more">
-                                    <a href="/blog/post/{{ post.slug }}">Voir en grand</a>
-                                </p>
-                                {% endif %}
-                            </div>
-                        </article>
-                        {% endfor %}
+                    {% for post in data.lastposts %}
+                        {% include "templates/mixins/post-thumbnail.html" %}
+                    {% endfor %}
                     </section>
                 </div>
             </div>
@@ -139,17 +119,17 @@
     {# Twitter #}
     <section class="section" id="twitter">
         <div class="page-section-content">
-            <div class="background-image-hide parallax-background">
-                <img class="background-image" alt="Background Image" src="/images/frontSlider/2015-07-20-5.jpg" />
+            <div class="background-image-hide">
+                <img class="background-image" src="/images/frontSlider/2015-07-20-5.jpg" />
             </div>
             <div class="dima-section-cover"></div>
             <div class="container page-section text-center">
-                <div class="topaz-line quote" data-delay="0">
+                <div class="topaz-line quote">
                     <i class="fa fa-twitter"></i>
                 </div>
-                <div class="di_2_of_3 offset_1_of_6" data-delay="0">
+                <div class="di_2_of_3 offset_1_of_6">
                     <div id="tweet" data-id="410447789689040896" data-count="1" data-type="quote">
-                        <p>Please wait...</p>
+                        <p>Merci de patienter</p>
                     </div>
                 </div>
                 <div class="cl_2 "></div>
