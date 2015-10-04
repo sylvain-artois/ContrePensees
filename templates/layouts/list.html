@@ -17,7 +17,7 @@
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
-
+    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet' />
     <link href="/css/front.css" rel="stylesheet" />
 
     {% block css %}{% endblock %}
@@ -34,21 +34,13 @@
 <body class="responsive">
     <div class="all_content">
 
-        <header role="banner">
-            <div class="dima-navbar-wrap">
-                {% include "templates/mixins/header-menu.html" %}
-            </div>
-        </header>
+        {% include "templates/mixins/fullwidth-navbar.html" %}
 
         <div class="dima-main">
 
             <section class="section">
-                {% block intro %}{% endblock %}
-                {% block content %}{% endblock %}
-            </section>
-
-            <section class="section" id="twitter">
-                {% block pinned %}{% endblock %}
+                    {% block intro %}{% endblock %}
+                    {% block content %}{% endblock %}
             </section>
 
         </div>
@@ -68,7 +60,13 @@
 
     {% include "templates/mixins/javascript.html" %}
 
-    {% block js %}{% endblock %}
+    {% block js %}
+    <script>
+        var application = {
+            options: { slide: {owl: true}}
+        };
+    </script>
+    {% endblock %}
 
     <script src="/js/okab/main.js"></script>
 </body>

@@ -1,7 +1,4 @@
 @charset "UTF-8";
-/**
- * First three files "variables,colors,fonts" is changeable
- */
 /************************/
 /*     OKAB variables      */
 /************************/
@@ -5971,7 +5968,7 @@ blockquote.post-quote {
       blockquote.post-quote cite a:visited {
         color: #b9b7a9; }
 blockquote.blog-style {
-  background-color: #dedcd6;
+  background-color: #3d3d39;
   border-left: none;
   font-style: italic;
   position: relative;
@@ -7557,7 +7554,7 @@ article.revolution {
     margin-bottom: 30px; }
   .sidebar .widget.dima-author-box {
     padding: 40px;
-    background: #dedcd6; }
+    background: #3d3d39; }
     .sidebar .widget.dima-author-box .dima-about-image, .sidebar .widget.dima-author-box .dima-author-info {
       position: relative;
       z-index: 5; }
@@ -12658,7 +12655,7 @@ a .dima-callout {
   padding: 20px;
   border: 1px solid #5e5d57;
   border-bottom: none;
-  background: #dedcd6; }
+  background: #3d3d39; }
 .boxed-blog .post audio, .boxed-blog .post video, .boxed-blog .post iframe {
   width: 100% !important; }
 .boxed-blog .sda-post {

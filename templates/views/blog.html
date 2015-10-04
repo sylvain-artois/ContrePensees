@@ -15,43 +15,38 @@
     {% else %}
     <div class="post-img">
         {% if post.type == 'gallery' %}
-        <div class="flexslider sample-slide small-control" data-animation="fade" data-loop="true">
-            <ul class="slides">
-                {% for image in post.images %}
-                <li class="slide-item">
-                    <div class="flex-img">
-                        <img src="{{ image.url }}" />
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
+            {% for image in post.images %}
+            {% if loop.first %}
+            <img src="{{ image.fill(1200,300, { 'gravity': 'face' }) }}" />
+            {% endif %}
+            {% endfor %}
         {% elif post.image.exists %}
-        <img src="{{ post._.image.fit(1200,300) }}" alt="Post illustration" />
+        <img src="{{ post._.image.fill(1200,300, { 'gravity': 'face' }) }}" alt="Post illustration" />
         {% else %}
-        <img src="{{ post.randomPhoto }}" alt="Post illustration" />
+        <div style="width: 100%; height: 300px; background: url('{{ post.randomPhoto }}') no-repeat; background-size: cover"></div>
         {% endif %}
     </div>
     {% endif %}
 
-    {% include "templates/mixins/post-meta.html" %}
+    <div class="post-content text-start box clearfix">
 
-    <div class="post-content text-start box">
+        {% include "templates/mixins/post-meta.html" %}
 
-        {% if post.type == 'text' %}
-        <h4 itemprop="headline">
-            <a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
-        </h4>
-        <p>{{ post.brief|safe }}</p>
-        <p class="read-more">
-            <a href="/blog/post/{{ post.slug }}">Read more...</a>
-        </p>
-        {% else %}
-        <p>{{ post.caption|safe }}</p>
-        <p class="read-more">
-            <a href="/blog/post/{{ post.slug }}">Voir en grand</a>
-        </p>
-        {% endif %}
+        <div class="di_1_of_1 first">
+
+            {% if post.type == 'text' %}
+            <h4 itemprop="headline">
+                <a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
+            </h4>
+            <p>{{ post.brief|safe }}</p>
+            {% else %}
+            <p>{{ post.caption|safe }}</p>
+            {% endif %}
+
+            <p class="read-more">
+                <a href="/blog/post/{{ post.slug }}">{% if post.type == 'text' %}Lire{% else %}Voir{% endif %}</a>
+            </p>
+        </div>
 
     </div>
 </article>
@@ -59,7 +54,7 @@
 
 {% block intro %}
 {% set title = ( data.category.name if data.category else "Blog" ) %}
-{% include "templates/mixins/big-title.html" %}
+{% include "templates/mixins/beautifull-quote.html" %}
 {% endblock %}
 
 {% block content %}
@@ -72,14 +67,6 @@
                         <h3 class="text-muted">Invalid Category.</h3>
                     {% else %}
                         {% if data.posts.results.length %}
-
-                            {% if data.posts.totalPages > 1 %}
-                            <h4 class="text-weight-normal">
-                            Showing <strong>{{ data.posts.first }}</strong> to <strong>{{ data.posts.last }}</strong> of <strong>{{ data.posts.total }}</strong> posts.
-                            </h4>
-                            {% else %}
-                            <h4 class="text-weight-normal">Showing {{ utils.plural(data.posts.results.length, "* post") }}.</h4>
-                            {% endif %}
 
                             {% for post in data.posts.results %}
                             {{ blogPost(post) }}
@@ -134,6 +121,14 @@
                                 {% endif %}
                             </div>
                             {% else %}
+
+                            {% if data.posts.totalPages > 1 %}
+                            <h4 class="text-weight-normal">
+                                Showing <strong>{{ data.posts.first }}</strong> to <strong>{{ data.posts.last }}</strong> of <strong>{{ data.posts.total }}</strong> posts.
+                            </h4>
+                            {% else %}
+                            <h4 class="text-weight-normal">Showing {{ utils.plural(data.posts.results.length, "* post") }}.</h4>
+                            {% endif %}
 
                             {% if data.category %}
                                 <h3 class="text-muted">There are no posts in the category {{ data.category.name }}.</h3>
