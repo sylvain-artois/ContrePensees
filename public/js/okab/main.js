@@ -1,4 +1,4 @@
-;(function($) {
+;;(function($) {
     "use strict";
 
     var w = $(window),
@@ -8,7 +8,7 @@
         windowHeight = w.height(),
         prefix,
         isTouch = Modernizr.touch,
-        isTransitions = Modernizr.csstransitions,
+        hasCssTransition = Modernizr.csstransitions,
         isFirefox = typeof InstallTrigger !== 'undefined',
         //isIE = /*@cc_on!@*/ false || !!document.documentMode,
         isChrome = !!window.chrome,
@@ -18,19 +18,15 @@
 
     doc.ready(function(PIXELDIMA) {
 
-        this.PIXELDIMA = PIXELDIMA || {}; //Main Namespace
+        this.PIXELDIMA = PIXELDIMA || {};
 
-        /**
-         * [ Main Module (Okab) ]
-         */
         PIXELDIMA.NAV = function() {
 
-            var myMenu = function() {
+            var initNavigation = function() {
                 mobileNav();
                 fixNav();
-                //subMenu();
+                subMenu();
                 searchBox();
-                //onePage();
             };
 
             var mobileNav = function() {
@@ -130,7 +126,6 @@
                     });
                 };
             };
-
             var searchBox = function() {
                 //search box event
                 var bool = true;
@@ -156,20 +151,46 @@
                     bool = true;
                 });
             };
+            var subMenu = function() {
+
+                $("ul.sf-menu").superfish({
+                    delay: 650,
+                    animation: {
+                        opacity: 'show',
+                        height: 'show'
+                    },
+                    hoverClass: 'sfHover',
+                    pathClass: 'overrideThisToUse',
+                    pathLevels: 1,
+                    animationOut: {
+                        opacity: 'hide',
+                        height: 'hide'
+                    },
+                    speed: 'normal',
+                    eventType: 'toggle',
+                    speedOut: 'fast',
+                    disableHI: false,
+                    autoArrows: 'false'
+
+                });
+            };
 
             return {
-                init: function () {
-                    myMenu();
-                    $("html").imagesLoaded();
+                init: function (options) {
+                    var navOptions = (options && "menu" in options) ? options.menu : {};
+                    initNavigation();
+                    if (navOptions.imagesLoaded) {
+                        $("html").imagesLoaded();
+                    }
                 }
             };
         }();
 
-        // Handles twitter,instagram,flickr API
         PIXELDIMA.API = function() {
-            var tw = $("#tweet");
-            var twitter = function() {
-                tw.each(function() {
+
+            var $tweet    = $("#tweet");
+            var twitter   = function() {
+                $tweet.each(function() {
                     var lem = $(this),
                         id = lem.attr("data-id"),
                         type = lem.attr("data-type"),
@@ -271,14 +292,19 @@
             };
 
             return {
-                init: function() {
-                    twitter();
-                    instagram();
+                init: function(options) {
+                    var apiOptions = (options && "api" in options) ? options.api : {};
+
+                    if (apiOptions.twitter) {
+                        twitter();
+                    }
+                    if (apiOptions.instagram) {
+                        instagram();
+                    }
                 }
             };
         }();
 
-        // Handles scrollable contents using jQuery sly and perfect scrollbar  
         PIXELDIMA.SCROLL = function() {
 
             var localScroll = function() {
@@ -350,10 +376,18 @@
             };
 
             return {
-                init: function() {
-                    localScroll();
-                    parallax();
-                    callingSly();
+                init: function(options) {
+                    var scrollOptions = (options && "scroll" in options) ? options.scroll : {};
+
+                    if (scrollOptions.localScroll) {
+                        localScroll();
+                    }
+                    if (scrollOptions.parallax) {
+                        parallax();
+                    }
+                    if (scrollOptions.callingSly) {
+                        callingSly();
+                    }
                 }
             };
         }();
@@ -381,11 +415,10 @@
                             triggerOnce: trgger
                         });
                     }
-
                 })
             };
 
-            var notAnimations = function() {
+            var animationsFallback = function() {
                 var elm = $("[data-animate]");
                 elm.each(function() {
                     var elm = $(this),
@@ -438,16 +471,20 @@
                 });
             };
 
-            var init = function() {
-                if (!Modernizr.mq('only all and (max-width: 480px)')) {
-                    if (isTransitions) {
-                        animations();
-                    } else {
-                        notAnimations();
-                    }
-                }
+            var init = function(options) {
 
-                twoLinesHover();
+                var animationOptions = (options && "animation" in options) ? options.animation : {};
+
+                if (animationOptions.animate) {
+                    if (! Modernizr.mq('only all and (max-width: 480px)')) {
+                        if (hasCssTransition) {
+                            animations();
+                        } else {
+                            animationsFallback();
+                        }
+                    }
+                    twoLinesHover();
+                }
             };
 
             return {
@@ -457,6 +494,7 @@
         }();
 
         PIXELDIMA.SLIDE = function() {
+
             var flexSlider = function() {
                 var D = $(".flexslider");
                 D.each(function() {
@@ -798,10 +836,19 @@
             };
 
             return {
-                init: function() {
-                    flexSlider();
-                    owlSlider();
-                    revolution();
+                init: function(options) {
+
+                    var slideOptions = (options && "slide" in options) ? options.slide : {};
+
+                    if (slideOptions.flex) {
+                        flexSlider();
+                    }
+                    if (slideOptions.owl) {
+                        owlSlider();
+                    }
+                    if (slideOptions.revolution) {
+                        revolution();
+                    }
                 },
                 flexSlider: flexSlider,
                 revolution: revolution
@@ -809,6 +856,7 @@
         }();
 
         PIXELDIMA.LIGHTBOX = function() {
+
             var lightBox = function() {
                 var d = $('[data-lightbox="image"]'),
                     i = $('[data-lightbox="iframe"]'),
@@ -888,21 +936,16 @@
                 });
             };
 
-            var init = function() {
-                lightBox();
-            }
-
-            var build = {
-                init: init,
-                lightBox: lightBox,
-            };
-
-            return build;
-        }();
-
-        PIXELDIMA.MEDIA = function() {
             return {
-                init: $.noop
+                init: function(options) {
+
+                    var lightboxOptions = (options && "lightbox" in options) ? options.lightbox : {};
+
+                    if (lightboxOptions.lightbox) {
+                        lightBox();
+                    }
+                },
+                lightBox: lightBox,
             };
         }();
 
@@ -960,15 +1003,25 @@
             };
 
             return {
-                init: function() {
-                    progress();
-                    notification();
-                    element_bg();
+                init: function(options) {
+
+                    var uiOptions = (options && "ui" in options) ? options.ui : {};
+
+                    if (uiOptions.progress){
+                        progress();
+                    }
+                    if (uiOptions.notification){
+                        notification();
+                    }
+                    if (uiOptions.element_bg){
+                        element_bg();
+                    }
                 }
             };
         }();
 
         PIXELDIMA.EVENT = function() {
+
             var event = function() {
 
                 //Fix The Navbar 
@@ -1006,14 +1059,18 @@
             };
 
             return {
-                init: function() {
-                    event();
+                init: function(options) {
+
+                    var eventOptions = (options && "event" in options) ? options.event : {};
+
+                    if (! eventOptions.disable) {
+                        event();
+                    }
                 }
             };
         }();
 
-        // handle the layout reinitialization on window resize
-        PIXELDIMA.DOCONRESIZE = function() {
+        PIXELDIMA.RESIZE = function() {
 
             var nav = function() {
                 windowWidth = w.width();
@@ -1059,28 +1116,30 @@
             };
         }();
 
-        // runs callback functions
-        PIXELDIMA.OKABREADY = function() {
+        PIXELDIMA.READY = function() {
+
+            var options = window.application.options || {};
+
             return {
+
                 init: function() {
-                    //Please don't change the order
-                    PIXELDIMA.SLIDE.init();
-                    PIXELDIMA.LIGHTBOX.init();
-                    PIXELDIMA.MEDIA.init();
-                    PIXELDIMA.ANIMATION.init();
-                    PIXELDIMA.NAV.init();
-                    //PIXELDIMA.SCROLL.init();
-                    PIXELDIMA.UI.init();
-                    PIXELDIMA.API.init();
-                    PIXELDIMA.EVENT.init();
+                    //Exec order is imperative
+                    PIXELDIMA.SLIDE.init(options);
+                    PIXELDIMA.LIGHTBOX.init(options);
+                    PIXELDIMA.ANIMATION.init(options);
+                    PIXELDIMA.NAV.init(options);
+                    PIXELDIMA.SCROLL.init(options);
+                    PIXELDIMA.UI.init(options);
+                    PIXELDIMA.API.init(options);
+                    PIXELDIMA.EVENT.init(options);
 
                     w.resize(function() {
-                        PIXELDIMA.DOCONRESIZE.init();
+                        PIXELDIMA.RESIZE.init();
                     });
                 }
             };
         }();
 
-        PIXELDIMA.OKABREADY.init();
+        PIXELDIMA.READY.init();
     });
 }($));

@@ -6655,11 +6655,6 @@ body div .first {
     margin-bottom: 30px;
     width: 100% !important; }
 
-  .responsive .isotope-item.no-margin {
-    width: 100% !important;
-    margin-left: 0;
-    margin-bottom: 0px; }
-
   .responsive .offset-by-1, .responsive .offset-by-2, .responsive .offset-by-3, .responsive .offset-by-4, .responsive .offset-by-5, .responsive .offset-by-6, .responsive .offset-by-7, .responsive .offset-by-8, .responsive .offset-by-9, .responsive .offset-by-10, .responsive .offset-by-11 {
     margin-left: 0; }
 
@@ -8347,61 +8342,9 @@ footer {
     .dima-menu li:last-child {
       padding-right: 0; }
 
-/*@import "navbar-landing";
-@import "navbar-top";
-@import "navbar-center";
-@import "navbar-vertical";*/
 /***********************************************************************************************/
-/* PROTFOLIO /
+/* PORTFOLIO
 /***********************************************************************************************/
-.isotope-item {
-  overflow: hidden;
-  border-left: 0px solid #fff;
-  border-bottom: 0px solid #fff;
-  cursor: pointer;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box; }
-  .isotope-item .work-item {
-    width: 100%;
-    z-index: 45;
-    position: relative; }
-    .isotope-item .work-item img {
-      -webkit-box-shadow: inset 0px -10px 0px #fff;
-      box-shadow: inset 0px -10px 0px #fff;
-      width: 100%; }
-  .isotope-item .work-info {
-    position: absolute;
-    bottom: -82px;
-    opacity: 0;
-    width: 100%;
-    -webkit-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
-    z-index: 10; }
-    .isotope-item .work-info .work-teitel {
-      width: 100%;
-      display: inline-block; }
-      .isotope-item .work-info .work-teitel p {
-        font-size: 18px;
-        font-weight: 700;
-        padding-bottom: 3px;
-        color: #fff;
-        text-transform: uppercase; }
-      .isotope-item .work-info .work-teitel span {
-        font-size: 14px;
-        font-weight: 300;
-        color: #fff; }
-  .isotope-item .post-img:hover .icons-media {
-    margin-top: -30px !important; }
-  .isotope-item .post-img:hover .work-info {
-    bottom: 15%;
-    opacity: 1;
-    -webkit-transform: scale(0.8);
-    -ms-transform: scale(0.8);
-        transform: scale(0.8); }
-  .isotope-item .post-img:hover .link_overlay {
-    background: #ff5733;
-    opacity: 1; }
-
 /**
  * Ajax Portfolio
  */
@@ -8524,15 +8467,6 @@ footer {
   padding-bottom: 35.9%; }
 .masonry .with-margin.column_4 .dima-masonry-111 {
   padding-bottom: 111.11%; }
-
-.isotope-item .work-item img {
-  -webkit-box-shadow: inset 0px -10px 0px #fff;
-  box-shadow: inset 0px -10px 0px #fff;
-  position: absolute;
-  height: 100%;
-  max-width: none;
-  top: 0;
-  left: 0; }
 
 .dima-masonry-145 {
   padding-bottom: 150%; }
@@ -9045,9 +8979,6 @@ footer {
   position: relative;
   margin-bottom: 50px;
   overflow: hidden; }
-  .products-grids .dima-product.isotope-item, .products-list .dima-product.isotope-item {
-    margin-bottom: 50px !important;
-    padding-bottom: 0; }
   .products-grids .dima-product .product-img, .products-list .dima-product .product-img {
     border: 1px solid #5e5d57; }
     .products-grids .dima-product .product-img .fix-chrome, .products-list .dima-product .product-img .fix-chrome {
@@ -10361,22 +10292,6 @@ hr {
 /*******************/
 .dima-tabs {
   display: block; }
-  .dima-tabs.responsive-tab .dima-tab-nav > li > a.tab-control, .dima-tabs.responsive-tab .dima-tab-nav > li span.tab-control-spacer {
-    float: left;
-    width: 20px;
-    height: 42px;
-    font-size: 30px;
-    font-weight: 400;
-    line-height: 34px;
-    color: #5e5d57; }
-    .dima-tabs.responsive-tab .dima-tab-nav > li > a.tab-control.right, .dima-tabs.responsive-tab .dima-tab-nav > li span.tab-control-spacer.right {
-      float: right; }
-  .dima-tabs.responsive-tab .dima-tab-nav > li span.tab-control-spacer {
-    line-height: 28px;
-    color: transparent;
-    background: transparent; }
-  .dima-tabs.responsive-tab .dima-tab-nav > li > a.tab-control:hover {
-    color: #ff5733; }
 
 /*1-Header*/
 .dima-tab-nav {
@@ -11749,9 +11664,6 @@ a .dima-callout {
 .dark-owl-page .owl-page span.owl-numbers {
   color: #dedcd6 !important; }
 
-.isotope-owl .owl-item {
-  margin: 0 15px; }
-
 .dima-bnner {
   clear: both; }
   .dima-bnner li {
@@ -12689,8 +12601,6 @@ a .dima-callout {
 
 .boxed-blog.blog-list .post {
   margin-bottom: 30px; }
-  .boxed-blog.blog-list .post.isotope-item {
-    margin-bottom: 0px; }
 .boxed-blog .post.e-post {
   padding: 20px;
   background: #31312e;
@@ -13284,12 +13194,6 @@ a .dima-callout {
   .visible-ml, .visible-mp {
     display: none; }
 
-  .isotope-item .link_overlay:hover .work-info {
-    bottom: 6%; }
-
-  .with-margin .isotope-item {
-    padding: 0 0.7% 10px 0.7% !important; }
-
   /*Pricing Table*/
   div.di_1_of_4 {
     width: 48.5%; }
@@ -13590,36 +13494,6 @@ a .dima-callout {
   .box-square.features-start.no-box header i, .box-square.features-end.no-box header i, .box-circle.features-start.no-box header i, .box-circle.features-end.no-box header i {
     display: block; }
 
-  .dima-tabs.responsive-tab .dima-tab-nav {
-    overflow: hidden; }
-    .dima-tabs.responsive-tab .dima-tab-nav ul {
-      margin: 0; }
-    .dima-tabs.responsive-tab .dima-tab-nav li {
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      display: inline-block;
-      width: 100%;
-      height: 44px;
-      line-height: 44px;
-      padding: 0 15px;
-      border: 1px solid #5e5d57;
-      overflow: hidden; }
-      .dima-tabs.responsive-tab .dima-tab-nav li a {
-        border-style: none;
-        display: inline-block;
-        margin: 0;
-        padding: 0; }
-        .dima-tabs.responsive-tab .dima-tab-nav li a:hover {
-          border-style: none;
-          background-color: transparent; }
-        .dima-tabs.responsive-tab .dima-tab-nav li a:active {
-          border-style: none; }
-    .dima-tabs.responsive-tab .dima-tab-nav .active > a, .dima-tabs.responsive-tab .dima-tab-nav .active > a:hover {
-      border-style: none; }
-
-  .dima-tabs.responsive-tab .dima-tab-nav.float-start, .dima-tabs.responsive-tab .dima-tab-nav.float-end, .dima-tabs.responsive-tab .dima-tab-content.float-end, .dima-tabs.responsive-tab .dima-tab-content.float-start {
-    width: 100%; }
-
   .dima-tab-content.float-end {
     left: 0; }
 
@@ -13675,10 +13549,6 @@ a .dima-callout {
     .vertical-menu .visible-l.visible-tm, .vertical-menu .visible-el, .vertical-menu .visible-m,
     .vertical-menu .visible-ml, .vertical-menu .visible-mp {
       display: none; }
-    .vertical-menu .isotope-item .link_overlay:hover .work-info {
-      bottom: 6%; }
-    .vertical-menu .with-margin .isotope-item {
-      padding: 0 0.7% 10px 0.7% !important; }
     .vertical-menu div.di_1_of_4 {
       width: 48.5%; }
     .vertical-menu div.di_1_of_4:nth-child(4n+3) {

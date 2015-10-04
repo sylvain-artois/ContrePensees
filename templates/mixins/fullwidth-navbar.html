@@ -1,0 +1,64 @@
+<header role="banner">
+    <div class="dima-navbar-wrap">
+        <div class="dima-navbar fix-one">
+            <div class="clearfix dima-nav-fixed"></div>
+            <div class="relative full-wrapper">
+
+                <div class="logo">
+                    <h1>
+                        <a href="/" title="Contre Pensées" style="font-family: 'Gruppo', cursive;">
+                            <span>Contre Pensées</span>
+                        </a>
+                    </h1>
+                </div>
+
+                <a class="dima-btn-nav" href="#">
+                    <i class="fa fa-bars"></i>
+                </a>
+
+                <nav role="navigation" class="clearfix">
+                    <ul class="dima-nav sf-menu">
+                        {% for link in navLinks %}
+                        <li class="{{ 'current' if link.key == section else '' }}">
+                            <a href="{{ link.href }}">{{ link.label }}</a>
+                            {% if link.href == '/blog' %}
+                            <ul class="sub-menu nav-menu sf-menu">
+                                {% for cat in data.categories %}
+                                <li>
+                                    <a href="/blog/{{ cat.key }}">
+                                        {{ cat.name }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+
+                        {% if user %}
+                            {% if user.canAccessKeystone %}
+                            <li><a href="/keystone">BO</a></li>
+                            {% endif %}
+                            <li><a href="/keystone/signout">Sign Out</a></li>
+                        {% else %}
+                            <li><a href="/keystone/signin">Sign In</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            <div id="search-box">
+                <div class="container">
+                    <form>
+                        <input type="text" placeholder="Rechercher" />
+                    </form>
+                    <div id="close">
+                        <a data-animated-link="fadeOut" href="#">
+                            <i class="di-close"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dima"></div>
+    </div>
+</header>

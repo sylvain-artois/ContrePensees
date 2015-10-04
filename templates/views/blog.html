@@ -155,7 +155,9 @@
 
                         {% for cat in data.categories %}
                         {% set class = ( "active" if data.category and data.category.id == cat.id else "" ) %}
-                        <a href="/blog/{{ cat.key }}" class="{{ class }} icon tiny button fill" data-animated-link="fadeOut"><i class="fa fa-tag"></i>{{ cat.name }}</a>
+                        <a href="/blog/{{ cat.key }}" class="{{ class }} icon tiny button fill" data-animated-link="fadeOut">
+                            <i class="fa fa-tag"></i>{{ cat.name }}
+                        </a>
                         {% endfor %}
 
                     </div>

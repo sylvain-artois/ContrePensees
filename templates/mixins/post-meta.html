@@ -1,36 +1,32 @@
-<div class="post-meta box">
-    <section class="dima-author-box box clearfix">
-        <div class="dima-about-image overlay">
-            <a data-animated-link="fadeOut" href="">
-                <img src="{{ post.author._.avatar.fit(100,100) }}" />
-            </a>
-        </div>
-        <div class="dima-author-info">
-            <h5 class="dima-author-name">
-                <a data-animated-link="fadeOut" href="">{{ post.author.name.full }}</a>
-            </h5>{{ post._.publishedDate.format("Do MMM YYYY") }}</p>
-            <div class="social-media dima-social-author social-small">
-                <ul class="inline clearfix">
-                    {% if post.categories and post.categories.length %}
-                    <li>
-                        {% for cat in post.categories %}
-                        <a href="/blog/{{ cat.key }}">{{ cat.name }}</a>
-                        {% if loop.index < post.categories.length %}, {% endif %}
-                        {% endfor %}
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-            <ul class="tags">
-                {% if post.tagsArray and post.tagsArray.length %}
-                <li>
-                    {% for tag in post.tagsArray %}
-                    <a data-animated-link="fadeOut" href="#">
-                        <i class="fa fa-tag"></i>{{ tag }}</a>
-                    {% endfor %}
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </section>
+<div class="di_1_of_4 first">
+    <h5 class="dima-author-name">
+        <a data-animated-link="fadeOut" href="">{{ post.author.name.full }}</a>
+    </h5>
+    <p>
+        <img src="{{ post.author._.avatar.fit(50,50) }}" style="width: auto" />
+    </p>
+</div>
+<div class="di_3_of_4">
+    <p>{{ post._.publishedDate.format("Do MMM YYYY") }}</p>
+    <ul class="inline">
+        {% if post.categories and post.categories.length %}
+        <li>
+            {% for cat in post.categories %}
+            <a href="/blog/{{ cat.key }}">{{ cat.name }}</a>
+            {% if loop.index < post.categories.length %}, {% endif %}
+            {% endfor %}
+        </li>
+        {% endif %}
+    </ul>
+    <ul class="inline">
+        {% if post.tagsArray and post.tagsArray.length %}
+        <li>
+            {% for tag in post.tagsArray %}
+            <span class="label" style="margin-right: 0.32rem; display: inline-block; margin-bottom: 0.32rem; line-height: inherit">
+                <i class="fa fa-tag"></i>&nbsp;{{ tag }}
+            </span>
+            {% endfor %}
+        </li>
+        {% endif %}
+    </ul>
 </div>

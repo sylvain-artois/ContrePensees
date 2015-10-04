@@ -1,0 +1,16 @@
+{# Last post #}
+<section class="section section-colored" data-bg="#3d3d39">
+    <div class="page-section-content" style="padding: 3rem;">
+
+        <h2 class="uppercase text-center" style="margin-bottom: 0">Derniers articles</h2>
+        <div class="topaz-line" style="margin: 1.5rem auto">
+            <i class="di-separator"></i>
+        </div>
+        <section class="boxed-blog">
+            {% for post in data.lastposts %}
+            {% include "templates/mixins/post-thumbnail.html" %}
+            {% endfor %}
+        </section>
+
+    </div>
+</section>

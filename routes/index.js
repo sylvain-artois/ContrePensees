@@ -16,7 +16,7 @@ var routes = {
 // Setup Route Bindings
 exports = module.exports = function(app) {
 
-    app.get('/', routes.views.index);
+    app.get('/', routes.views.home);
     app.get('/blog/:category?', routes.views.blog);
     app.get('/blog/post/:post', routes.views.post);
     app.get('/sylvain-artois/resume', routes.views.resume);

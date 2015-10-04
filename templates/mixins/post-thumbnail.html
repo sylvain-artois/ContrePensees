@@ -1,25 +1,27 @@
-<article role="article" class="post di_1_of_3 {% if loop.first %}first{% endif %}">
+<article role="article" class="post di_1_of_3 {% if loop.first %}first{% endif %}" style="border: 1px solid #5E5D57">
 
-    <div class="post-img" style="border: 1px solid #5E5D57">
+    <div class="di_1_of_1 first" style="border-bottom: 1px solid #5E5D57">
         <img src="/images/dye-pop/night-paris-square-0{{ loop.index }}.jpg" />
     </div>
 
-    {# include "templates/mixins/post-meta.html" #}
+    <div class="di_1_of_1 first" style="padding: 1.5em;">
 
-    <div class="post-content text-start box">
+        {% include "templates/mixins/post-meta.html" %}
 
-        {% if post.type == 'text' %}
-        <h4 itemprop="headline">
-            <a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
-        </h4>
-        <p>{{ post.brief|safe }}</p>
-        {% else %}
-        <p>{{ post.caption|safe }}</p>
-        {% endif %}
+        <div class="di_1_of_1 first">
+            {% if post.type == 'text' %}
+            <h4 itemprop="headline">
+                <a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
+            </h4>
+            <p>{{ post.brief|safe }}</p>
+            {% else %}
+            <p>{{ post.caption|safe }}</p>
+            {% endif %}
 
-        <p class="read-more">
-            <a href="/blog/post/{{ post.slug }}">{% if post.type == 'text' %}Lire{% else %}Voir{% endif %}</a>
-        </p>
-
+            <p class="read-more">
+                <a href="/blog/post/{{ post.slug }}">{% if post.type == 'text' %}Lire{% else %}Voir{% endif %}</a>
+            </p>
+        </div>
     </div>
+
 </article>

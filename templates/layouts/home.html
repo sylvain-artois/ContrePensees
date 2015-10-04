@@ -15,8 +15,9 @@
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet' />
 
     <link href="/css/front.css" rel="stylesheet" />
     <link href="/js/okab/revolution-slider/css/settings.css" rel="stylesheet" />
@@ -35,39 +36,28 @@
 <body class="responsive">
     <div class="all_content">
 
+        {% include "templates/mixins/fullwidth-navbar.html" %}
+
         <div class="tp-banner-container">
             {% block slider %}{% endblock %}
         </div>
 
-        <header role="banner">
-            <div class="dima-navbar-wrap">
-                {% include "templates/mixins/header-menu.html" %}
-            </div>
-        </header>
-
-        {# Sub slider content #}
-        <div class="dima-main">
-            {% block content %}{% endblock %}
-        </div>
-
-        <div class="top-footer">
-            <div class="container">
-                {% include "templates/mixins/top-footer.html" %}
-            </div>
-        </div>
-
-        <footer role="contentinfo" class="dima-footer">
-            <div class="container">
-                {% include "templates/mixins/second-footer.html" %}
-            </div>
-        </footer>
     </div>
 
-    {% include "templates/mixins/javascript.html" %}
-
-    {% block js %}
-    {% endblock %}
-
+    <script src="/vendor/jquery/dist/jquery.js"></script>
+    <script src="/vendor/jquery.easing/js/jquery.easing.js"></script>
+    <script src="/vendor/superfish/dist/js/superfish.js"></script>
+    <script src="/js/okab/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/js/okab/revolution-slider/js/jquery.themepunch.revolution.js"></script>
+    <script>
+        var application = {
+            options: {
+                slide: {
+                    revolution: true
+                }
+            }
+        };
+    </script>
     <script src="/js/okab/main.js"></script>
 </body>
 </html>
