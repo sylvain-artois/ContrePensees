@@ -127,28 +127,41 @@
                 };
             };
             var searchBox = function() {
-                //search box event
-                var bool = true;
-                $(".search-btn").click(function(e) {
+
+                var flag        = true,
+                    $searchBox  = $("#search-box"),
+                    $searchBtn  = $(".search-btn"),
+                    $close      = $("#close"),
+                    $searchForm = $("[name=\"searchForm\"]"),
+                    $freeTextSearch = $("[name=\"freeTextSearch\"]")
+
+                $searchBtn.click(function(e) {
                     e.preventDefault();
-                    if (bool) {
-                        $("#search-box").stop().slideDown(250, "easeOutExpo");
-                        $("#search-box input[type=text]").focus();
-                        bool = false;
+                    if (flag) {
+                        $searchBox.stop().slideDown(250, "easeOutExpo");
+                        $freeTextSearch.focus();
                     } else {
-                        $("#search-box").stop().slideUp(250, "easeOutExpo");
-                        bool = true;
+                        $searchBox.stop().slideUp(250, "easeOutExpo");
                     }
+                    flag = !flag;
                 });
 
                 function closeSearch() {
-                        $("#search-box").stop().slideUp(250, "easeOutExpo");
-                    }
-                    //close search btn event
-                $("#close").click(function(e) {
+                    $searchBox.stop().slideUp(250, "easeOutExpo");
+                }
+
+                //close search btn event
+                $close.click(function(e) {
                     e.preventDefault();
                     closeSearch();
-                    bool = true;
+                    flag = true;
+                });
+
+                $searchForm.submit(function(e){
+                    var searchString = encodeURI($freeTextSearch.val());
+                    $searchForm.attr('action', '/search/' + searchString);
+                    //avoid query string
+                    $freeTextSearch.remove();
                 });
             };
             var subMenu = function() {
