@@ -21,12 +21,13 @@ Post.add({
 
     title: { type: Types.Text, dependsOn: { type: 'text' } },
     image: { type: Types.CloudinaryImage, dependsOn: { type: ['text', 'photo'] } },
-    medium: { type: Types.Html, wysiwyg: true, height: 150,  dependsOn: { type: 'medium' }  },
-    brief: { type: Types.Html, wysiwyg: true, height: 150,  dependsOn: { type: 'text' }  },
+    medium: { type: Types.Html, wysiwyg: true, height: 150,  dependsOn: { type: 'medium' } },
+    brief: { type: Types.Html, wysiwyg: true, height: 150,  dependsOn: { type: 'text' } },
     content: { type: Types.Html, wysiwyg: true, height: 400, dependsOn: { type: 'text' } },
     images: { type: Types.CloudinaryImages, dependsOn: { type: 'gallery' } },
     quote: { type: Types.Html, wysiwyg: true, height: 150, dependsOn: { type: 'quote' } },
-    caption: { type: Types.Html, wysiwyg: true, height: 150, dependsOn: { type: ['photo','medium', 'gallery', 'quote'] }},
+    writer: { type: Types.Text, dependsOn: { type: 'quote' } },
+    caption: { type: Types.Html, wysiwyg: true, height: 150, dependsOn: { type: ['photo','medium', 'gallery', 'quote'] } },
 
     tags: { type: Types.Text },
 
@@ -84,6 +85,7 @@ Post.schema.index({
     tags: 'text',
     title: 'text',
     quote: 'text',
+    writer: 'text',
     briefText: 'text',
     contentText: 'text',
     captionText: 'text'

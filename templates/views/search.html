@@ -1,81 +1,34 @@
-{% extends "templates/layouts/content.html" %}
+{% extends "templates/layouts/list.html" %}
 
-{% block page_title %}
-{% set title = "Portfolio" ) %}
-{% include "templates/mixins/big-title.html" %}
+{% import "templates/mixins/post-macro.html" as postHelper %}
+
+{% block intro %}
+{% include "templates/mixins/beautifull-quote.html" %}
 {% endblock %}
 
-{% block content_navigation %}
-{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="page-section-content boxed-blog blog-list">
+        <div class="container blog">
+            <div class="row">
+                <div class="col-sm-8 col-md-9">
 
-{% block post_content %}
-<div class="container text-center ">
-    <h2 class="uppercase">Comming soon</h2>
+                    {% if data.posts.length %}
 
-    <div class="topaz-line">
-        <i class="di-separator"></i>
-    </div>
+                    {% for post in data.posts %}
+                    {{ postHelper.shortPost(post) }}
+                    {% endfor %}
 
-    <p>We're building a great new demo</p>
-    <div class="clear-section"></div>
-
-    <!-- CIRCLE (1) -->
-    <div class=" di_1_of_4 first ">
-        <div class="circular-bar">
-            <input type="text" class="dial" data-fgColor="#ff5733" data-width="200" data-height="200" value="90">
-            <div class="circular-bar-content">
-                <label></label>
+                    {% else %}
+                    <h1>Pas de résultats</h1>
+                    {% endif %}
+                </div>
             </div>
-            <strong>Planning</strong>
         </div>
     </div>
-    <!-- CIRCLE (1) -->
-
-    <!-- CIRCLE (2) -->
-    <div class=" di_1_of_4 ">
-        <div class="circular-bar">
-            <input type="text" class="dial" data-fgColor="#ff5733" data-width="200" data-height="200" value="85">
-            <div class="circular-bar-content">
-                <label></label>
-            </div>
-            <strong>Design</strong>
-        </div>
-    </div>
-    <!-- CIRCLE (2) -->
-
-    <!-- CIRCLE (3) -->
-    <div class=" di_1_of_4 ">
-        <div class="circular-bar">
-            <input type="text" class="dial" data-fgColor="#ff5733" data-width="200" data-height="200" value="87">
-            <div class="circular-bar-content">
-                <label></label>
-            </div>
-            <strong>Development</strong>
-        </div>
-    </div>
-    <!-- CIRCLE (3) -->
-
-    <!-- CIRCLE (4) -->
-    <div class=" di_1_of_4 ">
-        <div class="circular-bar">
-            <input type="text" class="dial" data-fgColor="#ff5733" data-width="200" data-height="200" value="100">
-            <div class="circular-bar-content">
-                <label></label>
-            </div>
-            <strong>Delight</strong>
-        </div>
-    </div>
-    <!-- CIRCLE (4) -->
-
-</div>
-<div class="clear-section"></div>
+</section>
 {% endblock %}
 
-{% block post_author %}
-{% endblock %}
-
-{% block post_related %}
-{% endblock %}
-
-{% block post_comment %}
+{% block pinned %}
+{% include "templates/mixins/emphase-post.html" %}
 {% endblock %}

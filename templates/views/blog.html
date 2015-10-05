@@ -1,59 +1,8 @@
 {% extends "templates/layouts/list.html" %}
 
-{% macro blogPost(post) %}
-<article role="article" class="post" itemscope itemType="http://schema.org/BlogPosting">
-
-    {% if post.type == 'quote' %}
-    <blockquote class="blog-style">
-        <div class="topaz-border"></div>
-        <p>“{{ post.quote }}”</p>
-    </blockquote>
-    {% elif post.type == 'medium' %}
-    <div class="post-img pad">
-        {{ post.medium|safe }}
-    </div>
-    {% else %}
-    <div class="post-img">
-        {% if post.type == 'gallery' %}
-            {% for image in post.images %}
-            {% if loop.first %}
-            <img src="{{ image.fill(1200,300, { 'gravity': 'face' }) }}" />
-            {% endif %}
-            {% endfor %}
-        {% elif post.image.exists %}
-        <img src="{{ post._.image.fill(1200,300, { 'gravity': 'face' }) }}" alt="Post illustration" />
-        {% else %}
-        <div style="width: 100%; height: 300px; background: url('{{ post.randomPhoto }}') no-repeat; background-size: cover"></div>
-        {% endif %}
-    </div>
-    {% endif %}
-
-    <div class="post-content text-start box clearfix">
-
-        {% include "templates/mixins/post-meta.html" %}
-
-        <div class="di_1_of_1 first">
-
-            {% if post.type == 'text' %}
-            <h4 itemprop="headline">
-                <a data-animated-link="fadeOut" href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
-            </h4>
-            <p>{{ post.brief|safe }}</p>
-            {% else %}
-            <p>{{ post.caption|safe }}</p>
-            {% endif %}
-
-            <p class="read-more">
-                <a href="/blog/post/{{ post.slug }}">{% if post.type == 'text' %}Lire{% else %}Voir{% endif %}</a>
-            </p>
-        </div>
-
-    </div>
-</article>
-{% endmacro %}
+{% import "templates/mixins/post-macro.html" as postHelper %}
 
 {% block intro %}
-{% set title = ( data.category.name if data.category else "Blog" ) %}
 {% include "templates/mixins/beautifull-quote.html" %}
 {% endblock %}
 
@@ -69,7 +18,7 @@
                         {% if data.posts.results.length %}
 
                             {% for post in data.posts.results %}
-                            {{ blogPost(post) }}
+                            {{ postHelper.shortPost(post) }}
                             {% endfor %}
 
                             {% if data.posts.totalPages > 1 %}

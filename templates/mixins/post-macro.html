@@ -1,0 +1,38 @@
+{% macro shortPost(post) %}
+<article role="article" class="post" itemscope itemType="http://schema.org/BlogPosting">
+
+    {% if post.type == 'quote' %}
+    <blockquote class="blog-style">
+        <div class="topaz-border"></div>
+        <p>{{ post.quote }}</p>
+    </blockquote>
+    {% elif post.type == 'medium' %}
+    <div class="post-img pad">
+        {{ post.medium|safe }}
+    </div>
+    {% elif post.type == 'text' %}
+    <div class="post-content text-start box">
+        <h4 itemprop="headline">
+            <a href="/blog/post/{{ post.slug }}">{{ post.title }}</a>
+        </h4>
+        <p>{{ post.brief|safe }}</p>
+    </div>
+    {% else %}
+    <div class="post-img">
+        {% if post.type == 'gallery' %}
+            {% for image in post.images %}
+            {% if loop.first %}
+            <img src="{{ image.fill(1200,300, { 'gravity': 'face' }) }}" />
+            {% endif %}
+            {% endfor %}
+        {% elif post.image.exists %}
+        <img src="{{ post._.image.fill(1200,300, { 'gravity': 'face' }) }}" alt="Post illustration" />
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="post-content text-start box clearfix">
+        {% include "templates/mixins/post-meta.html" %}
+    </div>
+</article>
+{% endmacro %}

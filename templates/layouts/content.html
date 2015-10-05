@@ -17,7 +17,7 @@
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
-
+    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet' />
     <link href="/css/front.css" rel="stylesheet" />
 
     {% block css %}{% endblock %}
@@ -34,9 +34,7 @@
 <body class="responsive">
     <div class="all_content">
 
-        <header role="banner">
-            {% include "templates/mixins/header-menu.html" %}
-        </header>
+        {% include "templates/mixins/fullwidth-navbar.html" %}
 
         <div class="dima-main">
 
@@ -71,10 +69,7 @@
     </div>
 
     {% include "templates/mixins/javascript.html" %}
-
-    {% block js %}
-    {% endblock %}
-
+    {% block js %}{% endblock %}
     <script src="/js/okab/main.js"></script>
 </body>
 </html>

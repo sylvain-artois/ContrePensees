@@ -19,11 +19,10 @@ exports = module.exports = function(app) {
     app.get('/', routes.views.home);
     app.get('/blog/:category?', routes.views.blog);
     app.get('/blog/post/:post', routes.views.post);
+    app.get('/search/:query?',  routes.views.search);
     app.get('/sylvain-artois/resume', routes.views.resume);
     app.get('/dye-pop/portfolio', routes.views.portfolio);
     app.all('/contact', routes.views.contact);
-    app.all('/search/:query?',  routes.views.search);
-
     app.get('/sitemap.xml', function(req, res) {
         sitemap.create(keystone, req, res);
     });

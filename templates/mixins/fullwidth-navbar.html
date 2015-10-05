@@ -34,6 +34,9 @@
                             {% endif %}
                         </li>
                         {% endfor %}
+                        <li class="search-btn">
+                            <a href="#"><i class="fa fa-search"></i></a>
+                        </li>
 
                         {% if user %}
                             {% if user.canAccessKeystone %}
@@ -48,8 +51,8 @@
             </div>
             <div id="search-box">
                 <div class="container">
-                    <form>
-                        <input type="text" placeholder="Rechercher" />
+                    <form action="/search" method="get" name="searchForm" onsubmit="this.action = '/search/' + encodeURIComponent(document.searchForm.freeTextSearch.value)">
+                        <input type="search" placeholder="Rechercher" name="freeTextSearch" />
                     </form>
                     <div id="close">
                         <a data-animated-link="fadeOut" href="#">
