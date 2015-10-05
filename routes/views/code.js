@@ -7,9 +7,9 @@ exports = module.exports = function(req, res) {
     var locals = res.locals;
 
     // Init locals
-    locals.section = 'arty';
+    locals.section = 'code';
     locals.filters = {
-        category: req.params.category
+        category: "Software"
     };
     locals.data = {
         posts: [],
@@ -44,24 +44,20 @@ exports = module.exports = function(req, res) {
     // Load the current category filter
     view.on('init', function(next) {
 
-        if (req.params.category) {
-            keystone.list('Category').model.findOne({ key: locals.filters.category }).exec(function(err, result) {
-                locals.data.category = result;
-                next(err);
-            });
-        } else {
-            next();
-        }
+        keystone.list('Category').model.findOne({ key: locals.filters.category }).exec(function(err, result) {
+            locals.data.category = result;
+            next(err);
+        });
     });
 
     // Load the posts
     view.on('init', function(next) {
 
         var q = keystone.list('Post').paginate({
-                page: req.query.page || 1,
-                perPage: 10,
-                maxPages: 10
-            })
+            page: req.query.page || 1,
+            perPage: 10,
+            maxPages: 10
+        })
             .where('state', 'published')
             .sort('-publishedDate')
             .populate('author categories');
@@ -77,5 +73,5 @@ exports = module.exports = function(req, res) {
     });
 
     // Render the view
-    view.render('blog');
+    view.render('code');
 };

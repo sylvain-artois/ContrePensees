@@ -17,12 +17,19 @@ var routes = {
 exports = module.exports = function(app) {
 
     app.get('/', routes.views.home);
-    app.get('/blog/:category?', routes.views.blog);
-    app.get('/blog/post/:post', routes.views.post);
+    app.get('/dye-pop/:category?', routes.views.blog);
+    app.get('/dye-pop/post/:post', routes.views.post);
+
+    app.get('/sylvain-artois/software',  routes.views.code)
+    app.get('/sylvain-artois/software/:post', routes.views.post);
+
     app.get('/search/:query?',  routes.views.search);
-    app.get('/sylvain-artois/resume', routes.views.resume);
-    app.get('/dye-pop/portfolio', routes.views.portfolio);
+
+    app.get('/resume/sylvain-artois', routes.views.resume);
+    app.get('/portfolio/dye-pop', routes.views.portfolio);
+
     app.all('/contact', routes.views.contact);
+
     app.get('/sitemap.xml', function(req, res) {
         sitemap.create(keystone, req, res);
     });

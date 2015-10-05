@@ -21,14 +21,16 @@
                         {% for link in navLinks %}
                         <li class="{{ 'current' if link.key == section else '' }}">
                             <a href="{{ link.href }}">{{ link.label }}</a>
-                            {% if link.href == '/blog' %}
+                            {% if link.key == 'arty' %}
                             <ul class="sub-menu nav-menu sf-menu">
                                 {% for cat in data.categories %}
+                                {% if cat.name != 'Software' %}
                                 <li>
                                     <a href="/blog/{{ cat.key }}">
                                         {{ cat.name }}
                                     </a>
                                 </li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                             {% endif %}
