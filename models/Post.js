@@ -50,6 +50,19 @@ Post.schema.virtual('tagsArray').get(function() {
     return (this.tags) ? this.tags.split(',') : [];
 });
 
+Post.schema.virtual('url').get(function() {
+    var url = '/dye-pop/post/' + this.slug;
+    if (this.categories && this.categories.length) {
+        this.categories.forEach(function(category) {
+            if (category && category.name=='Software') {
+                return '/sylvain-artois/software/' + this.slug;
+            }
+        });
+    }
+    return url;
+});
+
+
 //Index data for full text search
 Post.schema.pre('save', function(next) {
     if (this.content) {

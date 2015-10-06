@@ -1,7 +1,9 @@
 {% extends "templates/layouts/content.html" %}
 
+{% import "templates/mixins/post-macro.html" as postHelper %}
+
 {% block page_title %}
-{% set title = ( data.post.title if data.post else "Oops" ) %}
+{% set title = ( data.post.title if data.post else "Bienvenu" ) %}
 {% include "templates/mixins/big-title.html" %}
 {% endblock %}
 
@@ -29,164 +31,19 @@
 {% endblock %}
 
 {% block post_content %}
-<article class="post">
-
-    <div class="post-img">
-        {% if data.post.image.exists %}
-        <img src="{{ data.post._.image.fill(1200) }}" />
-        {% else %}
-        <img src="{{ data.post.randomPhoto }}" />
-        {% endif %}
-    </div>
-
-    <div class="post-meta box">
-        <ul>
-            <li class="post-on">Posted on {{ data.post._.publishedDate.format("MMMM Do, YYYY") }}</li>
-            {% if data.post.category %}<li class="post-view"><i class="fa fa-eye"></i> <a href="/blog/{{ data.post.category.key }}">{{ data.post.category.name }}</a></li>{% endif %}
-            <li class="post-comments"><i class="fa fa-comments"></i> 12 Comments</li>
-        </ul>
-    </div>
-
-    <div class="post-content box">
-        <h1><a data-animated-link="fadeOut" href="#">{{ data.post.title }}</a></h1>
-
-        {{ data.post.content.full|safe }}
-
-        <div class="social-media dima-social-post social-medium">
-            <ul class="inline clearfix">
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-google-plus"></i></a></li>
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-instagram"></i></a></li>
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-pinterest"></i></a></li>
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-reddit"></i></a></li>
-            </ul>
-        </div>
-    </div>
-</article>
+{{ postHelper.post(data.post,full=true) }}
 {% endblock %}
 
 {% block post_author %}
-<section class="dima-author-box box clearfix">
-    <div class="dima-about-image overlay">
-        <a data-animated-link="fadeOut" href="author.html">
-            <img src="images/posts/author.jpg" alt="">
-        </a>
-    </div>
-
-    <div class="dima-author-info">
-        <h5 class="dima-author-name"><a data-animated-link="fadeOut" href="author.html">RICHARD ROGERS</a></h5>
-        <p>Lorem Ipsum. psum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit.</p>
-
-        <div class="social-media dima-social-author social-small">
-            <ul class="inline clearfix">
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-facebook"></i></a>
-                </li>
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-twitter"></i></a>
-                </li>
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-google-plus"></i></a>
-                </li>
-                <li><a data-animated-link="fadeOut" href="#"><i class="fa fa-instagram"></i></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
 {% endblock %}
 
 {% block post_related %}
-<section class="related-posts box clearfix">
-    <h5 class="related-posts-title ">Related Posts</h5>
-
-    <!-- POST (1) -->
-    <article role="article" class="related-entry  di_1_of_4 first">
-        <div class="related-entry-media">
-            <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
-                <div class="related-entry-thumbnail overlay">
-                    <img src="images/posts/related-1.jpg" alt="Super Cool Photography Tricks" width="650" height="450">
-                </div>
-            </a>
-        </div>
-        <div class="related-entry-content">
-            <div class="related-entry-title">
-                <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
-                    <h6>psychology in branding</h6>
-                </a>
-                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-            </div>
-        </div>
-    </article>
-    <!--! POST (1) -->
-
-    <!-- POST (2) -->
-    <article role="article" class="related-entry  di_1_of_4 ">
-        <div class="related-entry-media">
-            <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
-                <div class="related-entry-thumbnail overlay">
-                    <img src="images/posts/related-2.jpg" alt="Super Cool Photography Tricks" width="650" height="450">
-                </div>
-            </a>
-        </div>
-        <div class="related-entry-content">
-            <div class="related-entry-title">
-                <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
-                    <h6>Process of Prototyping</h6>
-                </a>
-                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-            </div>
-        </div>
-    </article>
-    <!--! POST (2) -->
-
-    <!-- POST (3) -->
-    <article role="article" class="related-entry  di_1_of_4 ">
-        <div class="related-entry-media">
-            <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
-                <div class="related-entry-thumbnail overlay">
-                    <img src="images/posts/related-3.jpg" alt="Super Cool Photography Tricks" width="650" height="450">
-
-                </div>
-            </a>
-        </div>
-        <div class="related-entry-content">
-            <div class="related-entry-title">
-                <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
-                    <h6>Responsive web design</h6>
-                </a>
-                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-            </div>
-        </div>
-    </article>
-    <!--! POST (3) -->
-
-    <!-- POST (4) -->
-    <article role="article" class="related-entry  di_1_of_4 ">
-        <div class="related-entry-media">
-            <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
-                <div class="related-entry-thumbnail overlay">
-                    <img src="images/posts/related-2.jpg" alt="Super Cool Photography Tricks" width="650" height="450">
-
-                </div>
-            </a>
-        </div>
-        <div class="related-entry-content">
-            <div class="related-entry-title">
-                <a data-animated-link="fadeOut" href="blog-full-Single-post.html" title="">
-                    <h6>Responsive web design</h6>
-                </a>
-                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-            </div>
-        </div>
-    </article>
-    <!--! POST (4) -->
-
-</section>
 {% endblock %}
 
 {% block js %}
 <script>
     var application = {
-        options: { slide: {owl: true}}
+        options: { slide: {owl: true, flex:true}}
     };
 </script>>
 {% endblock %}
