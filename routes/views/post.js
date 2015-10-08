@@ -10,8 +10,23 @@ exports = module.exports = function(req, res) {
         post: req.params.post
     };
     locals.data = {
-        posts: []
+        posts: [],
+        categories: []
     };
+
+    // Load all categories
+    view.on('init', function(next) {
+
+        keystone.list('Category').model.find().sort('name').exec(function(err, results) {
+
+            if (err || !results.length) {
+                return next(err);
+            }
+
+            locals.data.categories = results;
+            next();
+        });
+    });
 
     // Load the current post
     view.on('init', function(next) {
@@ -25,7 +40,6 @@ exports = module.exports = function(req, res) {
             locals.data.post = result;
             next(err);
         });
-
     });
 
     // Load other posts
@@ -37,9 +51,7 @@ exports = module.exports = function(req, res) {
             locals.data.posts = results;
             next(err);
         });
-
     });
 
-    // Render the view
     view.render('post');
 };
