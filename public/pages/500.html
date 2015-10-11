@@ -1,10 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <title>Contre Pensées, server error</title>
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet' />
+
+    <link href="../css/front.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    <script src="/vendor/modernizr/dist/modernizr-build.js"></script>
+
+</head>
+<body class="responsive">
+    <div class="all_content">
+
+        <header role="banner">
+            <div class="dima-navbar-wrap">
+                <div class="dima-navbar fix-one">
+                    <div class="clearfix dima-nav-fixed"></div>
+                    <div class="relative full-wrapper">
+
+                        <div class="logo">
+                            <h1>
+                                <a href="/" title="Contre Pensées" style="font-family: 'Gruppo', cursive;">
+                                    <span>Contre Pensées</span>
+                                </a>
+                            </h1>
+                        </div>
+
+                        <a class="dima-btn-nav" href="#">
+                            <i class="fa fa-bars"></i>
+                        </a>
+
+                        <nav role="navigation" class="clearfix">
+                            <ul class="dima-nav sf-menu">
+                                {% for link in navLinks %}
+                                <li class="{{ 'current' if link.key == section else '' }}">
+                                    <a href="{{ link.href }}">{{ link.label }}</a>
+                                    {% if link.label == 'Arty' %}
+                                    <ul class="sub-menu nav-menu sf-menu">
+                                        {% for cat in data.categories %}
+                                        {% if cat.name != 'Software' %}
+                                        <li>
+                                            <a href="/dye-pop/{{ cat.key }}">
+                                                {{ cat.name }}
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                                <li class="search-btn">
+                                    <a href="#"><i class="fa fa-search"></i></a>
+                                </li>
+
+                                {% if user %}
+                                {% if user.canAccessKeystone %}
+                                <li><a href="/keystone">BO</a></li>
+                                {% endif %}
+                                <li><a href="/keystone/signout">Sign Out</a></li>
+                                {% else %}
+                                <li><a href="/keystone/signin">Sign In</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                    <div id="search-box">
+                        <div class="container">
+                            <form action="/search" method="get" name="searchForm">
+                                <input type="search" placeholder="Rechercher" name="freeTextSearch" />
+                            </form>
+                            <div id="close">
+                                <a data-animated-link="fadeOut" href="#">
+                                    <i class="di-close"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dima"></div>
+            </div>
+        </header>
+
+        <div class="page-section-content">
+            <div class="container text-center not-found">
+
+                <h1>Oops</h1>
+                <p class="lead">Sorry, the site has encountered an error.</p>
+                <div class="double-clear"></div>
+
+                <form action="/search" method="get" name="searchForm" class="form-small form search-form">
+                    <input type="search" placeholder="Rechercher" name="freeTextSearch" />
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/vendor/jquery/dist/jquery.js"></script>
+    <script src="/vendor/jquery.easing/js/jquery.easing.js"></script>
+    <script src="/vendor/superfish/dist/js/superfish.js"></script>
+    <script src="/js/okab/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/js/okab/revolution-slider/js/jquery.themepunch.revolution.js"></script>
+    <script>
+        var application = {
+            options: {
+                slide: {
+                    revolution: true
+                }
+            }
+        };
+    </script>
+    <script src="/js/okab/main.js"></script>
 </body>
 </html>
