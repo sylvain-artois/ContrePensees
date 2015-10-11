@@ -5,6 +5,10 @@
 assets/vendor/*
 !assets/vendor/.gitkeep
 
+#Generated CSS
+public/css/*
+!public/css/.gitkeep
+
 #In dev, mongodb data path
 data
 
