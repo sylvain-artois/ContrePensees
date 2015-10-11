@@ -24,29 +24,22 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig(configs);
 
-    // load jshint
-    grunt.registerTask('lint', [
-        'jshint'
-    ]);
-
     grunt.registerTask('dev', [
         'compass:dev',
-        'postcss'
+        'postcss',
+        'copy:modernizr',
+        'copy:jqueryDev',
+        'copy:revolutionSliderStyle',
+        'copy:jquerySuperfish',
+        'copy:jqueryEasing',
+        'uglify:dev'
     ]);
 
     grunt.registerTask('prod', [
         'compass:prod',
-        'postcss'
+        'postcss',
+        'copy:jqueryProd',
+        'copy:revolutionSliderStyle',
+        'uglify:prod'
     ]);
-
-    // default option to connect server
-    grunt.registerTask('serve', [
-        'jshint',
-        'concurrent:dev'
-    ]);
-
-    grunt.registerTask('server', function () {
-        grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-        grunt.task.run(['serve:' + target]);
-    });
 };

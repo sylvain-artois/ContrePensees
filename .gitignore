@@ -9,6 +9,10 @@ assets/vendor/*
 public/css/*
 !public/css/.gitkeep
 
+#Generated JS
+public/vendor/*
+!public/vendor/.gitkeep
+
 #In dev, mongodb data path
 data
 
