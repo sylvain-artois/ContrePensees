@@ -30,12 +30,12 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('dev', [
-        'sass',
-        'watch'
+        'compass:dev',
+        'postcss'
     ]);
 
-    grunt.registerTask('front', [
-        'compass',
+    grunt.registerTask('prod', [
+        'compass:prod',
         'postcss'
     ]);
 
@@ -49,5 +49,4 @@ module.exports = function(grunt) {
         grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
         grunt.task.run(['serve:' + target]);
     });
-
 };
