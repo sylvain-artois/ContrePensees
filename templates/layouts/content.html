@@ -15,10 +15,12 @@
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
-    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet' />
-    <link href="/css/front.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gruppo" />
+
+    <link rel="stylesheet" href="/css/front.css" />
+    <link rel="stylesheet" href="/vendor/settings.css" />
 
     {% block css %}{% endblock %}
 
@@ -27,7 +29,7 @@
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 
-    <script src="/vendor/modernizr/dist/modernizr-build.js"></script>
+    <script src="/vendor/{% if locals.data.env == 'production' %}modernizr.min.js{% else %}modernizr-build.js{% endif %}"></script>
 
     {% block head %}{% endblock %}
 </head>
@@ -70,6 +72,6 @@
 
     {% include "templates/mixins/javascript.html" %}
     {% block js %}{% endblock %}
-    <script src="/js/okab/main.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

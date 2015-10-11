@@ -15,12 +15,12 @@
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" rel="stylesheet" />
-    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet' />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gruppo" />
 
-    <link href="/css/front.css" rel="stylesheet" />
-    <link href="/js/okab/revolution-slider/css/settings.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/front.css" />
+    <link rel="stylesheet" href="/vendor/settings.css" />
 
     {% block css %}{% endblock %}
 
@@ -29,7 +29,7 @@
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 
-    <script src="/vendor/modernizr/dist/modernizr-build.js"></script>
+    <script src="/vendor/{% if locals.data.env == 'production' %}modernizr.min.js{% else %}modernizr-build.js{% endif %}"></script>
 
     {% block head %}{% endblock %}
 </head>
@@ -44,20 +44,18 @@
 
     </div>
 
-    <script src="/vendor/jquery/dist/jquery.js"></script>
-    <script src="/vendor/jquery.easing/js/jquery.easing.js"></script>
-    <script src="/vendor/superfish/dist/js/superfish.js"></script>
-    <script src="/js/okab/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
-    <script src="/js/okab/revolution-slider/js/jquery.themepunch.revolution.js"></script>
+    {% set isProd = locals.data.env == 'production' %}
+    <script src="/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
+    <script src="vendor/jquery.themepunch.min.js"></script>
+    {% if isProd %}
+    <script src="/vendor/jquery-plugin-easing-superfish.min.js"></script>
+    {% else %}
+    <script src="/vendor/jquery.easing.js"></script>
+    <script src="/vendor/superfish.js"></script>
+    {% endif %}
     <script>
-        var application = {
-            options: {
-                slide: {
-                    revolution: true
-                }
-            }
-        };
+    var application = {options: {slide: {revolution: true}}};
     </script>
-    <script src="/js/okab/main.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

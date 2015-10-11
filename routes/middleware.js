@@ -17,7 +17,7 @@ exports.initLocals = function(req, res, next) {
 
     locals.navLinks = [
         { label: 'Home',            key: 'home',        href: '/' },
-        { label: 'Arty',            key: 'arty',        href: '/dye-pop' },
+        { label: 'Cogito',          key: 'cogito',      href: '/dye-pop' },
         { label: '&lt;code /&gt;',  key: 'code',        href: '/sylvain-artois/software' },
         { label: 'Portfolio',       key: 'portfolio',   href: '/portfolio/dye-pop' },
         { label: 'CV',              key: 'resume',      href: '/resume/sylvain-artois' },

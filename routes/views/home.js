@@ -7,17 +7,19 @@ exports = module.exports = function(req, res) {
 
     locals.section = 'home';
     locals.data = {
-        lastposts: []
+        lastposts: [],
+        categories: [],
+        env: keystone.get('env')
     };
 
+    // Load last three post
     view.on('init', function(next) {
 
         keystone.list('Post').model.find()
             .where('state', 'published')
             .sort({ 'publishedDate': 'desc'})
             .limit(3)
-            .populate('author')
-            .populate('categories')
+            .populate('author categories')
             .exec(function(err, results) {
                 locals.data.lastposts = results;
                 next(err);
@@ -26,13 +28,10 @@ exports = module.exports = function(req, res) {
 
     // Load all categories
     view.on('init', function(next) {
-
         keystone.list('Category').model.find().sort('name').exec(function(err, results) {
-
             if (err || !results.length) {
                 return next(err);
             }
-
             locals.data.categories = results;
             next(err);
         });

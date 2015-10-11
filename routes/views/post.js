@@ -5,24 +5,22 @@ exports = module.exports = function(req, res) {
     var view = new keystone.View(req, res);
     var locals = res.locals;
 
-    locals.section = 'blog';
+    locals.section = 'cogito';
     locals.filters = {
         post: req.params.post
     };
     locals.data = {
         posts: [],
-        categories: []
+        categories: [],
+        env: keystone.get('env')
     };
 
     // Load all categories
     view.on('init', function(next) {
-
         keystone.list('Category').model.find().sort('name').exec(function(err, results) {
-
             if (err || !results.length) {
                 return next(err);
             }
-
             locals.data.categories = results;
             next();
         });
@@ -38,6 +36,7 @@ exports = module.exports = function(req, res) {
 
         q.exec(function(err, result) {
             locals.data.post = result;
+            //fixme loop category to set the correct nav
             next(err);
         });
     });

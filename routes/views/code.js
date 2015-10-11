@@ -13,25 +13,39 @@ exports = module.exports = function(req, res) {
     };
     locals.data = {
         posts: [],
-        categories: []
+        categories: [],
+        category: {},
+        env: keystone.get('env')
     };
 
+    // Load all categories
     view.on('init', function(next) {
+        keystone.list('Category').model.find().sort('name').exec(function(err, results) {
+            if (err || !results.length) {
+                return next(err);
+            }
+            locals.data.categories = results;
+            next();
+        });
+    });
 
+    // Load the "Software" category
+    view.on('init', function(next) {
         keystone.list('Category').model.findOne({ 'name': locals.filters.category }).exec(function(err, result) {
             locals.data.category = result;
-            locals.data.categories = [result];
             next(err);
         });
     });
 
+    // Load post from "Software" category
     view.on('init', function(next) {
 
-        var q = keystone.list('Post').paginate({
-            page: req.query.page || 1,
-            perPage: 10,
-            maxPages: 10
-        })
+        var q = keystone.list('Post')
+            .paginate({
+                page: req.query.page || 1,
+                perPage: 10,
+                maxPages: 10
+            })
             .where('state', 'published')
             .sort('-publishedDate')
             .populate('author categories');

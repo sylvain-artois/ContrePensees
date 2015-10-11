@@ -3,7 +3,7 @@
 {% import "templates/mixins/post-macro.html" as postHelper %}
 
 {% block page_title %}
-{% set title = ( data.post.title if data.post else "Bienvenu" ) %}
+{% set title = ( data.post.title if data.post else "Bienvenue" ) %}
 {% include "templates/mixins/big-title.html" %}
 {% endblock %}
 
@@ -15,7 +15,7 @@
         </span>
         <div>
             <h6>Previous Post</h6>
-            <img src="images/posts/next.jpg" alt="Previous thumb">
+            {#<img src="/images/posts/next.jpg" alt="Previous thumb">#}
         </div>
     </a>
     <a data-animated-link="fadeOut" class="next" href="#">
@@ -24,7 +24,7 @@
         </span>
         <div>
             <h6>Next Post</h6>
-            <img src="images/posts/next.jpg" alt="Next thumb">
+            {#<img src="/images/posts/next.jpg" alt="Next thumb">#}
         </div>
     </a>
 </nav>
@@ -42,8 +42,6 @@
 
 {% block js %}
 <script>
-    var application = {
-        options: { slide: {owl: true, flex:true}}
-    };
-</script>>
+    var application = {options: { slide: {owl: true, flex:true}}};
+</script>
 {% endblock %}

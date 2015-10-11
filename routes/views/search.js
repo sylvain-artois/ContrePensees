@@ -8,15 +8,31 @@ exports = module.exports = function(req, res) {
     var locals          = res.locals;
     locals.section      = 'search';
     locals.data         = {
-        posts: []
+        posts: [],
+        categories: [],
+        env: keystone.get('env')
     };
 
+    // Load all categories
     view.on('init', function(next) {
+        keystone.list('Category').model.find().sort('name').exec(function(err, results) {
+            if (err || !results.length) {
+                return next(err);
+            }
+            locals.data.categories = results;
+            next();
+        });
+    });
 
-        var q = keystone.list('Post').model.find({
-            $text : { $search : fullTextSearch } },{
-            score : { $meta: "textScore" }
-        }).sort({ score : { $meta : 'textScore' } }).populate('author categories').limit(10);
+    view.on('init', function(next) {
+        var q = keystone.list('Post').model
+            .find({
+                $text : { $search : fullTextSearch } },{
+                score : { $meta: "textScore" }
+            })
+            .sort({ score : { $meta : 'textScore' } })
+            .populate('author categories')
+            .limit(10);
 
         q.exec(function(err, documents) {
             if (err) {

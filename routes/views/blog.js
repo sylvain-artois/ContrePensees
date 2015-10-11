@@ -7,13 +7,14 @@ exports = module.exports = function(req, res) {
     var locals = res.locals;
 
     // Init locals
-    locals.section = 'arty';
+    locals.section = 'cogito';
     locals.filters = {
         category: req.params.category
     };
     locals.data = {
         posts: [],
-        categories: []
+        categories: [],
+        env: keystone.get('env')
     };
 
     // Load all categories
@@ -26,18 +27,7 @@ exports = module.exports = function(req, res) {
             }
 
             locals.data.categories = results;
-
-            // Load the counts for each category
-            async.each(locals.data.categories, function(category, next) {
-
-                keystone.list('Post').model.count().where('categories').in([category.id]).exec(function(err, count) {
-                    category.postCount = count;
-                    next(err);
-                });
-
-            }, function(err) {
-                next(err);
-            });
+            next();
         });
     });
 
