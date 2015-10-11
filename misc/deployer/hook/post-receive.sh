@@ -22,19 +22,17 @@ echo " - Starting code update"
 GIT_WORK_TREE="$DEPLOYDIR" git checkout -f
 echo " - Finished code update"
 
-#chown -R git:www-data $DEPLOYDIR
-
-##Update node modules
-echo " - Starting npm install"
-cd "$DEPLOYDIR"
-npm install --production;
-echo " - Finished npm update"
-
-##Update bower deps
+#Update bower deps
 echo " - Starting bower install"
 cd "$DEPLOYDIR"
 bower install;
 echo " - Finished bower update"
+
+#Update node modules
+echo " - Starting npm install"
+cd "$DEPLOYDIR"
+npm install --production;
+echo " - Finished npm update"
 
 cd -
 echo "Finished Deploy" >> $LOGFILE

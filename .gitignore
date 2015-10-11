@@ -13,6 +13,9 @@ public/css/*
 public/vendor/*
 !public/vendor/.gitkeep
 
+#Revolution slider assets
+public/assets
+
 #In dev, mongodb data path
 data
 

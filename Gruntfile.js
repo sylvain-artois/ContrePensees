@@ -30,9 +30,9 @@ module.exports = function(grunt) {
         'copy:modernizr',
         'copy:jqueryDev',
         'copy:revolutionSliderStyle',
-        'copy:jquerySuperfish',
-        'copy:jqueryEasing',
-        'uglify:dev'
+        'copy:revolutionSliderAssets',
+        'copy:allDev',
+        'uglify:revolutionSlider'
     ]);
 
     grunt.registerTask('prod', [
@@ -40,6 +40,8 @@ module.exports = function(grunt) {
         'postcss',
         'copy:jqueryProd',
         'copy:revolutionSliderStyle',
+        'copy:revolutionSliderAssets',
+        'uglify:revolutionSlider',
         'uglify:prod'
     ]);
 };
