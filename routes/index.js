@@ -2,16 +2,26 @@ var keystone   = require('keystone'),
     middleware = require('./middleware'),
     sitemap    = require('keystone-express-sitemap');
 
-var importRoutes = keystone.importer(__dirname);
+var importRoutes = keystone.importer(__dirname),
+    // Import Route Controllers
+    routes = {
+        views: importRoutes('./views')
+    };
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
+keystone.pre('routes', middleware.initErrorHandlers);
 keystone.pre('render', middleware.flashMessages);
 
-// Import Route Controllers
-var routes = {
-    views: importRoutes('./views')
-};
+// Handle other errors
+keystone.set('500', function(err, req, res, next) {
+    res.serverError(err, title, message);
+});
+
+// Handle 404 errors
+keystone.set('404', function(req, res, next) {
+    res.notfound();
+});
 
 // Setup Route Bindings
 exports = module.exports = function(app) {

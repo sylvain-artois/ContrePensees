@@ -1,8 +1,20 @@
-{% extends "templates/layouts/content.html" %}
+{% extends "templates/layouts/list.html" %}
 
 {% block content %}
-	<div class="container">
-		<h1>404</h1>
-		<p class="lead">Sorry, the page you requested can"t be found.</p>
-	</div>
+<div class="page-section-content">
+    <div class="container text-center not-found">
+
+        <h6>On a rien trouvé qui ressemble à {{  }}  :'-(</h6>
+
+        <div class="double-clear"></div>
+
+        <h1>Page not found</h1>
+        <div class="double-clear"></div>
+
+        <form action="/search" method="get" name="searchForm" class="form-small form search-form">
+            <input type="search" placeholder="Rechercher" name="freeTextSearch" />
+        </form>
+
+    </div>
+</div>
 {% endblock %}

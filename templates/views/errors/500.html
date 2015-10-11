@@ -1,8 +1,19 @@
-{% extends "templates/layouts/default.html" %}
+{% extends "templates/layouts/list.html" %}
 
 {% block content %}
-	<div class="container">
-		<h1>Error (500)</h1>
-		<p class="lead">Sorry, the site has encountered an error.</p>
-	</div>
+<div class="page-section-content">
+    <div class="container text-center not-found">
+
+        <h1></h1>
+        <p class="lead">Sorry, the site has encountered an error.</p>
+        <div class="double-clear"></div>
+
+        <form action="/search" method="get" name="searchForm" class="form-small form search-form">
+            <input type="search" placeholder="Rechercher" name="freeTextSearch" />
+        </form>
+
+    </div>
+</div>
 {% endblock %}
+
+
