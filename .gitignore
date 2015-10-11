@@ -1,3 +1,22 @@
+#In dev, sass private dir
+.sass-cache
+
+#Bower deps
+assets/vendor/*
+!assets/vendor/.gitkeep
+
+#In dev, mongodb data path
+data
+
+#Mongo dump
+misc/backup
+
+# Dependency directory
+node_modules
+
+# Ignore .env configuration files
+.env
+
 # Logs
 logs
 *.log
@@ -13,37 +32,8 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directory
-# Deployed apps should consider commenting this line out:
-# see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
-node_modules
-
-#Javascript deps
-public/vendor/*
-!public/vendor/.gitkeep
-
-# Ignore .env configuration files
-.env
-
 # Ignore .DS_Store files on OS X
 .DS_Store
 
 #Jetbrains
 .idea
-
-#In dev, mongodb data path
-data
-
-#In dev, sass private dir
-.sass-cache
-
-#Mongo dump
-misc/backup
-
-
