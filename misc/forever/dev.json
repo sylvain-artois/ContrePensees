@@ -1,0 +1,9 @@
+{
+  "uid": "contre-pensees",
+  "script": "keystone.js",
+  "outFile": "contre-pensees-output.log",
+  "errFile": "contre-pensees-error.log",
+  "append": true,
+  "watch": true,
+  "sourceDir": "/Users/sartois/Documents/PersonalWork/ContrePensees"
+}
