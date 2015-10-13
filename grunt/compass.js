@@ -8,7 +8,7 @@ module.exports = {
     },
     prod: {
         options: {
-            config: 'public/config.rb',
+            config: 'assets/styles/config.rb',
             environment: 'production',
             outputStyle: 'compressed',
             force: true,
