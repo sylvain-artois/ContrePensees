@@ -19,13 +19,10 @@ exports = module.exports = function(req, res) {
 
     // Load all categories
     view.on('init', function(next) {
-
         keystone.list('Category').model.find().sort('name').exec(function(err, results) {
-
             if (err || !results.length) {
                 return next(err);
             }
-
             locals.data.categories = results;
             next();
         });
@@ -35,10 +32,16 @@ exports = module.exports = function(req, res) {
     view.on('init', function(next) {
 
         if (req.params.category) {
-            keystone.list('Category').model.findOne({ key: locals.filters.category }).exec(function(err, result) {
-                locals.data.category = result;
-                next(err);
-            });
+            keystone.list('Category')
+                .model
+                .findOne({ key: locals.filters.category })
+                .exec(function(err, result) {
+                    if (err) {
+                        return next(err);
+                    }
+                    locals.data.category = result;
+                    next();
+                });
         } else {
             next();
         }
@@ -47,23 +50,29 @@ exports = module.exports = function(req, res) {
     // Load the posts
     view.on('init', function(next) {
 
-        var q = keystone.list('Post').paginate({
-                page: req.query.page || 1,
-                perPage: 10,
-                maxPages: 10
-            })
-            .where('state', 'published')
-            .where('isSoftwareRelated', false)
-            .sort('-publishedDate')
-            .populate('author categories');
+        var pageIndex = req.query.page || 1,
+            perPage = 10,
+            q = keystone.list('Post')
+                .paginate({
+                    page: pageIndex,
+                    perPage: perPage,
+                    maxPages: 10
+                })
+                .where('state', 'published')
+                .where('isSoftwareRelated', false)
+                .populate('author categories')
+                .sort('-publishedDate');
 
         if (locals.data.category) {
             q.where('categories').in([locals.data.category]);
         }
 
-        q.exec(function(err, results) {
-            locals.data.posts = results;
-            next(err);
+        q.exec(function(err, documents) {
+            if (err) {
+                return next(err);
+            }
+            locals.data.posts = documents;
+            next();
         });
     });
 
