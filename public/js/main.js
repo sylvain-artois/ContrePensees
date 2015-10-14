@@ -306,7 +306,7 @@
                     if (apiOptions.twitter) {
                         twitter();
                     }
-                    if (!apiOptions.instagram) {
+                    if (apiOptions.instagram) {
                         instagram();
                     }
                 }
