@@ -10,105 +10,30 @@
 <section class="section">
     <div class="page-section-content boxed-blog blog-list">
         <div class="container blog">
-            <div class="row">
-                <div class="col-sm-8 col-md-9">
-                    {% if filters.category and not data.category %}
-                        <h3 class="text-muted">Invalid Category.</h3>
-                    {% else %}
-                        {% if data.posts.results.length %}
-
-                            {% for post in data.posts.results %}
-                            {{ postHelper.post(post) }}
-                            {% endfor %}
-
-                            {% if data.posts.totalPages > 1 %}
-                            <div class="dima-pagination text-center">
-                                <ul>
-                                    {% if data.posts.previous %}
-                                    <li>
-                                        <a href="?page=1" data-animated-link="fadeOut">
-                                            <span class="fa fa-angle-left"></span>
-                                        </a>
-                                    </li>
-                                    {% else %}
-                                    <li class="disabled">
-                                        <a href="?page=1" data-animated-link="fadeOut">
-                                            <span class="fa fa-angle-left"></span>
-                                        </a>
-                                    </li>
-                                    {% endif %}
-
-                                    {% for p in data.posts.pages %}
-                                    {% set class = ( "current-page" if data.posts.currentPage == p else "" ) %}
-                                    <li class="{{ class }}">
-                                        {% set page = ( (data.posts.totalPages if i else 1) if p == "..." else p ) %}
-                                        <a href="?page={{ page }}" data-animated-link="fadeOut">
-                                            <span>{{ p }}</span>
-                                        </a>
-                                    </li>
-                                    {% endfor %}
-
-                                    {% if data.posts.next %}
-                                    <li>
-                                        <a href="?page={{ data.posts.next }}" data-animated-link="fadeOut">
-                                            <span>
-                                                <i class="fa fa-angle-right"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    {% else %}
-                                    <li class="disabled">
-                                        <a href="?page={{ data.posts.totalPages }}" data-animated-link="fadeOut">
-                                            <span>
-                                                <i class="fa fa-angle-right"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    {% endif %}
-
-                                </ul>
-                                {% endif %}
-                            </div>
-                            {% else %}
-
-                            {% if data.posts.totalPages > 1 %}
-                            <h4 class="text-weight-normal">
-                                Showing <strong>{{ data.posts.first }}</strong> to <strong>{{ data.posts.last }}</strong> of <strong>{{ data.posts.total }}</strong> posts.
-                            </h4>
-                            {% else %}
-                            <h4 class="text-weight-normal">Showing {{ utils.plural(data.posts.results.length, "* post") }}.</h4>
-                            {% endif %}
-
-                            {% if data.category %}
-                                <h3 class="text-muted">There are no posts in the category {{ data.category.name }}.</h3>
-                            {% else %}
-                                <h3 class="text-muted">There are no posts yet.</h3>
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
+            {% if filters.category and not data.category %}
+                <div class="dima-callout text-center dima-center-full">
+                    <h3 class="h-callout">Oops</h3>
+                    <p class="p-callout">La catégorie {{ filters.category }} n'existe pas ici :'-(</p>
+                    <form action="/search" method="get" class="form-mini form text-center">
+                        <div class="field">
+                            <input type="search" placeholder="Rechercher" />
+                        </div>
+                        <button type="submit" class="icon button fill">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                 </div>
+            {% else %}
+                {% if data.posts.results.length %}
 
-                {% if data.categories.length %}
-                <div class="col-sm-4 col-md-3">
-                    <h4>Categories</h4>
-                    <div class="hr-start"><i class="di-separator-s"></i></div>
-                    <div class="tag">
-                        {% set class = ( "active" if not data.category else "" ) %}
+                    {% for post in data.posts.results %}
+                        {{ postHelper.post(post) }}
+                    {% endfor %}
 
-                        <a href="/blog" class="{{ class }} icon tiny button fill" data-animated-link="fadeOut"><i class="fa fa-tag"></i>All Categories</a>
+                    {% include "templates/mixins/pager.html" %}
 
-                        {% for cat in data.categories %}
-                        {% set class = ( "active" if data.category and data.category.id == cat.id else "" ) %}
-                        <a href="/blog/{{ cat.key }}" class="{{ class }} icon tiny button fill" data-animated-link="fadeOut">
-                            <i class="fa fa-tag"></i>{{ cat.name }}
-                        </a>
-                        {% endfor %}
-
-                    </div>
-                </div>
                 {% endif %}
-
-            </div>
+            {% endif %}
         </div>
     </div>
 </section>

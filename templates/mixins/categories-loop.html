@@ -1,0 +1,19 @@
+{% if data.categories.length %}
+  <div class="col-sm-4 col-md-3">
+    <h4>Categories</h4>
+    <div class="hr-start"><i class="di-separator-s"></i></div>
+    <div class="tag">
+      {% set class = ( "active" if not data.category else "" ) %}
+
+      <a href="/blog" class="{{ class }} icon tiny button fill" data-animated-link="fadeOut"><i class="fa fa-tag"></i>All Categories</a>
+
+      {% for cat in data.categories %}
+        {% set class = ( "active" if data.category and data.category.id == cat.id else "" ) %}
+        <a href="/blog/{{ cat.key }}" class="{{ class }} icon tiny button fill" data-animated-link="fadeOut">
+          <i class="fa fa-tag"></i>{{ cat.name }}
+        </a>
+      {% endfor %}
+
+    </div>
+  </div>
+{% endif %}

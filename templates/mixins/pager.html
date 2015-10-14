@@ -1,0 +1,48 @@
+{% if data.posts.totalPages > 1 %}
+<div class="dima-pagination text-center">
+  <h4 class="text-weight-normal">Articles <strong>{{ data.posts.first }}</strong> à <strong>{{ data.posts.last }}</strong> sur <strong>{{ data.posts.total }}</strong>.</h4>
+  <ul>
+    {% if data.posts.previous %}
+      <li>
+        <a href="?page=1">
+          <span class="fa fa-angle-left"></span>
+        </a>
+      </li>
+    {% else %}
+      <li class="disabled">
+        <a href="?page=1" >
+          <span class="fa fa-angle-left"></span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% for p in data.posts.pages %}
+      <li>
+        {% set class = ( 'current-page' if data.posts.currentPage == p else "" ) %}
+        {% set page = ( (data.posts.totalPages if i else 1) if p == "..." else p ) %}
+        <a href="?page={{ page }}" class="{{ class }}">
+          <span>{{ p }}</span>
+        </a>
+      </li>
+    {% endfor %}
+
+    {% if data.posts.next %}
+      <li>
+        <a href="?page={{ data.posts.next }}">
+          <span><i class="fa fa-angle-right"></i></span>
+        </a>
+      </li>
+    {% else %}
+      <li class="disabled">
+        <a href="?page={{ data.posts.totalPages }}">
+          <span><i class="fa fa-angle-right"></i></span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</div>
+{% else %}
+<div class="dima-pagination text-center">
+  <h4 class="text-weight-normal">{{ data.posts.results.length }} article(s) trouvé(s).</h4>
+</div>
+{% endif %}
