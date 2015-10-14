@@ -18,6 +18,7 @@ Post.add({
     state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
     publishedDate: { type: Types.Datetime, index: true, dependsOn: { state: 'published' } },
     pinned: { type: Types.Boolean, default: false },
+    isSoftwareRelated: { type: Types.Boolean, default: false },
 
     title: { type: Types.Text, dependsOn: { type: 'text' } },
     image: { type: Types.CloudinaryImage, dependsOn: { type: ['text', 'photo'] } },
@@ -62,7 +63,6 @@ Post.schema.virtual('url').get(function() {
     return url;
 });
 
-
 //Index data for full text search
 Post.schema.pre('save', function(next) {
     if (this.content) {
@@ -83,6 +83,7 @@ Post.schema.pre('save', function(next) {
     next();
 });
 
+//Handle createdAt||updatedAt readonly fields
 Post.schema.pre('save', function(next){
     now = new Date();
     this.updatedAt = now;

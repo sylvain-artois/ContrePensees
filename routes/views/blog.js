@@ -53,6 +53,7 @@ exports = module.exports = function(req, res) {
                 maxPages: 10
             })
             .where('state', 'published')
+            .where('isSoftwareRelated', false)
             .sort('-publishedDate')
             .populate('author categories');
 
