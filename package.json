@@ -43,9 +43,7 @@
     "npm": ">=1.3.14"
   },
   "scripts": {
-    "postinstall": "/usr/lib/node_modules/grunt prod",
-    "start": "forever stop contre-pensees & NODE_ENV=production forever start ./misc/forever/production.json",
-    "stop": "forever stop contre-pensees"
+    //"postinstall": "grunt prod"
   },
   "main": "keystone.js"
 }
