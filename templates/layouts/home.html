@@ -44,7 +44,7 @@
 
     </div>
 
-    {% set isProd = locals.data.env == 'production' %}
+    {% set isProd = data.env == 'production' %}
     <script src="/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
     <script src="vendor/jquery.themepunch.min.js"></script>
     {% if isProd %}

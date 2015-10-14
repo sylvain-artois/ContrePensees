@@ -21,7 +21,7 @@
                         {% for link in navLinks %}
                         <li class="{{ 'current' if link.key == section else '' }}">
                             <a href="{{ link.href }}">{{ link.label }}</a>
-                            {% if link.label == 'Arty' %}
+                            {% if link.label == 'Cogito' %}
                             <ul class="sub-menu nav-menu sf-menu">
                                 {% for cat in data.categories %}
                                 {% if cat.name != 'Software' %}
