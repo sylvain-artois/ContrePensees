@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # description: contrepensees service
 # processname: node
 # pidfile: /var/run/contrepensees.pid
@@ -9,19 +8,20 @@
 # Based on https://gist.github.com/jinze/3748766
 #
 # To use it as service on Ubuntu:
-# sudo cp contrepensees.sh /etc/init.d/contrepensees
-# sudo chmod a+x /etc/init.d/contrepensees
-# sudo update-rc.d contrepensees defaults
+# cp contrepensees.sh /etc/init.d/contrepensees
+# chmod a+x /etc/init.d/contrepensees
+# update-rc.d contrepensees defaults
 #
 # Then use commands:
 # service contrepensees <command (start|stop|etc)>
 
 NAME=contrepensees                       # Unique name for the application
-SOUREC_DIR=/srv/contrepensees.fr         # Location of the application source
+SOURCE_DIR=/srv/contrepensees.fr         # Location of the application source
 COMMAND=node                             # Command to run
 SOURCE_NAME=keystone.js                  # Name os the applcation entry point script
 USER=git                                 # User for process running
 NODE_ENVIROMENT=production               # Node environment
+UUID=contrepensees
 
 pidfile=/var/run/$NAME.pid
 logfile=/var/log/$NAME.log
@@ -38,14 +38,14 @@ start() {
     chown $USER $pidfile
 
     #iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
-    /bin/su - $USER  -c "$forever start --pidFile $pidfile -l $logfile -a --sourceDir $SOUREC_DIR -c $COMMAND $SOURCE_NAME"
+    /bin/su - $USER  -c "export NODE_ENV=$NODE_ENVIROMENT && $forever start --pidFile $pidfile -l $logfile -a --sourceDir $SOURCE_DIR -c $COMMAND $SOURCE_NAME"
 
     RETVAL=$?
 }
 
 restart() {
     echo -n "Restarting $NAME node instance : "
-    /bin/su - $USER  -c "$USER $forever restart $SOURCE_NAME"
+    /bin/su - $USER  -c "$forever restart $SOURCE_NAME"
     RETVAL=$?
 }
 
