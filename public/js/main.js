@@ -255,63 +255,58 @@
                 });
 
             };
+
             var instagram = function() {
 
-                function createPhotoElement(photo) {
-                    var innerHtml = $('<img>')
-                        .addClass('instagram-image')
-                        .attr('src', photo.images.thumbnail.url);
+                var template = '\
+<li id ="[ID]" class="instagram-placeholder">                \
+    <a href="[LINK]" target="_blank"> \
+        <img class="instagram-image" src="[URL]" /> \
+    </a> \
+</li>';
+                var $instaWidget = $(".dima-instagram"),
+                    instaLimit   = $instaWidget.data("limit"),
+                    instaUserid  = $instaWidget.data("userid"),
+                    instaToken   = $instaWidget.data("accesstoken");
 
-                    innerHtml = $('<a>')
-                        .attr('target', '_blank')
-                        .attr('href', photo.link)
-                        .append(innerHtml);
+                $instaWidget.on('didLoadInstagram', function(event, response) {
 
-                    return $('<li>')
-                        .addClass('instagram-placeholder')
-                        .attr('id', photo.id)
-                        .append(innerHtml);
-                }
+                    if ("meta" in response && "error_message" in response.meta) {
+                        console.log(response.meta.error_message);
+                        return;
+                    }
 
-                function didLoadInstagram(event, response) {
-                    /*jshint validthis:true */
-                    var that = this;
+                    var widgetHtml = "";
+
                     $.each(response.data, function(i, photo) {
-                        $(that).append(createPhotoElement(photo));
+                        widgetHtml += createPhotoElement(photo);
                     });
-                }
-                var lem = $(".dima-instagram"),
-                    d = lem.attr("data-limit") || 6,
-                    i = lem.attr("data-userId"),
-                    m = lem.attr("data-hash"),
-                    a = lem.attr("data-accessToken"),
-                    h = lem.attr("data-clientId") || 'baee48560b984845974f6b85a07bf7d9';
 
-                lem.on('didLoadInstagram', didLoadInstagram);
+                    $(this).append(widgetHtml)
+                });
 
-                if (m != undefined) {
-                    lem.instagram({
-                        hash: m,
-                        count: d,
-                        clientId: h
-                    });
-                } else if (i != undefined && a != undefined) {
-                    lem.instagram({
-                        userId: i,
-                        accessToken: a,
-                        count: d,
-                    });
+                $instaWidget.instagram({
+                    userId: instaUserid,
+                    accessToken: instaToken,
+                    count: instaLimit
+                });
+
+                function createPhotoElement(photo) {
+                    return template.replace("[URL]", photo.images.thumbnail.url)
+                        .replace("[LINK]", photo.link)
+                        .replace("ID]", photo.id);
                 }
             };
 
             return {
                 init: function(options) {
+
                     var apiOptions = (options && "api" in options) ? options.api : {};
 
                     if (apiOptions.twitter) {
                         twitter();
                     }
-                    if (apiOptions.instagram) {
+                    if (!apiOptions.instagram) {
                         instagram();
                     }
                 }
