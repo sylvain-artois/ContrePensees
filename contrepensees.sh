@@ -6,6 +6,7 @@
 # logfile: /var/log/contrepensees.log
 #
 # Based on https://gist.github.com/jinze/3748766
+# @see https://gist.github.com/operatino/8389370
 #
 # To use it as service on Ubuntu:
 # cp contrepensees.sh /etc/init.d/contrepensees
@@ -14,6 +15,9 @@
 #
 # Then use commands:
 # service contrepensees <command (start|stop|etc)>
+#
+# Voir aussi https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/
+# Voir aussi https://www.terlici.com/2015/02/05/hosting-deploying-nodejs.html
 
 NAME=contrepensees                       # Unique name for the application
 SOURCE_DIR=/srv/contrepensees.fr         # Location of the application source
@@ -58,6 +62,18 @@ status() {
 stop() {
     echo -n "Shutting down $NAME node instance : "
     /bin/su - $USER  -c "$forever stop $SOURCE_NAME"
+
+#if [ -f $PIDFILE ]; then
+#        echo "Shutting down $NAME"
+#        # Tell Forever to stop the process.
+#        forever stop $APPLICATION_PATH 2>&1 > /dev/null
+#        # Get rid of the pidfile, since Forever won't do that.
+#        rm -f $PIDFILE
+#        RETVAL=$?
+#    else
+#        echo "$NAME is not running."
+#        RETVAL=0
+#    fi
 }
 
 case "$1" in
