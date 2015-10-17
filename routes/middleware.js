@@ -1,4 +1,12 @@
-var _ = require('underscore');
+var _           = require('underscore'),
+    keystone    = require('keystone'),
+    cacheManager = require('cache-manager'),
+    memcachedStore = require('cache-manager-memcached'),
+    memcachedCache = cacheManager.caching({
+        store: memcachedStore,
+        servers: ['127.0.0.1:11211'],
+        ttl: 100
+    });
 
 /**
  * Initialises the standard view locals
@@ -98,5 +106,43 @@ exports.initErrorHandlers = function(req, res, next) {
         });
     };
 
+    next();
+};
+
+/**
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.initCategories= function(req, res, next) {
+
+    var cacheKey = 'contrepensees_category';
+    var cacheTtl = 3600*24*365;
+    var getCategories = function(cacheCallback) {
+        keystone.list('Category').model.find()
+            .sort('name')
+            .exec(function(err, results) {
+                if (err) {
+                    return cacheCallback(err);
+                }
+                return cacheCallback(null, results);
+            });
+    };
+
+    memcachedCache.wrap(cacheKey, getCategories, {ttl: cacheTtl}, function (err, categories) {
+        if (err) {
+            return next(err);
+        }
+        res.locals.categories = categories;
+        next();
+    });
+};
+
+/**
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.loadPinned = function(req, res, next) {
     next();
 };
