@@ -13,20 +13,9 @@ exports = module.exports = function(req, res) {
     };
     locals.data = {
         posts: [],
-        categories: [],
+        categories: res.locals.categories,
         env: keystone.get('env')
     };
-
-    // Load all categories
-    view.on('init', function(next) {
-        keystone.list('Category').model.find().sort('name').exec(function(err, results) {
-            if (err || !results.length) {
-                return next(err);
-            }
-            locals.data.categories = results;
-            next();
-        });
-    });
 
     // Load the current category filter
     view.on('init', function(next) {

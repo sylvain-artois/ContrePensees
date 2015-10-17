@@ -13,20 +13,9 @@ exports = module.exports = function(req, res) {
     locals.validationErrors = {};
     locals.enquirySubmitted = false;
     locals.data = {
-        categories: [],
+        categories: res.locals.categories,
         env: keystone.get('env')
     };
-
-    // Load all categories
-    view.on('init', function(next) {
-        keystone.list('Category').model.find().sort('name').exec(function(err, results) {
-            if (err || !results.length) {
-                return next(err);
-            }
-            locals.data.categories = results;
-            next();
-        });
-    });
 
     // On POST requests, add the Enquiry item to the database
     view.on('post', { action: 'contact' }, function(next) {

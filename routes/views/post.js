@@ -1,5 +1,31 @@
 var keystone = require('keystone');
 
+
+function seachRelated(post, viewCallback)
+{
+    "use strict";
+
+    var q = keystone.list('Post').model
+        .find({
+            $text : { $search : fullTextSearch } },{
+            score : { $meta: "textScore" }
+        })
+        .sort({ score : { $meta : 'textScore' } })
+        .populate('author categories')
+        .limit(10);
+
+    q.exec(function(err, documents) {
+        if (err) {
+            return next(err);
+        }
+        locals.data.posts = documents;
+        next();
+    });
+
+}
+
+
+
 exports = module.exports = function(req, res) {
 
     var view = new keystone.View(req, res);
@@ -14,17 +40,6 @@ exports = module.exports = function(req, res) {
         categories: [],
         env: keystone.get('env')
     };
-
-    // Load all categories
-    view.on('init', function(next) {
-        keystone.list('Category').model.find().sort('name').exec(function(err, results) {
-            if (err || !results.length) {
-                return next(err);
-            }
-            locals.data.categories = results;
-            next();
-        });
-    });
 
     // Load the current post
     view.on('init', function(next) {
