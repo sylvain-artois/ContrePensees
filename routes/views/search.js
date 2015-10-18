@@ -17,7 +17,7 @@ exports = module.exports = function(req, res) {
             keystone.list('Post').model
                 .find(
                     { $text : { $search : fullTextSearch } },
-                    { score : { $meta: "textScore" }}
+                    { score : { $meta : "textScore" } }
                 )
                 .sort({ score : { $meta : 'textScore' } })
                 .populate('author categories')
