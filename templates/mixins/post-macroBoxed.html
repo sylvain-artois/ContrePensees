@@ -1,0 +1,99 @@
+{% macro boxedPost(post, isInLoop=true, index=1) %}
+    <article role="article" class="related-entry{% if isInLoop %} di_1_of_4{% endif %}{% if index == 1 %} first{% endif %}">
+        {% if post.type == 'quote' %}
+            {{ boxedQuote(post) }}
+        {% elif post.type == 'medium' %}
+            {{ boxedMedium(post) }}
+        {% elif post.type == 'photo' %}
+            {{ boxedPhoto(post) }}
+        {% elif post.type == 'gallery' %}
+            {{ boxedGallery(post) }}
+        {% else %}
+            {{ boxedText(post) }}
+        {% endif %}
+        <div class="related-entry-content">
+            <div class="related-entry-title">
+                {{ postMetaBoxed(post) }}
+            </div>
+        </div>
+    </article>
+{% endmacro %}
+
+{####################################
+ # Boxed quote
+ #}
+{% macro boxedQuote(post) %}
+    <div class="related-entry-media">
+        <a href="{{ post.url }}">
+            {{ post.quote | truncate(70) }}
+        </a>
+    </div>
+{% endmacro %}
+
+{% macro boxedMedium(post) %}
+    <div class="related-entry-media">
+        <a href="{{ post.url }}">
+            {{ post.captionText | truncate(70) }}
+        </a>
+    </div>
+{% endmacro %}
+
+{% macro boxedPhoto(post) %}
+    <div class="related-entry-media">
+        <a href="{{ post.url }}">
+            <img src="{{ post._.image.fill(200, 200, { 'gravity': 'face:center' }) }}" />
+        </a>
+    </div>
+{% endmacro %}
+
+{% macro boxedGallery(post) %}
+    <div class="related-entry-media">
+        <a href="{{ post.url }}">
+            {% for image in post.images %}
+                {% if loop.index <= 2 %}
+                    <div class="di_1_of_2 {% if loop.first %}first{% endif %}">
+                        <img src="{{ image.fill(100, 100, { 'gravity': 'face:center' }) }}" />
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </a>
+    </div>
+{% endmacro %}
+
+{% macro boxedText(post) %}
+    <div class="related-entry-media">
+        <a href="{{ post.url }}">
+            {{ post.title }}
+        </a>
+    </div>
+{% endmacro %}
+
+{####################################
+ # Post meta boxed
+ #}
+{% macro postMetaBoxed(post) %}
+    <a href="{{ post.url }}">
+        <h6>{{ post.type }}</h6>
+    </a>
+    <p>
+        {% if post.categories and post.categories.length %}
+            {% for cat in post.categories %}
+                {% if cat.name == "Software" %}
+                    <a href="/sylvain-artois/{{ cat.key }}">{{ cat.name }}</a>
+                {% else %}
+                    <a href="/dye-pop/{{ cat.key }}">{{ cat.name }}</a>
+                {% endif %}
+                {% if loop.index < post.categories.length %}, {% endif %}
+            {% endfor %}
+        {% endif %}
+    </p>
+    <p>
+        {% if post.tagsArray and post.tagsArray.length %}
+            {% for tag in post.tagsArray %}
+                <span class="label" style="color: #5e5d57;">
+                    <i class="fa fa-tag"></i>&nbsp;{{ tag }}
+                </span>
+            {% endfor %}
+        {% endif %}
+    </p>
+{% endmacro %}

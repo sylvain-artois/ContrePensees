@@ -1,65 +1,86 @@
-{% extends "templates/layouts/default.html" %}
+{% extends "templates/layouts/content.html" %}
 
-{% block intro %}
-	<div class="container">
-		<h1>Contact Us</h1>
-	</div>
+{% block page_title %}
+    {% set title = "Je réponds à tout le monde" %}
+    {% set title_bkg = "/images/frontSlider/2015-07-20-5.jpg" %}
+    {% include "templates/mixins/title-big.html" %}
 {% endblock %}
 
-{% block content %}
-	<div class="container">
-		{% if enquirySubmitted %}
-			<h3>Thanks for getting in touch.</h3>
-		{% else %}
-			<div class="row">
-				<div class="col-sm-8 col-md-6">
-					<form method="post">
-						<input type="hidden" name="action" value="contact">
-						{% set class = ( "has-error" if validationErrors.name else "" ) %}
-						<div class="form-group {{ class }}">
-							<label>
-								<span>Name</span>
-								<input type="text" name="name.full" value="{{ formData["name.full"] }}" class="form-control">
-							</label>
-						</div>
-						{% set class = ( "has-error" if validationErrors.email else "" ) %}
-						<div class="form-group {{ class }}">
-							<label>
-								<span>Email</span>
-								<input type="email" name="email" value="{{ formData.email }}" class="form-control">
-							</label>
-						</div>
-						<div class="form-group">
-							<label>
-								<span>Phone</span>
-								<input type="text" name="phone" value="{{ formData.phone }}" placeholder="(optional)" class="form-control">
-							</label>
-						</div>
-						{% set class = ( "has-error" if validationErrors.enquiryType else "" ) %}
-						<div class="form-group {{ class }}">
-							<label>
-								<span>What are you contacting us about?</span>
-								<select name="enquiryType" class="form-control">
-									<option value="">(select one)</option>
-									{% for type in enquiryTypes %}
-										{% set selected = ( 'selected="selected"' if formData.enquiryType == type.value else "" ) %}
-										<option value="{{type.value}}" {{ selected }}>{{ type.label }}</option>
-									{% endfor %}
-								</select>
-						</div>
-						{% set class = ( "has-error" if validationErrors.message else "" ) %}
-						<div class="form-group {{ class }}">
-							<label>
-								<span>Message</span>
-								<textarea name="message" placeholder="Leave us a message..." rows="4" class="form-control">{{ formData.message }}</textarea>
-							</label>
-						</div>
-						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Send</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		{% endif %}
-	</div>
+{% block post_content %}
+    <div class="main cl_8 first">
+
+        {% if enquirySubmitted %}
+            <h3>Merci à vous, surveillez votre boite mail !</h3>
+
+            <div id="contactSuccess" class="dima-alert dima-alert-success fade in hide">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <i class="fa fa-check"></i>
+                <h4 class="header-alert">Success</h4>
+                <p>Votre message est dans les tuyaux.</p>
+            </div>
+        {% else %}
+
+            <h5>M'envoyer un email</h5>
+            <div class="clear"></div>
+
+            {% if validationErrors %}
+            <div id="contactError" class="dima-alert dima-alert-error fade in hide">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <i class="fa fa-times "></i>
+                <h4 class="header-alert">Oops !</h4>
+                <p>Encore un dev qui ne sait pas coder...</p>
+            </div>
+            {% endif %}
+
+            <form method="post" class="form-small form text-center">
+                <input type="hidden" name="action" value="contact" />
+
+                <div class="post di_1_of_2 first">
+                    <div class="field {% if validationErrors.name %}error{% endif %}">
+                        <input type="text" name="name.full" value="{{ formData["name.full"] }}" placeholder="Name" required />
+                    </div>
+                </div>
+                <div class="post di_1_of_2">
+                    <div class="field {% if validationErrors.email %}error{% endif %}">
+                        <input type="email" name="email" value="{{ formData.email }}" placeholder="Email" required />
+                    </div>
+                </div>
+                <div class="field {% if validationErrors.message %}error{% endif %}">
+                    <textarea name="message" class="textarea" placeholder="Message" rows="4" required>{{ formData.message }}</textarea>
+                </div>
+                <input type="submit" value="Envoyer" class="no-rounded button small fill" />
+            </form>
+        {% endif %}
+    </div>
+
+    <aside role="complementary" class="main sidebar hidden-tm cl_4">
+        <div class="widget">
+            <h5 class="widget-title uppercase">Sylvain Artois</h5>
+            <div class="widget-content">
+                <ul class="with-border featured-posts contact-icon">
+                    <li>
+                        <i class="fa fa-map-marker "></i>
+                        <p>Bluett Avenue, Seaview, Isle of Wight PO34, UK</p>
+                    </li>
+                    <li>
+                        <i class="fa fa-phone"></i>
+                        <p>+213 2020 555013</p>
+                        <p>+213 7700 900106</p>
+                    </li>
+                    <li>
+                        <i class="fa fa-envelope"></i>
+                        <p>Emal1@domain.com</p>
+                        <p>Emal2@domain.com</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="widget-content">
+                {% set social_class = "social-media social-big" %}
+                {% include "templates/mixins/block-socialnetwork.html" %}
+            </div>
+        </div>
+    </aside>
 {% endblock %}

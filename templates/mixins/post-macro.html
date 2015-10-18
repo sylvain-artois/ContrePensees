@@ -17,7 +17,7 @@
 {####################################
  # quote
  #}
-{% macro quote(post, full = false) %}
+{% macro quote(post, full=false) %}
 <blockquote class="blog-style">
     <div class="topaz-border"></div>
     <p>{{ post.quote }}</p>
@@ -37,7 +37,7 @@
     {{ post.caption }}
     {% endif %}
 
-    {{ socialShare(instagram=false) }}
+    {{ socialShare(post) }}
 
 </div>
 {% endif %}
@@ -57,10 +57,10 @@
 <div class="post-content box">
 
     {% if post.caption %}
-    {{ post.caption }}
+    {{ post.caption|safe }}
     {% endif %}
 
-    {{ socialShare(instagram=false) }}
+    {{ socialShare() }}
 </div>
 {% endif %}
 {% endmacro %}
@@ -73,7 +73,7 @@
     {% if full %}
     <img src="{{ post._.image.fit(1200) }}" alt="{{ post.tags }}" />
     {% else %}
-    <img src="{{ post._.image.fill(1200,300, { 'gravity': 'face' }) }}" alt="{{ post.tags }}" />
+    <img src="{{ post._.image.fill(1200,300, { 'gravity': 'face:center' }) }}" alt="{{ post.tags }}" />
     <div class="link_overlay">
         <ul class="icons-media">
             <li>
@@ -93,10 +93,10 @@
 <div class="post-content box">
 
     {% if post.caption %}
-    {{ post.caption }}
+    {{ post.caption|safe }}
     {% endif %}
 
-    {{ socialShare() }}
+    {{ socialShare(post) }}
 </div>
 {% endif %}
 {% endmacro %}
@@ -146,7 +146,7 @@
     {{ post.caption }}
     {% endif %}
 
-    {{ socialShare() }}
+    {{ socialShare(post) }}
 </div>
 {% endif %}
 {% endmacro %}
@@ -157,17 +157,21 @@
 {% macro text(post, full=false) %}
 {% if post.image.exists %}
 <div class="post-img">
-    <img src="{{ post._.image.fill(1200,300, { 'gravity': 'face' }) }}" alt="{{ post.tags }}" />
-    <div class="link_overlay">
-        <ul class="icons-media">
-            <li>
-                <a href="{{ post.url }}">
-                    <i class="fa fa-link"></i>
-                </a>
-            </li>
-        </ul>
-        <span class="topaz-hover"></span>
-    </div>
+    {% if full %}
+        <img src="{{ post._.image.fit(1200) }}" />
+    {% else %}
+        <img src="{{ post._.image.fill(1200, 300, { 'gravity': 'face:center' }) }}" />
+        <div class="link_overlay">
+            <ul class="icons-media">
+                <li>
+                    <a href="{{ post.url }}">
+                        <i class="fa fa-link"></i>
+                    </a>
+                </li>
+            </ul>
+            <span class="topaz-hover"></span>
+        </div>
+    {% endif %}
 </div>
 {% endif %}
 <div class="post-meta box">
@@ -181,7 +185,7 @@
 
     {% if full %}
     {{ post.content|safe }}
-    {{ socialShare() }}
+    {{ socialShare(post) }}
     {% endif %}
 </div>
 {% endmacro %}
@@ -189,30 +193,34 @@
 {####################################
  # socialShare
  #}
-{% macro socialShare(instagram=true)%}
+{% macro socialShare(post) %}
 <div class="social-media dima-social-post social-medium">
     <ul class="inline clearfix">
         <li>
-            <a data-animated-link="fadeOut" href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#">
+                <i class="fa fa-tumblr"></i>
+            </a>
         </li>
         <li>
-            <a data-animated-link="fadeOut" href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#">
+                <i class="fa fa-twitter"></i>
+            </a>
         </li>
         <li>
-            <a data-animated-link="fadeOut" href="#"><i class="fa fa-pinterest"></i></a>
+            <a href="#">
+                <i class="fa fa-pinterest"></i>
+            </a>
         </li>
         <li>
-            <a data-animated-link="fadeOut" href="#"><i class="fa fa-google-plus"></i></a>
+            <a href="#">
+                <i class="fa fa-facebook"></i>
+            </a>
         </li>
-        {% if instagram %}
         <li>
-            <a data-animated-link="fadeOut" href="#"><i class="fa fa-instagram"></i></a>
+            <a href="#">
+                <i class="fa fa-google-plus"></i>
+            </a>
         </li>
-        {% endif %}
-        <li>
-            <a data-animated-link="fadeOut" href="#"><i class="fa fa-tumblr"></i></a>
-        </li>
-
     </ul>
 </div>
 {% endmacro %}

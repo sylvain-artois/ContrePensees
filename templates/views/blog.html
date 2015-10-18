@@ -3,7 +3,7 @@
 {% import "templates/mixins/post-macro.html" as postHelper %}
 
 {% block intro %}
-{% include "templates/mixins/beautifull-quote.html" %}
+{% include "templates/mixins/title-quote.html" %}
 {% endblock %}
 
 {% block content %}
@@ -30,7 +30,7 @@
                         {{ postHelper.post(post) }}
                     {% endfor %}
 
-                    {% include "templates/mixins/pager.html" %}
+                    {% include "templates/mixins/block-pager.html" %}
 
                 {% endif %}
             {% endif %}
@@ -40,5 +40,4 @@
 {% endblock %}
 
 {% block pinned %}
-{% include "templates/mixins/emphase-post.html" %}
 {% endblock %}

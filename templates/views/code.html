@@ -3,7 +3,8 @@
 {% import "templates/mixins/post-macro.html" as postHelper %}
 
 {% block intro %}
-{% include "templates/mixins/beautifull-quote.html" %}
+    {% set title = "&lt;code /&gt;" %}
+    {% include "templates/mixins/title-big.html" %}
 {% endblock %}
 
 {% block content %}
@@ -12,74 +13,14 @@
         <div class="container blog">
             <div class="row">
                 <div class="col-sm-8 col-md-9">
-                    {% if filters.category and not data.category %}
-                        <h3 class="text-muted">Invalid Category.</h3>
-                    {% else %}
-                        {% if data.posts.results.length %}
+                    {% if data.posts.results.length %}
 
-                            {% for post in data.posts.results %}
+                        {% for post in data.posts.results %}
                             {{ postHelper.post(post) }}
-                            {% endfor %}
+                        {% endfor %}
 
-                            {% if data.posts.totalPages > 1 %}
-                            <div class="dima-pagination text-center">
-                                <ul>
-                                    {% if data.posts.previous %}
-                                    <li>
-                                        <a href="?page=1" data-animated-link="fadeOut">
-                                            <span class="fa fa-angle-left"></span>
-                                        </a>
-                                    </li>
-                                    {% else %}
-                                    <li class="disabled">
-                                        <a href="?page=1" data-animated-link="fadeOut">
-                                            <span class="fa fa-angle-left"></span>
-                                        </a>
-                                    </li>
-                                    {% endif %}
+                        {% include "templates/mixins/block-pager.html" %}
 
-                                    {% for p in data.posts.pages %}
-                                    {% set class = ( "current-page" if data.posts.currentPage == p else "" ) %}
-                                    <li class="{{ class }}">
-                                        {% set page = ( (data.posts.totalPages if i else 1) if p == "..." else p ) %}
-                                        <a href="?page={{ page }}" data-animated-link="fadeOut">
-                                            <span>{{ p }}</span>
-                                        </a>
-                                    </li>
-                                    {% endfor %}
-
-                                    {% if data.posts.next %}
-                                    <li>
-                                        <a href="?page={{ data.posts.next }}" data-animated-link="fadeOut">
-                                            <span>
-                                                <i class="fa fa-angle-right"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    {% else %}
-                                    <li class="disabled">
-                                        <a href="?page={{ data.posts.totalPages }}" data-animated-link="fadeOut">
-                                            <span>
-                                                <i class="fa fa-angle-right"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    {% endif %}
-
-                                </ul>
-                                {% endif %}
-                            </div>
-                            {% else %}
-
-                            {% if data.posts.totalPages > 1 %}
-                            <h4 class="text-weight-normal">
-                                Showing <strong>{{ data.posts.first }}</strong> to <strong>{{ data.posts.last }}</strong> of <strong>{{ data.posts.total }}</strong> posts.
-                            </h4>
-                            {% else %}
-                            <h4 class="text-weight-normal">Showing {{ utils.plural(data.posts.results.length, "* post") }}.</h4>
-                            {% endif %}
-
-                        {% endif %}
                     {% endif %}
                 </div>
             </div>
@@ -89,5 +30,4 @@
 {% endblock %}
 
 {% block pinned %}
-{% include "templates/mixins/emphase-post.html" %}
 {% endblock %}

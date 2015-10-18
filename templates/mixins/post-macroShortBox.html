@@ -1,0 +1,40 @@
+{% macro shortBoxedPost(post) %}
+    <h6 class="uppercase">{{ post.type }}</h6>
+
+    {% if post.type == 'quote' %}
+        {{ shortBoxedQuote(post) }}
+    {% elif post.type == 'medium' %}
+        {{ shortBoxedMedium(post) }}
+    {% elif post.type == 'photo' %}
+        {{ shortBoxedPhoto(post) }}
+    {% elif post.type == 'gallery' %}
+        {{ shortBoxedGallery(post) }}
+    {% else %}
+        {{ shortBoxedText(post) }}
+    {% endif %}
+
+{% endmacro %}
+
+{% macro shortBoxedQuote(post) %}
+    <p>{{ post.quote | truncate(150) }}</p>
+{% endmacro %}
+
+{% macro shortBoxedMedium(post) %}
+    <p>{{ post.captionText | truncate(150) }}</p>
+{% endmacro %}
+
+{% macro shortBoxedPhoto(post) %}
+    <img src="{{ post._.image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+{% endmacro %}
+
+{% macro shortBoxedGallery(post) %}
+    {% for image in post.images %}
+        {% if loop.index == 1 %}
+            <img src="{{ image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro shortBoxedText(post) %}
+    <p>{{ post.title }}</p>
+{% endmacro %}

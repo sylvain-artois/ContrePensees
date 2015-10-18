@@ -1,47 +1,54 @@
 {% extends "templates/layouts/content.html" %}
 
 {% import "templates/mixins/post-macro.html" as postHelper %}
+{% import "templates/mixins/post-macroShortBox.html" as postHelperBoxed %}
 
 {% block page_title %}
-{% set title = ( data.post.title if data.post else "Bienvenue" ) %}
-{% include "templates/mixins/big-title.html" %}
+{% set title = ( data.mainPost.title if data.mainPost else "Bienvenue" ) %}
+{% include "templates/mixins/title-big.html" %}
 {% endblock %}
 
 {% block content_navigation %}
 <nav role="navigation" class="nav-slit">
-    <a data-animated-link="fadeOut" class="prev" href="#">
+
+    {% if data.nextPost %}
+    <a class="prev" href="{{ data.nextPost.url }}">
         <span class="slit-wrap">
             <i class="fa fa-angle-left"></i>
         </span>
         <div>
-            <h6>Previous Post</h6>
-            {#<img src="/images/posts/next.jpg" alt="Previous thumb">#}
+            {{ postHelperBoxed.shortBoxedPost(data.nextPost) }}
         </div>
     </a>
-    <a data-animated-link="fadeOut" class="next" href="#">
+    {% endif %}
+
+    {% if data.previousPost %}
+    <a class="next" href="{{ data.previousPost.url }}">
         <span class="slit-wrap">
             <i class="fa fa-angle-right"></i>
         </span>
         <div>
-            <h6>Next Post</h6>
-            {#<img src="/images/posts/next.jpg" alt="Next thumb">#}
+            {{ postHelperBoxed.shortBoxedPost(data.previousPost) }}
         </div>
     </a>
+    {% endif %}
+
 </nav>
 {% endblock %}
 
 {% block post_content %}
-{{ postHelper.post(data.post,full=true) }}
+{{ postHelper.post(data.mainPost,full=true) }}
 {% endblock %}
 
 {% block post_author %}
 {% endblock %}
 
 {% block post_related %}
+    {% set titleBloc = "Vous aimerez peut-être aussi" %}
+    {% set posts     = data.relatedposts %}
+    {% include "templates/mixins/posts-aside.html" %}
 {% endblock %}
 
 {% block js %}
-<script>
-    var application = {options: { slide: {owl: true, flex:true}}};
-</script>
+<script>var application = {options: { slide: {owl: true, flex:true}}};</script>
 {% endblock %}
