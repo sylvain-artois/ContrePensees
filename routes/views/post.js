@@ -1,70 +1,115 @@
 var keystone = require('keystone');
 
-
-function seachRelated(post, viewCallback)
-{
-    "use strict";
-
-    var q = keystone.list('Post').model
-        .find({
-            $text : { $search : fullTextSearch } },{
-            score : { $meta: "textScore" }
-        })
-        .sort({ score : { $meta : 'textScore' } })
-        .populate('author categories')
-        .limit(10);
-
-    q.exec(function(err, documents) {
-        if (err) {
-            return next(err);
-        }
-        locals.data.posts = documents;
-        next();
-    });
-
-}
-
-
-
 exports = module.exports = function(req, res) {
 
     var view = new keystone.View(req, res);
     var locals = res.locals;
 
-    locals.section = 'cogito';
     locals.filters = {
         post: req.params.post
     };
     locals.data = {
-        posts: [],
-        categories: [],
+        categories: res.locals.categories,
         env: keystone.get('env')
     };
 
     // Load the current post
     view.on('init', function(next) {
 
-        var q = keystone.list('Post').model.findOne({
-            state: 'published',
-            slug: locals.filters.post
-        }).populate('author categories');
+        keystone.list('Post').model
+            .findOne({
+                state: 'published',
+                slug: locals.filters.post
+            })
+            .populate('author categories')
+            .exec(function(mainPostErr, mainPost) {
 
-        q.exec(function(err, result) {
-            locals.data.post = result;
-            //fixme loop category to set the correct nav
-            next(err);
-        });
-    });
+                if (mainPostErr) {
+                    return next(mainPostErr);
+                }
 
-    // Load other posts
-    view.on('init', function(next) {
+                if (! "key" in mainPost) {
+                    return next(new Error("Post not found"));
+                }
 
-        var q = keystone.list('Post').model.find().where('state', 'published').sort('-publishedDate').populate('author').limit('4');
+                locals.data.mainPost = mainPost;
+                locals.section = (mainPost.isSoftwareRelated) ? 'code' : 'cogito';
 
-        q.exec(function(err, results) {
-            locals.data.posts = results;
-            next(err);
-        });
+                async.parallel(
+                    [
+                        //Get previous post
+                        function(callback){
+                            "use strict";
+
+                            keystone.list('Post').model
+                                .findOne({
+                                    state: 'published',
+                                    publishedDate: { $lt: mainPost.publishedDate }
+                                })
+                                .sort('-publishedDate')
+                                .populate('author categories')
+                                .exec(function(previousPostErr, previousPost) {
+                                    if (previousPostErr) {
+                                        return callback(previousPostErr);
+                                    }
+                                    callback(null, previousPost);
+                                });
+                        },
+                        //Get next post
+                        function(callback){
+                            "use strict";
+
+                            keystone.list('Post').model
+                                .findOne({
+                                    state: 'published',
+                                    publishedDate: { $gt: mainPost.publishedDate }
+                                })
+                                .sort('-publishedDate')
+                                .populate('author categories')
+                                .exec(function(nextPostErr, nextPost) {
+                                    if (nextPostErr) {
+                                        return callback(nextPostErr);
+                                    }
+                                    callback(null, nextPost);
+                                });
+                        },
+                        //Get related post
+                        function(callback){
+                            "use strict";
+
+                            keystone.list('Post').model
+                                .find(
+                                    { $text : { $search : mainPost.searchRelated } },
+                                    { score : { $meta : "textScore" } }
+                                )
+                                .sort({ score : { $meta : 'textScore' } })
+                                .populate('author categories')
+                                .limit(4)
+                                .exec(function(relatedPostErr, relatedPosts) {
+
+                                    if (relatedPostErr) {
+                                        return callback(relatedPostErr);
+                                    }
+
+                                    //The first el is often the same as searched
+                                    relatedPosts.shift();
+                                    callback(null, relatedPosts);
+                                });
+                        },
+                    ],
+                    function(parallelError, results) {
+
+                        if (parallelError) {
+                            return next(parallelError);
+                        }
+
+                        locals.data.previousPost = results[0];
+                        locals.data.nextPost     = results[1];
+                        locals.data.relatedposts = results[2];
+                        next();
+                    }
+                );
+            });
     });
 
     view.render('post');
