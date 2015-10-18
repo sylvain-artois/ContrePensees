@@ -1,4 +1,5 @@
-var keystone = require('keystone');
+var keystone = require('keystone'),
+    async = require('async');
 
 exports = module.exports = function(req, res) {
 
@@ -84,7 +85,7 @@ exports = module.exports = function(req, res) {
                                 )
                                 .sort({ score : { $meta : 'textScore' } })
                                 .populate('author categories')
-                                .limit(4)
+                                .limit(5)
                                 .exec(function(relatedPostErr, relatedPosts) {
 
                                     if (relatedPostErr) {
