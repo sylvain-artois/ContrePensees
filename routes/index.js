@@ -12,6 +12,7 @@ var importRoutes = keystone.importer(__dirname),
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('routes', middleware.initErrorHandlers);
 keystone.pre('routes', middleware.initCategories);
+keystone.pre('routes', middleware.loadPinned);
 keystone.pre('render', middleware.flashMessages);
 
 // Handle other errors

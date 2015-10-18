@@ -144,5 +144,30 @@ exports.initCategories= function(req, res, next) {
  * @param next
  */
 exports.loadPinned = function(req, res, next) {
-    next();
+
+    var cacheKey = 'contrepensees_getFeaturedPosts';
+    var cacheTtl = 3600*24*365;
+
+    var getFeatured = function(cacheCallback) {
+        keystone.list('Post').model.find()
+            .where('state', 'published')
+            .where('pinned', true)
+            .sort('-publishedDate')
+            .limit(3)
+            .populate('author categories')
+            .exec(function(err, results) {
+                if (err) {
+                    return cacheCallback(err);
+                }
+                return cacheCallback(null, results);
+            });
+    };
+
+    memcachedCache.wrap(cacheKey, getFeatured, {ttl: cacheTtl}, function(err, posts) {
+        if (err) {
+            return next(err);
+        }
+        res.locals.pinnedPosts = posts;
+        next();
+    });
 };

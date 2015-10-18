@@ -12,28 +12,17 @@
     </div>
 </div>
 
+{% import "templates/mixins/post-macroShortBox.html" as postHelperBoxed %}
+
 <div class=" di_1_of_4 widget">
     <h5 class="widget-titel uppercase">Featured posts</h5>
     <div class="widget-content">
         <ul class="with-border featured-posts">
+            {% for post in pinnedPosts %}
             <li>
-                <a href="#">
-                    <h6 class="uppercase">The psychology of branding</h6>
-                </a>
-                <span>By Admin / 09 Sept 2014</span>
+                {{ postHelperBoxed.shortBoxedPost(post) }}
             </li>
-            <li>
-                <a href="#">
-                    <h6 class="uppercase">The psychology of branding</h6>
-                </a>
-                <span>By Admin / 09 Sept 2014</span>
-            </li>
-            <li>
-                <a href="#">
-                    <h6 class="uppercase">The psychology of branding</h6>
-                </a>
-                <span>By Admin / 09 Sept 2014</span>
-            </li>
+            {% endfor %}
         </ul>
     </div>
 </div>
