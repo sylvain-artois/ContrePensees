@@ -51,6 +51,25 @@ Post.schema.virtual('tagsArray').get(function() {
     return (this.tags) ? this.tags.split(',') : [];
 });
 
+Post.schema.virtual('searchRelated').get(function() {
+
+    if (['medium', 'photo', 'gallery'].indexOf(this.type) !== -1 ) {
+        return this.captionText + " " + this.tags;
+    }
+
+    if (this.type === 'quote') {
+        return this.quote + " " + this.writer;
+    }
+
+    return [].push.apply(
+        this.title.split(' '),
+        this.brief.split(' ').concat(this.tagsArray)
+    ).filter(function(value, index, self) {
+            return self.indexOf(value) === index;
+        }
+    );
+});
+
 Post.schema.virtual('url').get(function() {
     var url = '/dye-pop/post/' + this.slug;
     if (this.categories && this.categories.length) {
