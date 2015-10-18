@@ -11,8 +11,6 @@
 
     <title>{{ title|default("Contre Pensées") }}</title>
 
-    {% import "templates/mixins/flash-messages.html" as FM %}
-
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" />
@@ -36,7 +34,7 @@
 <body class="responsive">
     <div class="all_content">
 
-        {% include "templates/mixins/fullwidth-navbar.html" %}
+        {% include "templates/mixins/block-navbar.html" %}
 
         <div class="tp-banner-container">
             {% block slider %}{% endblock %}
@@ -46,7 +44,7 @@
 
     {% set isProd = data.env == 'production' %}
     <script src="/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
-    <script src="vendor/jquery.themepunch.min.js"></script>
+    <script src="/vendor/jquery.themepunch.min.js"></script>
     {% if isProd %}
     <script src="/vendor/jquery-plugin-easing-superfish.min.js"></script>
     {% else %}

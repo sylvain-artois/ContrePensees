@@ -11,8 +11,6 @@
 
     <title>{{ title|default("Contre Pensées") }}</title>
 
-    {% import "templates/mixins/flash-messages.html" as FM %}
-
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" />
@@ -36,7 +34,7 @@
 <body class="responsive">
     <div class="all_content">
 
-        {% include "templates/mixins/fullwidth-navbar.html" %}
+        {% include "templates/mixins/block-navbar.html" %}
 
         <div class="dima-main">
 
@@ -59,18 +57,18 @@
 
         <div class="top-footer">
             <div class="container">
-                {% include "templates/mixins/top-footer.html" %}
+                {% include "templates/mixins/footer-top.html" %}
             </div>
         </div>
 
         <footer role="contentinfo" class="dima-footer">
             <div class="container">
-                {% include "templates/mixins/second-footer.html" %}
+                {% include "templates/mixins/footer-second.html" %}
             </div>
         </footer>
     </div>
 
-    {% include "templates/mixins/javascript.html" %}
+    {% include "templates/mixins/block-javascript.html" %}
     {% block js %}{% endblock %}
     <script src="/js/main.js?time=256747936"></script>
 </body>
