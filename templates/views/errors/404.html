@@ -1,14 +1,15 @@
 {% extends "templates/layouts/list.html" %}
 
+{% block page_title %}
+    {% set title = errorTitle %}
+    {% include "templates/mixins/title-big.html" %}
+{% endblock %}
+
 {% block content %}
 <div class="page-section-content">
     <div class="container text-center not-found">
 
-        <h6>On a rien trouvé qui ressemble à {{  }}  :'-(</h6>
-
-        <div class="double-clear"></div>
-
-        <h1>Page not found</h1>
+        <h6>On a rien trouvé qui ressemble à {{ errorMsg }} :'-(</h6>
         <div class="double-clear"></div>
 
         <form action="/search" method="get" name="searchForm" class="form-small form search-form">

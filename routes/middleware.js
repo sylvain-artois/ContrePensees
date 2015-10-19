@@ -85,13 +85,15 @@ exports.requireUser = function(req, res, next) {
 exports.initErrorHandlers = function(req, res, next) {
 
     res.serverError = function(err, title, message) {
+
         var title = "Le serveur a planté",
-            message = "";
+            message = "Encore un développeur qui sait pas coder";
 
         if (err instanceof Error) {
             message = err.message;
             err = err.stack;
         }
+
         res.status(500).render('errors/500', {
             err: err,
             errorTitle: title,
