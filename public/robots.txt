@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /keystone*
+Sitemap: http://contrepensees.fr/sitemap.xml
+
