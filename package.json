@@ -11,7 +11,7 @@
     "consolidate": "^0.10.0",
     "dotenv": "^1.1.0",
     "ent": "^2.2.0",
-    "forever": "^0.15.1",
+    "forever": "^0.14.2",
     "grunt": "^0.4.4",
     "grunt-applymin": "^0.2.0",
     "grunt-cli": "^0.1.13",
