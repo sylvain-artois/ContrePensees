@@ -18,6 +18,17 @@ User.schema.virtual('canAccessKeystone').get(function() {
     return this.isAdmin;
 });
 
+User.schema.virtual('url').get(function() {
+    if(this.name.full){
+
+        var nameArray = this.name.full
+
+        var nameString = nameArray.join('-')
+
+        return nameString.toLowerCase();
+    }
+});
+
 User.relationship({ ref: 'Post',    path: 'author' });
 
 User.defaultColumns = 'name, avatar, email, isAdmin';

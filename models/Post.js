@@ -12,6 +12,7 @@ var Types = keystone.Field.Types,
     });
 
 Post.add({
+
     key: { type: Types.Text, required: true,  initial: true },
     type: { type: Types.Select, options: 'text, quote, photo, gallery, medium', default: 'photo', index: true, initial: true },
 
@@ -57,7 +58,22 @@ Post.schema.virtual('searchRelated').get(function() {
 });
 
 Post.schema.virtual('url').get(function() {
-    return commonlib.postUrl(this);
+    var urlParts = ['dye-pop'];
+    if (this.author && this.author.url) {
+        console.log(this.author.url);
+        urlParts[0] = this.author.url;
+    }
+
+    if (this.categories && this.categories.length > 0) {
+        console.log(this.categories[0].name.toLowerCase());
+        urlParts[1] = this.categories[0].name.toLowerCase();
+    }
+
+    urlParts.push(this.slug);
+
+    console.log(urlParts);
+
+    return '/' + urlParts.join('/');
 });
 
 Post.schema.virtual('fullUrl').get(function() {
