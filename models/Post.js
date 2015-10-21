@@ -48,7 +48,7 @@ Post.schema.virtual('randomPhoto').get(function() {
 });
 
 Post.schema.virtual('tagsArray').get(function() {
-    return (this.tags) ? this.tags.split(',') : [];
+    return (this.tags) ? this.tags.split(',').map(function(s){return s.trim()}) : [];
 });
 
 Post.schema.virtual('searchRelated').get(function() {
@@ -61,12 +61,9 @@ Post.schema.virtual('searchRelated').get(function() {
         return this.quote + " " + this.writer;
     }
 
-    return [].push.apply(
+    return commonlib.handleKeyWords(
         this.title.split(' '),
-        this.brief.split(' ').concat(this.tagsArray)
-    ).filter(function(value, index, self) {
-            return self.indexOf(value) === index;
-        }
+        this.tagsArray
     );
 });
 

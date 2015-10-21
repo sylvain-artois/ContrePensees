@@ -62,5 +62,24 @@ module.exports = {
     randomPhoto: function() {
         var randomPhotoId = this.shuffle(this.range(6))[0] + 1;
         return defaultRandPhotoPath.replace("[ID]", randomPhotoId);
+    },
+    /**
+     *
+     * @param array1
+     * @param array2
+     * @returns {string}
+     */
+    handleKeyWords: function(array1, array2) {
+        "use strict";
+
+        var toReturn =[];
+        toReturn = toReturn.concat(array1, array2);
+        toReturn = toReturn.join('~').toLowerCase().replace(/,/g, '').split('~');
+        toReturn = toReturn.filter(function(value, index, self) {
+                return value.length > 1 && self.indexOf(value) == index;
+            }
+        );
+
+        return toReturn.join(' ');
     }
 };
