@@ -7,7 +7,7 @@
     <div class="di_2_of_3 hidden-tm">
         <ul class="dima-menu">
             {% for link in navLinks %}
-            <li class="{{ 'active' if link.key == section else '' }}">
+            <li class="{% if link.key == section %}current{% endif %}">
                 <a data-animated-link="fadeOut" href="{{ link.href }}">{{ link.label }}</a>
             </li>
             {% endfor %}

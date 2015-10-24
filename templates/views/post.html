@@ -1,11 +1,11 @@
-{% extends "templates/layouts/content.html" %}
+{% extends "../layouts/content.html" %}
 
-{% import "templates/mixins/post-macro.html" as postHelper %}
-{% import "templates/mixins/post-macroShortBox.html" as postHelperBoxed %}
+{% import "../mixins/post-macro.html" as postHelper %}
+{% import "../mixins/post-macroShortBox.html" as postHelperBoxed %}
 
 {% block page_title %}
 {% set title = ( data.mainPost.title if data.mainPost else "Bienvenue" ) %}
-{% include "templates/mixins/title-big.html" %}
+{% include "../mixins/title-big.html" %}
 {% endblock %}
 
 {% block content_navigation %}
@@ -46,7 +46,7 @@
 {% block post_related %}
     {% set titleBloc = "Vous aimerez peut-être aussi" %}
     {% set posts     = data.relatedposts %}
-    {% include "templates/mixins/posts-aside.html" %}
+    {% include "../mixins/posts-aside.html" %}
 {% endblock %}
 
 {% block js %}

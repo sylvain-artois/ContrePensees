@@ -1,9 +1,7 @@
-{% set title_bkg = ( title_bkg if title_bkg else "/images/frontSlider/2015-07-20-7.jpg" ) %}
-
 <section class="title_container">
     <div class="page-section-content">
         <div class="background-image-hide parallax-background">
-            <img class="background-image" alt="Background Image" src="{{ title_bkg }}" />
+            <img class="background-image" alt="Background Image" src="{{ title_bkg|default('/images/frontSlider/2015-07-20-7.jpg') }}" />
         </div>
         <div class="container page-section text-center">
             <h1 class="uppercase undertitle">{{ title }}</h1>

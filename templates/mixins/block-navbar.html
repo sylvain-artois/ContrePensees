@@ -19,7 +19,7 @@
                 <nav role="navigation" class="clearfix">
                     <ul class="dima-nav sf-menu">
                         {% for link in navLinks %}
-                        <li class="{{ 'current' if link.key == section else '' }}">
+                        <li class="{% if link.key == section %}current{% endif %}">
                             <a href="{{ link.href }}">{{ link.label }}</a>
                             {% if link.label == 'Cogito' %}
                             <ul class="sub-menu nav-menu sf-menu">
@@ -36,6 +36,7 @@
                             {% endif %}
                         </li>
                         {% endfor %}
+
                         <li class="search-btn">
                             <a href="#"><i class="fa fa-search"></i></a>
                         </li>

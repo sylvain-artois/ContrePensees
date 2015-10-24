@@ -1,3 +1,5 @@
+{% import "../mixins/post-macroShortBox.html" as postHelperBoxed %}
+
 <div class=" di_1_of_4 first widget">
     <h5 class="widget-titel uppercase">à propos</h5>
     <div class="widget-content">
@@ -7,12 +9,10 @@
 
     <div class="widget-content">
         <div class="dima-social-footer social-media social-medium">
-            {% include "templates/mixins/block-socialnetwork.html" %}
+            {% include "../mixins/block-socialnetwork.html" %}
         </div>
     </div>
 </div>
-
-{% import "templates/mixins/post-macroShortBox.html" as postHelperBoxed %}
 
 <div class=" di_1_of_4 widget">
     <h5 class="widget-titel uppercase">Featured posts</h5>
