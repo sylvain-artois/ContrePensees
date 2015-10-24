@@ -46,9 +46,13 @@ keystone.set('locals', {
     editable: keystone.content.editable
 });
 
-// Load your project's Routes
-
 keystone.set('routes', require('./routes'));
+
+keystone.set('nav', {
+    'administration':['enquiries', 'users'],
+    'category': 'categories',
+    'post': 'posts'
+});
 
 // Setup common locals for your emails. The following are required by Keystone's
 // default email templates, you may remove them if you're using your own.
@@ -85,16 +89,6 @@ keystone.set('email rules', [{
 // Load your project's email test routes
 
 keystone.set('email tests', require('./routes/emails'));
-
-// Configure the navigation bar in Keystone's Admin UI
-
-keystone.set('nav', {
-    'administration':['enquiries', 'users'],
-    'category': 'categories',
-    'post': 'posts'
-});
-
-// Start Keystone to connect to your database and initialise the web server
 
 keystone.start();
 
