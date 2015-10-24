@@ -1,9 +1,9 @@
-{% extends "templates/layouts/list.html" %}
+{% extends "../layouts/list.html" %}
 
-{% import "templates/mixins/post-macro.html" as postHelper %}
+{% import "../mixins/post-macro.html" as postHelper %}
 
 {% block intro %}
-{% include "templates/mixins/title-quote.html" %}
+{% include "../mixins/title-quote.html" %}
 {% endblock %}
 
 {% block content %}
@@ -30,7 +30,7 @@
                         {{ postHelper.post(post) }}
                     {% endfor %}
 
-                    {% include "templates/mixins/block-pager.html" %}
+                    {% include "../mixins/block-pager.html" %}
 
                 {% endif %}
             {% endif %}

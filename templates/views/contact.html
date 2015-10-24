@@ -1,9 +1,9 @@
-{% extends "templates/layouts/content.html" %}
+{% extends "../layouts/content.html" %}
 
 {% block page_title %}
     {% set title = "Je réponds à tout le monde" %}
     {% set title_bkg = "/images/frontSlider/2015-07-20-5.jpg" %}
-    {% include "templates/mixins/title-big.html" %}
+    {% include "../mixins/title-big.html" %}
 {% endblock %}
 
 {% block post_content %}
@@ -79,7 +79,7 @@
         <div class="widget">
             <div class="widget-content">
                 {% set social_class = "social-media social-big" %}
-                {% include "templates/mixins/block-socialnetwork.html" %}
+                {% include "../mixins/block-socialnetwork.html" %}
             </div>
         </div>
     </aside>

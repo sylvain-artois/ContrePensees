@@ -16,15 +16,27 @@
       </li>
     {% endif %}
 
-    {% for p in data.posts.pages %}
+    {# for p in data.posts.pages %}
       <li>
-        {% set class = ( 'current-page' if data.posts.currentPage == p else "" ) %}
-        {% set page = ( (data.posts.totalPages if i else 1) if p == "..." else p ) %}
+        {% if data.posts.currentPage == p %}
+            {% set class = 'current-page' %}
+        {% else %}
+            {% set class = '' %}
+        {% endif %}
+        {% if p == "..." %}
+            {% if i %}
+                {% set page = data.posts.totalPages %}
+            {% else %}
+                {% set page = 1 %}
+            {% endif %}
+        {% else %}
+            {% set page = p %}
+        {% endif %}
         <a href="?page={{ page }}" class="{{ class }}">
           <span>{{ p }}</span>
         </a>
       </li>
-    {% endfor %}
+    {% endfor #}
 
     {% if data.posts.next %}
       <li>
