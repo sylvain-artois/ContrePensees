@@ -11,7 +11,7 @@
 # To use it as service on Ubuntu:
 # cp contrepensees.sh /etc/init.d/contrepensees
 # chmod a+x /etc/init.d/contrepensees
-# update-rc.d contrepensees defaults
+# insserv contrepensees
 #
 # Then use commands:
 # service contrepensees <command (start|stop|etc)>
