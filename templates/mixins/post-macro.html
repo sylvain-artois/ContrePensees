@@ -1,251 +1,165 @@
-{% macro post(post, full=false) %}
+{% macro post(post, full) %}
 <article role="article" class="post" itemscope itemType="http://schema.org/BlogPosting">
+
     {% if post.type == 'quote' %}
-    {{ quote(post,full) }}
+        <blockquote class="blog-style">
+            <div class="topaz-border"></div>
+            <div>{{ post.quote|safe }}</div>
+            {% if post.writer %}
+                <cite>{{ post.writer }}</cite>
+            {% endif %}
+        </blockquote>
     {% elif post.type == 'medium' %}
-    {{ medium(post,full) }}
-    {% elif post.type == 'photo' %}
-    {{ photo(post,full) }}
-    {% elif post.type == 'gallery' %}
-    {{ gallery(post,full) }}
-    {% else %}
-    {{ text(post,full) }}
-    {% endif %}
-</article>
-{% endmacro %}
-
-{####################################
- # quote
- #}
-{% macro quote(post, full=false) %}
-<blockquote class="blog-style">
-    <div class="topaz-border"></div>
-    <p>{{ post.quote }}</p>
-    {% if post.writer %}
-    <cite>
-        <a data-animated-link="fadeOut" href="">{{ post.writer }}</a>
-    </cite>
-    {% endif %}
-</blockquote>
-<div class="post-meta box">
-    {{ postMetaBox(post) }}
-</div>
-{% if full %}
-<div class="post-content box">
-
-    {% if post.caption %}
-    {{ post.caption }}
-    {% endif %}
-
-    {{ socialShare(post) }}
-
-</div>
-{% endif %}
-{% endmacro %}
-
-{####################################
- # medium
- #}
-{% macro medium(post, full=false) %}
-<div class="post-img pad">
-    {{ post.medium|safe }}
-</div>
-<div class="post-meta box">
-    {{ postMetaBox(post) }}
-</div>
-{% if full %}
-<div class="post-content box">
-
-    {% if post.caption %}
-    {{ post.caption|safe }}
-    {% endif %}
-
-    {{ socialShare() }}
-</div>
-{% endif %}
-{% endmacro %}
-
-{####################################
- # photo
- #}
-{% macro photo(post, full=false) %}
-<div class="post-img">
-    {% if full %}
-    <img src="{{ post._.image.fit(1200) }}" alt="{{ post.tags }}" />
-    {% else %}
-    <img src="{{ post._.image.fill(1200,300, { 'gravity': 'face:center' }) }}" alt="{{ post.tags }}" />
-    <div class="link_overlay">
-        <ul class="icons-media">
-            <li>
-                <a href="{{ post.url }}">
-                    <i class="fa fa-link"></i>
-                </a>
-            </li>
-        </ul>
-        <span class="topaz-hover"></span>
-    </div>
-    {% endif %}
-</div>
-<div class="post-meta box">
-    {{ postMetaBox(post) }}
-</div>
-{% if full %}
-<div class="post-content box">
-
-    {% if post.caption %}
-    {{ post.caption|safe }}
-    {% endif %}
-
-    {{ socialShare(post) }}
-</div>
-{% endif %}
-{% endmacro %}
-
-{####################################
- # gallery
- #}
-{% macro gallery(post, full=false) %}
-{% for image in post.images %}
-{% if loop.first %}
-<div class="post-img">
-    {% if full %}
-    <div class="flexslider sample-slide small-control" data-animation="fade" data-loop="true">
-        <ul class="slides">
-            {% for image in post.images %}
-            <li class="slide-item">
-                <div class="flex-img">
-                    <img src="{{ image.url }}" />
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% else %}
-    <img src="{{ image.fill(1200,300, { 'gravity': 'face' }) }}" alt="{{ post.tags }}" />
-    <div class="link_overlay">
-        <ul class="icons-media">
-            <li>
-                <a href="{{ post.url }}">
-                    <i class="fa fa-link"></i>
-                </a>
-            </li>
-        </ul>
-        <span class="topaz-hover"></span>
-    </div>
-    {% endif %}
-</div>
-{% endif %}
-{% endfor %}
-<div class="post-meta box">
-    {{ postMetaBox(post) }}
-</div>
-{% if full %}
-<div class="post-content box">
-
-    {% if post.caption %}
-    {{ post.caption }}
-    {% endif %}
-
-    {{ socialShare(post) }}
-</div>
-{% endif %}
-{% endmacro %}
-
-{####################################
- # text
- #}
-{% macro text(post, full=false) %}
-{% if post.image.exists %}
-<div class="post-img">
-    {% if full %}
-        <img src="{{ post._.image.fit(1200) }}" />
-    {% else %}
-        <img src="{{ post._.image.fill(1200, 300, { 'gravity': 'face:center' }) }}" />
-        <div class="link_overlay">
-            <ul class="icons-media">
-                <li>
-                    <a href="{{ post.url }}">
-                        <i class="fa fa-link"></i>
-                    </a>
-                </li>
-            </ul>
-            <span class="topaz-hover"></span>
+        <div class="post-img pad">
+            {{ post.medium|safe }}
         </div>
-    {% endif %}
-</div>
-{% endif %}
-<div class="post-meta box">
-    {{ postMetaBox(post) }}
-</div>
-<div class="post-content text-start box">
-    <h4 itemprop="headline">
-        <a href="{{ post.url }}">{{ post.title }}</a>
-    </h4>
-    <p>{{ post.brief|safe }}</p>
-
-    {% if full %}
-    {{ post.content|safe }}
-    {{ socialShare(post) }}
-    {% endif %}
-</div>
-{% endmacro %}
-
-{####################################
- # socialShare
- #}
-{% macro socialShare(post) %}
-<div class="social-media dima-social-post social-medium">
-    <ul class="inline clearfix">
-        <li>
-            <a href="#">
-                <i class="fa fa-tumblr"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-twitter"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-pinterest"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-facebook"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-google-plus"></i>
-            </a>
-        </li>
-    </ul>
-</div>
-{% endmacro %}
-
-{####################################
- # Post meta box
- #}
-{% macro postMetaBox(post) %}
-<ul>
-    <li class="post-on">
-        Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.format("Do MMM YYYY") }}</time>
-
-        {% if post.categories and post.categories.length %}
-            {% for cat in post.categories %}
-                <a href="/dye-pop/{{ cat.key }}">{{ cat.name }}</a>
-                {% if loop.index < post.categories.length %}, {% endif %}
-            {% endfor %}
+    {% elif post.type == 'photo' %}
+        <div class="post-img">
+            {% if full %}
+                <img src="{{ post._.image.fit(1200) }}" />
+            {% else %}
+                <img src="{{ post._.image.fill(1200,300, { 'gravity': 'face:center' }) }}" />
+                <div class="link_overlay">
+                    <ul class="icons-media">
+                        <li>
+                            <a href="{{ post.url }}">
+                                <i class="fa fa-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="topaz-hover"></span>
+                </div>
+            {% endif %}
+        </div>
+    {% elif post.type == 'gallery' %}
+        {% for image in post.images %}
+            {% if loop.first %}
+                <div class="post-img">
+                    {% if full %}
+                        <div class="flexslider sample-slide small-control" data-animation="fade" data-loop="true">
+                            <ul class="slides">
+                                {% for image in post.images %}
+                                    <li class="slide-item">
+                                        <div class="flex-img">
+                                            <img src="{{ image.url }}" />
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <img src="{{ image.fill(1200,300, { 'gravity': 'face' }) }}" />
+                        <div class="link_overlay">
+                            <ul class="icons-media">
+                                <li>
+                                    <a href="{{ post.url }}">
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <span class="topaz-hover"></span>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% if post.image.exists %}
+            <div class="post-img">
+                {% if full %}
+                    <img src="{{ post._.image.fit(1200) }}" />
+                {% else %}
+                    <img src="{{ post._.image.fill(1200, 300, { 'gravity': 'face:center' }) }}" />
+                    <div class="link_overlay">
+                        <ul class="icons-media">
+                            <li>
+                                <a href="{{ post.url }}">
+                                    <i class="fa fa-link"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <span class="topaz-hover"></span>
+                    </div>
+                {% endif %}
+            </div>
         {% endif %}
-    </li>
-    <li class="post-comments">
-        {% if post.tagsArray and post.tagsArray.length %}
-            {% for tag in post.tagsArray %}
-                <span class="label" style="color: #5e5d57;"><i class="fa fa-tag"></i>&nbsp;{{ tag }}</span>
-            {% endfor %}
+    {% endif %}
+
+    <div class="post-meta box">
+        <ul>
+            <li class="post-on">
+                Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.format("Do MMM YYYY") }}</time>
+
+                {% if post.categories and post.categories.length %}
+                    {% for cat in post.categories %}
+                        <a href="{{ cat.url }}">{{ cat.name }}</a>
+                        {% if loop.index < post.categories.length %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </li>
+            <li class="post-comments">
+                {% if post.tagsArray and post.tagsArray.length %}
+                    {% for tag in post.tagsArray %}
+                        <span class="label" style="color: #5e5d57;">
+                            <i class="fa fa-tag"></i>&nbsp;{{ tag }}
+                        </span>
+                    {% endfor %}
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+
+    {% if post.type == 'text' or full %}
+    <div class="post-content box">
+
+        {% if post.type == 'text' %}
+
+            <h4 itemprop="headline">
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </h4>
+            <p>{{ post.brief|safe }}</p>
+
+            {% if full %}
+            {{ post.content|safe }}
+            {% endif %}
+
+        {% elif post.caption %}
+            {{ post.caption|safe }}
         {% endif %}
-    </li>
-</ul>
+
+        {% if full %}
+            <div class="social-media dima-social-post social-medium">
+                <ul class="inline clearfix">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-tumblr"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-pinterest"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</article>
 {% endmacro %}

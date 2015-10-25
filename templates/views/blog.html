@@ -27,7 +27,7 @@
                 {% if data.posts.results.length %}
 
                     {% for post in data.posts.results %}
-                        {{ postHelper.post(post) }}
+                        {{ postHelper.post(post, false) }}
                     {% endfor %}
 
                     {% include "../mixins/block-pager.html" %}

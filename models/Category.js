@@ -9,5 +9,9 @@ Category.add({
     header: { type: Types.Html, wysiwyg: true, height: 200 },
 });
 
+Category.schema.virtual('url').get(function() {
+    return (this.name == 'Software') ? '/sylvain-artois/software' : '/dye-pop/' + this.name;
+});
+
 Category.relationship({ ref: 'Post', path: 'categoriesPath' });
 Category.register();
