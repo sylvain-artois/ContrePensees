@@ -33,8 +33,9 @@ keystone.init({
     'wysiwyg images': true,
     'wysiwyg cloudinary images': true,
     'wysiwyg menubar': true,
-    'wysiwyg additional buttons': ['emoticons'],
-    'wysiwyg additional plugins': ['emoticons']
+    'wysiwyg skin': 'lightgray',
+    'wysiwyg additional buttons': 'emoticons searchreplace charmap',
+    'wysiwyg additional plugins': 'emoticons searchreplace charmap'
 });
 
 keystone.import('models');
