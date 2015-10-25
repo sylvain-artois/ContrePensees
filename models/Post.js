@@ -68,11 +68,12 @@ Post.schema.virtual('searchRelated').get(function() {
 });
 
 Post.schema.virtual('url').get(function() {
-    var url = '/dye-pop/post/' + this.slug;
+    var that = this,
+        url = '/dye-pop/post/' + this.slug;
     if (this.categories && this.categories.length) {
         this.categories.forEach(function(category) {
-            if (category && category.name=='Software') {
-                return '/sylvain-artois/software/' + this.slug;
+            if (category.name == 'Software') {
+                url = '/sylvain-artois/software/' + that.slug;
             }
         });
     }
