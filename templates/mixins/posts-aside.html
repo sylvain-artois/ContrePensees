@@ -8,7 +8,7 @@
         <section class="boxed-blog">
             {% for post in posts %}
                 {% set loopIndex = loop.index %}
-                {% include "../mixins/post-thumbnail.html" %}
+                {% include "./post-thumbnail.html" %}
             {% endfor %}
         </section>
 

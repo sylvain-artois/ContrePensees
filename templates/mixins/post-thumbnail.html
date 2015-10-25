@@ -1,3 +1,3 @@
-{% import "../mixins/post-macroBoxed.html" as postHelper %}
+{% import "./post-macroBoxed.html" as postHelper %}
 
-{{ postHelper.boxedPost(post, index=loopIndex) }}
+{{ postHelper.boxedPost(post, true, loopIndex) }}

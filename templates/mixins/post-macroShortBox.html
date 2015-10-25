@@ -2,39 +2,19 @@
     <h6 class="uppercase">{{ post.type }}</h6>
 
     {% if post.type == 'quote' %}
-        {{ shortBoxedQuote(post) }}
+        <p>{{ post.quote|striptags|truncate(150) }}</p>
     {% elif post.type == 'medium' %}
-        {{ shortBoxedMedium(post) }}
+        <p>{{ post.captionText | truncate(150) }}</p>
     {% elif post.type == 'photo' %}
-        {{ shortBoxedPhoto(post) }}
+        <img src="{{ post._.image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
     {% elif post.type == 'gallery' %}
-        {{ shortBoxedGallery(post) }}
+        {% for image in post.images %}
+            {% if loop.index == 1 %}
+                <img src="{{ image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+            {% endif %}
+        {% endfor %}
     {% else %}
-        {{ shortBoxedText(post) }}
+        <p>{{ post.title }}</p>
     {% endif %}
 
-{% endmacro %}
-
-{% macro shortBoxedQuote(post) %}
-    <p>{{ post.quote | truncate(150) }}</p>
-{% endmacro %}
-
-{% macro shortBoxedMedium(post) %}
-    <p>{{ post.captionText | truncate(150) }}</p>
-{% endmacro %}
-
-{% macro shortBoxedPhoto(post) %}
-    <img src="{{ post._.image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
-{% endmacro %}
-
-{% macro shortBoxedGallery(post) %}
-    {% for image in post.images %}
-        {% if loop.index == 1 %}
-            <img src="{{ image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
-        {% endif %}
-    {% endfor %}
-{% endmacro %}
-
-{% macro shortBoxedText(post) %}
-    <p>{{ post.title }}</p>
 {% endmacro %}

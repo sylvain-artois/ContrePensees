@@ -1,11 +1,11 @@
 {% extends "../layouts/content.html" %}
 
 {% import "../mixins/post-macro.html" as postHelper %}
-{% import "../mixins/post-macroShortBox.html" as postHelperBoxed %}
+{%  import "../mixins/post-macroShortBox.html" as postHelperBoxed  %}
 
 {% block page_title %}
-{% set title = ( data.mainPost.title if data.mainPost else "Bienvenue" ) %}
-{% include "../mixins/title-big.html" %}
+    {% if data.mainPost.title %}{% set title = data.mainPost.title %}{% else %}{% set title = "Bienvenue" %}{% endif %}
+    {% include "../mixins/title-big.html" %}
 {% endblock %}
 
 {% block content_navigation %}
@@ -37,7 +37,7 @@
 {% endblock %}
 
 {% block post_content %}
-{{ postHelper.post(data.mainPost,full=true) }}
+{{ postHelper.post(data.mainPost, true) }}
 {% endblock %}
 
 {% block post_author %}
