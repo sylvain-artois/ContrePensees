@@ -23,10 +23,9 @@ NAME=contrepensees                       # Unique name for the application
 SOURCE_DIR=/srv/contrepensees.fr         # Location of the application source
 COMMAND=node                             # Command to run
 SOURCE_NAME=keystone.js                  # Name os the applcation entry point script
-USER=git                                 # User for process running
+USER=www-data                                 # User for process running
 NODE_ENVIROMENT=production               # Node environment
 UUID=contrepensees
-
 pidfile=/var/run/$NAME.pid
 logfile=/var/log/$NAME.log
 forever=forever
@@ -60,20 +59,20 @@ status() {
 }
 
 stop() {
-    echo -n "Shutting down $NAME node instance : "
-    /bin/su - $USER  -c "$forever stop $SOURCE_NAME"
+#    echo -n "Shutting down $NAME node instance : "
+#    /bin/su - $USER  -c "$forever stop $SOURCE_NAME"
 
-#if [ -f $PIDFILE ]; then
-#        echo "Shutting down $NAME"
-#        # Tell Forever to stop the process.
-#        forever stop $APPLICATION_PATH 2>&1 > /dev/null
-#        # Get rid of the pidfile, since Forever won't do that.
-#        rm -f $PIDFILE
-#        RETVAL=$?
-#    else
-#        echo "$NAME is not running."
-#        RETVAL=0
-#    fi
+    if [ -f $PIDFILE ]; then
+        echo "Shutting down $NAME"
+        # Tell Forever to stop the process.
+        forever stop $APPLICATION_PATH 2>&1 > /dev/null
+        # Get rid of the pidfile, since Forever won't do that.
+        rm -f $PIDFILE
+        RETVAL=$?
+    else
+        echo "$NAME is not running."
+        RETVAL=0
+    fi
 }
 
 case "$1" in
