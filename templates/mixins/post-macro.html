@@ -4,7 +4,7 @@
     {% if post.type == 'quote' %}
         <blockquote class="blog-style">
             <div class="topaz-border"></div>
-            <div>{{ post.quote|safe }}</div>
+            <p>{{ post.quote|safe }}</p>
             {% if post.writer %}
                 <cite>{{ post.writer }}</cite>
             {% endif %}
