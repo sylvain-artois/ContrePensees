@@ -4,7 +4,7 @@
 {%  import "../mixins/post-macroShortBox.html" as postHelperBoxed  %}
 
 {% block page_title %}
-    {% if data.mainPost.title %}{% set title = data.mainPost.title %}{% else %}{% set title = "Bienvenue" %}{% endif %}
+    {% if data.mainPost and "title" in data.mainPost %}{% set title = data.mainPost.title %}{% else %}{% set title = "Bienvenue" %}{% endif %}
     {% include "../mixins/title-big.html" %}
 {% endblock %}
 
