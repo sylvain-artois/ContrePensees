@@ -84,10 +84,10 @@ exports.requireUser = function(req, res, next) {
  */
 exports.initErrorHandlers = function(req, res, next) {
 
-    res.serverError = function(err, title, message) {
+    res.serverError = function(err) {
 
         var title = "Le serveur a planté",
-            message = "Encore un développeur qui sait pas coder";
+            message = "J'ai encore voulu coder trop vite";
 
         if (err instanceof Error) {
             message = err.message;
@@ -101,10 +101,10 @@ exports.initErrorHandlers = function(req, res, next) {
         });
     };
 
-    res.notfound = function(title, message) {
+    res.notfound = function() {
         res.status(404).render('errors/404', {
-            errorTitle: title,
-            errorMsg: message
+            errorTitle: "Vous êtes perdu ...",
+            errorMsg: req.url
         });
     };
 
