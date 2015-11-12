@@ -11,7 +11,8 @@ exports = module.exports = function(req, res) {
     };
     locals.data = {
         categories: res.locals.categories,
-        env: keystone.get('env')
+        env: keystone.get('env'),
+        isBlogType: true
     };
 
     // Load the current post

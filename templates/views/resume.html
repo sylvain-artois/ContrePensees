@@ -9,18 +9,79 @@
 {% endblock %}
 
 {% block post_content %}
-<div class="container text-center ">
-    <h2 class="uppercase">Coming soon</h2>
 
-    <div class="topaz-line">
-        <i class="di-separator"></i>
+    <h2 class="text-center">My work timeline</h2>
+    <div class="double-clear"></div>
+
+    <div class="dima-timeline clearfix dima-timeline-blog boxed-blog blog-list">
+
+        <div class="line"></div>
+
+        <div class="timeline_element-left">
+
+            <div class="timeline_element-content">
+                <div class="post">
+                    <div class="post-img">
+                        <img src="images/posts/post-list-1.jpg" alt="Brand Consulting">
+                        <div class="link_overlay">
+                            <ul class="icons-media">
+                                <li>
+                                    <a data-animated-link="fadeOut" href="#">
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <span class="topaz-hover"></span>
+                        </div>
+                    </div>
+                    <div class="post-meta box">
+                        <ul>
+                            <li class="post-on">Posted by Admin on 09 Sept 2014</li>
+                            <li class="post-view"><i class="fa fa-eye"></i> 122 Views</li>
+                            <li class="post-comments"><i class="fa fa-comments"></i> 12 Comments</li>
+                        </ul>
+                    </div>
+                    <div class="post-content box text-start">
+                        <h4>
+                            <a data-animated-link="fadeOut" href="#">The Psychology of Branding</a>
+                        </h4>
+                        <p>Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="timeline_element-right">
+
+            <div class="timeline_element-content">
+                <div class="post ">
+                    <blockquote class="blog-style">
+                        <div class="topaz-border"></div>
+                        <p>A designer is an emerging synthesis of artist, inventor, mechanic</p>
+                        <cite>
+                            <a data-animated-link="fadeOut" href="">Buckminster Fuller</a>
+                        </cite>
+                    </blockquote>
+                    <div class="post-meta box">
+                        <ul>
+                            <li class="post-on">Posted by Admin on 09 Sept 2014</li>
+                            <li class="post-view"><i class="fa fa-eye"></i> 122 Views</li>
+                            <li class="post-comments"><i class="fa fa-comments"></i> 12 Comments</li>
+                        </ul>
+                    </div>
+                    <div class="post-content box text-start">
+                        <h4>
+                            <a data-animated-link="fadeOut" href="#">The Psychology of Branding</a>
+                        </h4>
+                        <p>Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-
-    <p>We're building a great new CV</p>
-    <div class="clear-section"></div>
-
-</div>
-<div class="clear-section"></div>
 {% endblock %}
 
 {% block post_author %}
@@ -33,7 +94,5 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-        var application = {options: { slide: {owl: true, flex:true}}};
-    </script>
+    <script>var application = {options: { slide: {owl: true, flex:true}}};</script>
 {% endblock %}

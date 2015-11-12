@@ -13,7 +13,8 @@ exports = module.exports = function(req, res) {
     locals.enquirySubmitted = false;
     locals.data = {
         categories: res.locals.categories,
-        env: keystone.get('env')
+        env: keystone.get('env'),
+        isBlogType: false
     };
 
     // On POST requests, add the Enquiry item to the database

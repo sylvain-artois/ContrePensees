@@ -9,7 +9,8 @@ exports = module.exports = function(req, res) {
     locals.data         = {
         posts: [],
         categories: res.locals.categories,
-        env: keystone.get('env')
+        env: keystone.get('env'),
+        isBlogType: true
     };
 
     new keystone.View(req, res)
