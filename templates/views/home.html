@@ -68,11 +68,10 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if data.env == 'production' %}
-        <script src="/build.js"></script>
-    {% else %}
-        <script src="/jspm_packages/system.js"></script>
-        <script src="/config.js"></script>
-        <script>System.import('js/home.js');</script>
+    <script src="/jspm_packages/system.js"></script>
+    <script src="/config.js"></script>
+    {% if data.env == 'production' or true %}
+        <script src="/vendor/bundle/home.js"></script>
     {% endif %}
+    <script>System.import('js/home.js');</script>
 {% endblock %}
