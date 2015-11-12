@@ -17,7 +17,7 @@ keystone.pre('render', middleware.flashMessages);
 
 // Handle other errors
 keystone.set('500', function(err, req, res, next) {
-    res.serverError(err, title, message);
+    res.serverError(err);
 });
 
 // Handle 404 errors
