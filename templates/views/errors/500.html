@@ -1,7 +1,11 @@
 {% extends "../layouts/list.html" %}
 
 {% block page_title %}
-    {% set title = errorTitle %}
+    {% if errorTitle %}
+        {% set title = errorTitle %}
+    {% else %}
+        {% set title = "Ooops" %}
+    {% endif %}
     {% include "../mixins/title-big.html" %}
 {% endblock %}
 
