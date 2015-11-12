@@ -8,7 +8,7 @@
 <head>
     {% include "../mixins/block-head.html" %}
 </head>
-<body class="responsive">
+<body class="responsive{% block pageclass %}{% endblock %}">
     <div class="all_content">
 
         {% include "../mixins/block-navbar.html" %}
@@ -19,18 +19,6 @@
 
     </div>
 
-    {% set isProd = data.env == 'production' %}
-    <script src="/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
-    <script src="/vendor/jquery.themepunch.min.js"></script>
-    {% if isProd %}
-    <script src="/vendor/jquery-plugin-easing-superfish.min.js"></script>
-    {% else %}
-    <script src="/vendor/jquery.easing.js"></script>
-    <script src="/vendor/superfish.js"></script>
-    {% endif %}
-    <script>
-    var application = {options: {slide: {revolution: true}}};
-    </script>
-    <script src="/js/main.js?time=256747936"></script>
+    {% block javascript %}{% endblock %}
 </body>
 </html>

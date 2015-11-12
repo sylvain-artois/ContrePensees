@@ -1,5 +1,7 @@
 {% extends "../layouts/home.html" %}
 
+{% block pageclass %} home{% endblock %}
+
 {% block slider %}
 <div class="tp-banner fullscreenOnePage">
     <ul>
@@ -63,4 +65,14 @@
 
     </ul>
 </div>
+{% endblock %}
+
+{% block javascript %}
+    {% if data.env == 'production' %}
+        <script src="/build.js"></script>
+    {% else %}
+        <script src="/jspm_packages/system.js"></script>
+        <script src="/config.js"></script>
+        <script>System.import('js/home.js');</script>
+    {% endif %}
 {% endblock %}

@@ -13,6 +13,9 @@ public/css/*
 public/vendor/*
 !public/vendor/.gitkeep
 public/js/vendor/*
+public/jspm_packages
+public/build.js
+public/build.js.map
 
 #Revolution slider assets
 public/assets
