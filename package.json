@@ -5,6 +5,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "autoprefixer": "^6.0.3",
+    "babel": "^6.1.18",
     "cache-manager": "^1.2.0",
     "cache-manager-memcached": "0.0.3",
     "connect-mongo": "^0.8.2",
@@ -30,6 +31,7 @@
     "node-sass": "^2.1.1",
     "node-sass-middleware": "^0.5.0",
     "swig": "^1.4.2",
+    "systemjs": "^0.19.5",
     "time-grunt": "^0.3.1",
     "underscore": "^1.8.0"
   },

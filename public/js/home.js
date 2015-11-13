@@ -1,5 +1,5 @@
-import {OffCanvasMenu} from 'js/lib/OffCanvasMenu.js'
-import {Slider} from 'js/lib/Slider.js'
+import {OffCanvasMenu} from 'lib/OffCanvasMenu.js'
+import {Slider} from 'lib/Slider.js'
 
 new OffCanvasMenu({
         name: 'sidr-main',

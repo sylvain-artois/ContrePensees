@@ -1,8 +1,8 @@
-import $            from 'jquery';
-import greensock    from 'greensock';
-import Hammer       from 'hammer';
-import wait4image   from 'wait4image';
-import revolution   from 'sliderrevolution';
+import $                from 'jquery';
+import TweenLite        from 'greensock';
+import Hammer           from 'hammer';
+import waitforimages    from 'waitforimages';
+import sliderrevolution from 'sliderrevolution';
 
 /**
  * Class Slider
@@ -123,9 +123,6 @@ export class Slider {
      * @param {string} selector
      */
     init(selector) {
-
-        //@fixme Ouuuuuu
-        window.Hammer = Hammer;
         return this.sliderInstance = $(selector).show().revolution(this.sliderSettings);
     }
 }

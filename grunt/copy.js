@@ -3,7 +3,19 @@ module.exports = {
         expand: true,
         flatten: true,
         src: ['assets/vendor/modernizr/dist/modernizr-build.js'],
-        dest: 'public/vendor/'
+        dest: 'public/js/vendor/'
+    },
+    'systemjs': {
+        expand: true,
+        flatten: true,
+        src: ['node_modules/systemjs/dist/*'],
+        dest: 'public/js/vendor/'
+    },
+    'babel': {
+        expand: true,
+        flatten: true,
+        src: ['node_modules/babel/dist/browser.js'],
+        dest: 'public/js/vendor/'
     },
     jqueryProd: {
         expand: true,
@@ -11,19 +23,51 @@ module.exports = {
         src: ['assets/vendor/jquery/dist/jquery.min.js',
             'assets/vendor/jquery/dist/jquery.min.map'
         ],
-        dest: 'public/vendor/'
+        dest: 'public/js/vendor/'
     },
     jqueryDev: {
         expand: true,
         flatten: true,
         src: ['assets/vendor/jquery/dist/jquery.js'],
-        dest: 'public/vendor/'
+        dest: 'public/js/vendor/'
+    },
+    hammer: {
+        expand: true,
+        flatten: true,
+        src: [
+            'assets/vendor/hammerjs/hammer.js'
+        ],
+        dest: 'public/js/vendor/'
+    },
+    greensock:{
+        expand: true,
+        flatten: true,
+        src: [ 'assets/vendor/gsap/src/uncompressed/TweenMax.js' ],
+        dest: 'public/js/vendor/'
+    },
+    wait4image: {
+        expand: true,
+        flatten: true,
+        src: [ 'assets/vendor/waitForImages/dist/jquery.waitforimages.js' ],
+        dest: 'public/js/vendor/'
+    },
+    sidr:{
+        expand: true,
+        flatten: true,
+        src: [ 'assets/vendor/sidr/jquery.sidr.min.js' ],
+        dest: 'public/js/vendor/'
+    },
+    revolutionSliderScript: {
+        expand: true,
+        flatten: true,
+        src: ['assets/vendor/slider-revolution/src/js/jquery.themepunch.revolution.js'],
+        dest: 'public/css/vendor/'
     },
     revolutionSliderStyle: {
         expand: true,
         flatten: true,
         src: ['assets/vendor/slider-revolution/src/css/settings.css'],
-        dest: 'public/vendor/'
+        dest: 'public/css/vendor/'
     },
     revolutionSliderAssets: {
         expand: true,
@@ -31,7 +75,6 @@ module.exports = {
         src: ['assets/vendor/slider-revolution/src/assets/*'],
         dest: 'public/assets'
     },
-
     allDev: {
         expand: true,
         flatten: true,
@@ -46,6 +89,6 @@ module.exports = {
             'assets/vendor/owl.carousel/dist/owl.carousel.js',
             'assets/vendor/flexslider/jquery.flexslider.js'
         ],
-        dest: 'public/vendor/'
+        dest: 'public/js/vendor/'
     }
 };

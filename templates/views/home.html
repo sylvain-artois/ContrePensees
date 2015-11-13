@@ -68,10 +68,21 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="/jspm_packages/system.js"></script>
-    <script src="/config.js"></script>
-    {% if data.env == 'production' or true %}
-        <script src="/vendor/bundle/home.js"></script>
+    {% set isProd = data.env == 'production' %}
+
+    {#<script src="/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
+    <script src="/vendor/hammer.{% if isProd %}min.{% endif %}js"></script>
+    <script src="/vendor/TweenMax.{% if isProd %}min.{% endif %}js"></script>
+    <script src="/vendor/jquery.waitforimages.{% if isProd %}min.{% endif %}js"></script>
+    <script src="/vendor/jquery.sidr.min.js"></script>
+    <script src="/vendor/jquery.themepunch.revolution.js"></script>#}
+    {% if isProd %}
+        {#<script src="/vendor/jquery-plugin-easing-superfish.min.js"></script>#}
+    {% else %}
+        {#<script src="/vendor/jquery.easing.js"></script>
+        <script src="/vendor/superfish.js"></script>#}
     {% endif %}
-    <script>System.import('js/home.js');</script>
+    <script src="/js/vendor/system.js"></script>
+    <script src="/js/config.js"></script>
+    <script>System.import('home.js');</script>
 {% endblock %}
