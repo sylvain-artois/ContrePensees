@@ -15,11 +15,6 @@ keystone.pre('routes', middleware.initCategories);
 keystone.pre('routes', middleware.loadPinned);
 keystone.pre('render', middleware.flashMessages);
 
-// Handle other errors
-keystone.set('500', function(err, req, res, next) {
-    res.serverError(err);
-});
-
 // Handle 404 errors
 keystone.set('404', function(req, res, next) {
     res.notfound();
