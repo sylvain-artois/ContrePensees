@@ -59,13 +59,11 @@ Post.schema.virtual('searchRelated').get(function() {
         searchString = searchString.concat(this.title.split(' '));
     }
 
-    if (this.writer === "string") {
+    if (typeof this.writer === "string") {
         searchString = searchString.concat(this.writer.split(' '));
     }
 
-    searchString = commonlib.handleKeyWords(searchString);
-    console.log(searchString);
-    return searchString;
+    return commonlib.handleKeyWords(searchString);
 });
 
 Post.schema.virtual('url').get(function() {

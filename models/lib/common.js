@@ -77,9 +77,10 @@ module.exports = {
         return defaultRandPhotoPath.replace("[ID]", randomPhotoId);
     },
     /**
-     * Remove french stop words
+     * Split 2 words tag
      * One line lowercase, remove coma
-     * Remove duplicate with Array.reduce
+     * Remove french stop words
+     * Remove duplicate with Array.filter
      * Return word space separated
      *
      * @param tokens
@@ -88,21 +89,18 @@ module.exports = {
     handleKeyWords: function(tokens) {
 
         var toReturn = [];
+
         tokens.forEach(function(value){
             value.split(' ').forEach(function(val){
                 toReturn.push(val);
             });
         });
-        console.log(toReturn);
         toReturn = toReturn.join('~').toLowerCase().replace(/,/g, '').split('~');
-        console.log(toReturn);
         toReturn = this.removeStopWords(toReturn);
-        console.log(toReturn);
         toReturn = toReturn.filter(function(value, index, self) {
                 return value.length > 1 && self.indexOf(value) == index;
             }
         );
-        console.log(toReturn);
 
         return toReturn.join(' ');
     },
@@ -112,7 +110,6 @@ module.exports = {
      * @returns {*}
      */
     removeStopWords: function(tokens) {
-        console.log('call');
         return tokens.filter(function(i) {
                 return frenchStopWords.indexOf(i) === -1;
             }
