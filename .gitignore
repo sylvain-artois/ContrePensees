@@ -12,6 +12,7 @@ public/css/*
 #Generated JS
 public/vendor/*
 !public/vendor/.gitkeep
+public/js/vendor/*
 
 #Revolution slider assets
 public/assets
