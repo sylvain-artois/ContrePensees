@@ -53,18 +53,19 @@ Post.schema.virtual('tagsArray').get(function() {
 
 Post.schema.virtual('searchRelated').get(function() {
 
-    if (['medium', 'photo', 'gallery'].indexOf(this.type) !== -1 ) {
-        return this.captionText + " " + this.tags;
+    var searchString = this.tagsArray;
+
+    if (typeof this.title === "string") {
+        searchString = searchString.concat(this.title.split(' '));
     }
 
-    if (this.type === 'quote') {
-        return this.quote + " " + this.writer;
+    if (this.writer === "string") {
+        searchString = searchString.concat(this.writer.split(' '));
     }
 
-    return commonlib.handleKeyWords(
-        this.title.split(' '),
-        this.tagsArray
-    );
+    searchString = commonlib.handleKeyWords(searchString);
+    console.log(searchString);
+    return searchString;
 });
 
 Post.schema.virtual('url').get(function() {

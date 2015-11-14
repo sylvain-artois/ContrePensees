@@ -4,7 +4,20 @@
 //models/lib/common.js
 
 var removeTagsRegex = /(<([^>]+)>)/ig,
-    defaultRandPhotoPath =  "/images/frontSlider/2015-07-20-[ID].jpg";
+    defaultRandPhotoPath =  "/images/frontSlider/2015-07-20-[ID].jpg",
+    frenchStopWords = ['alors','au','aucuns','aussi','autre','avant',
+        'avec','avoir','bon','car','ce','cela','ces','ceux','chaque','ci',
+        'comme','comment','dans','des','du', 'de', 'dedans','dehors','depuis',
+        'devrait','doit','donc','dos','début','elle','elles','en','encore',
+        'essai','est','et','eu','fait','faites','fois','font','hors','ici',
+        'il','ils','je','la','le','les','leur','là','ma','maintenant','mais','mes',
+        'mon','même','ni','nommés','notre','nous','ou','où','par','parce',
+        'pas','peut','peu','plupart','pour','quand','que','quel','quelle','quelles',
+        'quels','qui','sa','sans','ses','seulement','si','sien','son','sont','sous',
+        'soyez','sur','ta','tandis','tellement','tels','tes','ton','tous','tout','trop',
+        'très','tu','voient','vont','votre','vous','vu','ça','étaient','état','étions','été','être'
+    ];
+
 
 module.exports = {
     /**
@@ -64,22 +77,45 @@ module.exports = {
         return defaultRandPhotoPath.replace("[ID]", randomPhotoId);
     },
     /**
+     * Remove french stop words
+     * One line lowercase, remove coma
+     * Remove duplicate with Array.reduce
+     * Return word space separated
      *
-     * @param array1
-     * @param array2
+     * @param tokens
      * @returns {string}
      */
-    handleKeyWords: function(array1, array2) {
-        "use strict";
+    handleKeyWords: function(tokens) {
 
-        var toReturn =[];
-        toReturn = toReturn.concat(array1, array2);
+        var toReturn = [];
+        tokens.forEach(function(value){
+            value.split(' ').forEach(function(val){
+                toReturn.push(val);
+            });
+        });
+        console.log(toReturn);
         toReturn = toReturn.join('~').toLowerCase().replace(/,/g, '').split('~');
+        console.log(toReturn);
+        toReturn = this.removeStopWords(toReturn);
+        console.log(toReturn);
         toReturn = toReturn.filter(function(value, index, self) {
                 return value.length > 1 && self.indexOf(value) == index;
             }
         );
+        console.log(toReturn);
 
         return toReturn.join(' ');
+    },
+
+    /**
+     * @param tokens
+     * @returns {*}
+     */
+    removeStopWords: function(tokens) {
+        console.log('call');
+        return tokens.filter(function(i) {
+                return frenchStopWords.indexOf(i) === -1;
+            }
+        );
     }
 };
