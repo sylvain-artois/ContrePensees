@@ -7,7 +7,7 @@
     </p>
 </div>
 <div class="di_3_of_4">
-    <p>{{ post._.publishedDate.format("Do MMM YYYY") }}</p>
+    <p>{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</p>
     <ul class="inline">
         {% if post.categories and post.categories.length %}
         <li>
