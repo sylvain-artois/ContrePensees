@@ -80,6 +80,23 @@ Post.schema.virtual('url').get(function() {
     return url;
 });
 
+Post.schema.virtual('fullTitle').get(function() {
+
+    var fullTitle = "Post";
+
+    if ('title' in this && this.title != false) {
+        fullTitle = this.title;
+    }
+
+    if (this.type == 'quote') {
+        fullTitle =  'Quote';
+    } else if (this.type == 'photo' || this.type == 'gallery') {
+        fullTitle = 'Photographie';
+    }
+
+    return fullTitle;
+});
+
 //Index data for full text search
 Post.schema.pre('save', function(next) {
     if (this.content) {
