@@ -10,7 +10,7 @@ Category.add({
 });
 
 Category.schema.virtual('url').get(function() {
-    return (this.name == 'Software') ? '/sylvain-artois/software' : '/dye-pop/' + this.name;
+    return (this.name == 'Software') ? '/sylvain-artois/software' : '/dye-pop/' + this.key;
 });
 
 Category.relationship({ ref: 'Post', path: 'categoriesPath' });
