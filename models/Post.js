@@ -61,7 +61,7 @@ Post.schema.virtual('url').get(function() {
 });
 
 Post.schema.virtual('fullUrl').get(function() {
-    return commonlib.getSiteUrl() + commonlib.postUrl(this);
+    return commonlib.getSiteUrl('production') + commonlib.postUrl(this);
 });
 
 Post.schema.virtual('shortBrief').get(function() {
@@ -99,8 +99,8 @@ Post.schema.methods.share = function(service) {
 Post.schema.methods.facebookShareUrl = function(fbId) {
     return "https://www.facebook.com/dialog/share?app_id=[APP_ID]&display=popup&href=[HREF]&redirect_uri=[REDIRECT]"
         .replace('[APP_ID]', fbId)
-        .replace('[HREF]', encodeURIComponent(commonlib.getSiteUrl() + this.url))
-        .replace('[REDIRECT]', encodeURIComponent(commonlib.getSiteUrl() + this.url));
+        .replace('[HREF]', encodeURIComponent(this.fullUrl))
+        .replace('[REDIRECT]', encodeURIComponent(this.fullUrl));
 };
 
 //Index data for full text search
