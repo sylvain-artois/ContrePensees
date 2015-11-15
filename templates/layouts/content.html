@@ -42,8 +42,8 @@
                 {% block page_title %}{% endblock %}
                 {% block content_navigation %}{% endblock %}
                 <section class="section">
-                    <div class="page-section-content{% if isBlogType %} boxed-blog blog-list{% endif %}">
-                        <div class="container{% if isBlogType %} blog{% endif %}">
+                    <div class="page-section-content{% if data.isBlogType %} boxed-blog blog-list{% endif %}">
+                        <div class="container{% if data.isBlogType %} blog{% endif %}">
                             {% block post_content %}{% endblock %}
                             {% block post_author %}{% endblock %}
                             {% block post_related %}{% endblock %}
