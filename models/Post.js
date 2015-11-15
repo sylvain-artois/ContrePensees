@@ -1,7 +1,8 @@
 var keystone   = require('keystone'),
     textSearch = require('mongoose-text-search'),
-    decode     = require('ent/decode'),
-    commonlib  = require('./lib/common');
+    ent        = require('ent'),
+    commonlib  = require('./lib/common'),
+    truncate   = require('html-truncate');
 
 var Types = keystone.Field.Types,
     Post = new keystone.List('Post', {
@@ -11,7 +12,6 @@ var Types = keystone.Field.Types,
     });
 
 Post.add({
-
     key: { type: Types.Text, required: true,  initial: true },
     type: { type: Types.Select, options: 'text, quote, photo, gallery, medium', default: 'photo', index: true, initial: true },
 
@@ -40,7 +40,8 @@ Post.add({
 
     contentText: { type: String, hidden: true },
     briefText: { type: String, hidden: true },
-    captionText: { type: String, hidden: true }
+    captionText: { type: String, hidden: true },
+    quoteText: { type: String, hidden: true }
 });
 
 Post.schema.virtual('randomPhoto').get(function() {
@@ -52,64 +53,75 @@ Post.schema.virtual('tagsArray').get(function() {
 });
 
 Post.schema.virtual('searchRelated').get(function() {
-
-    var searchString = this.tagsArray;
-
-    if (typeof this.title === "string") {
-        searchString = searchString.concat(this.title.split(' '));
-    }
-
-    if (typeof this.writer === "string") {
-        searchString = searchString.concat(this.writer.split(' '));
-    }
-
-    return commonlib.handleKeyWords(searchString);
+    return commonlib.searchRelated(this);
 });
 
 Post.schema.virtual('url').get(function() {
-    var that = this,
-        url = '/dye-pop/post/' + this.slug;
-    if (this.categories && this.categories.length) {
-        this.categories.forEach(function(category) {
-            if (category.name == 'Software') {
-                url = '/sylvain-artois/software/' + that.slug;
-            }
-        });
-    }
-    return url;
+    return commonlib.postUrl(this);
 });
 
-Post.schema.virtual('fullTitle').get(function() {
-
-    var fullTitle = "Post";
-
-    if ('title' in this && this.title != false) {
-        fullTitle = this.title;
-    }
-
-    if (this.type == 'quote') {
-        fullTitle =  'Quote';
-    } else if (this.type == 'photo' || this.type == 'gallery') {
-        fullTitle = 'Photographie';
-    }
-
-    return fullTitle;
+Post.schema.virtual('fullUrl').get(function() {
+    return commonlib.getSiteUrl() + commonlib.postUrl(this);
 });
+
+Post.schema.virtual('shortBrief').get(function() {
+    return commonlib.brief(this, 'brief', 200);
+});
+
+Post.schema.virtual('quoteBrief').get(function() {
+    return commonlib.brief(this, 'quote', 70);
+});
+
+Post.schema.virtual('captionBrief').get(function() {
+    return commonlib.brief(this, 'caption', 200);
+});
+
+Post.schema.virtual('pageTitle').get(function() {
+    return commonlib.pageTitle(this);
+});
+
+Post.schema.virtual('desc').get(function() {
+    return commonlib.desc(this);
+});
+
+Post.schema.methods.share = function(service) {
+    if (service === 'tumblr') {
+        return commonlib.shareOnTumblr(this);
+    } else if (service === 'pinterest') {
+        return commonlib.shareOnPinterest(this);
+    } else if (service === 'twitter') {
+        return commonlib.shareOnTwitter(this);
+    }
+
+    return "";
+};
+
+Post.schema.methods.facebookShareUrl = function(fbId) {
+    return "https://www.facebook.com/dialog/share?app_id=[APP_ID]&display=popup&href=[HREF]&redirect_uri=[REDIRECT]"
+        .replace('[APP_ID]', fbId)
+        .replace('[HREF]', encodeURIComponent(commonlib.getSiteUrl() + this.url))
+        .replace('[REDIRECT]', encodeURIComponent(commonlib.getSiteUrl() + this.url));
+};
 
 //Index data for full text search
 Post.schema.pre('save', function(next) {
     if (this.content) {
-        this.contentText = decode(
+        this.contentText = ent.decode(
             this.content.replace(commonlib.removeTagsRegex(), "")
         );
     }
     if (this.brief) {
-        this.briefText = decode(
+        this.briefText = ent.decode(
             this.brief.replace(commonlib.removeTagsRegex(), "")
         );
     }
     if (this.caption) {
-        this.captionText = decode(
+        this.captionText = ent.decode(
+            this.caption.replace(commonlib.removeTagsRegex(), "")
+        );
+    }
+    if (this.quote) {
+        this.quoteText = ent.decode(
             this.caption.replace(commonlib.removeTagsRegex(), "")
         );
     }
@@ -131,11 +143,11 @@ Post.schema.plugin(textSearch);
 Post.schema.index({
     tags: 'text',
     title: 'text',
-    quote: 'text',
     writer: 'text',
     briefText: 'text',
     contentText: 'text',
-    captionText: 'text'
+    captionText: 'text',
+    quoteText: 'text',
 }, {
     default_language:'fr'
 });

@@ -3,7 +3,9 @@
  */
 //models/lib/common.js
 
-var removeTagsRegex = /(<([^>]+)>)/ig,
+var truncate = require('html-truncate'),
+    ent = require('ent'),
+    removeTagsRegex = /(<([^>]+)>)/ig,
     defaultRandPhotoPath =  "/images/frontSlider/2015-07-20-[ID].jpg",
     frenchStopWords = ['alors','au','aucuns','aussi','autre','avant',
         'avec','avoir','bon','car','ce','cela','ces','ceux','chaque','ci',
@@ -16,7 +18,14 @@ var removeTagsRegex = /(<([^>]+)>)/ig,
         'quels','qui','sa','sans','ses','seulement','si','sien','son','sont','sous',
         'soyez','sur','ta','tandis','tellement','tels','tes','ton','tous','tout','trop',
         'très','tu','voient','vont','votre','vous','vu','ça','étaient','état','étions','été','être'
-    ];
+    ],
+    postTypeToTumblr = {
+        'text':'text',
+        'quote':'quote',
+        'photo':'photo',
+        'gallery':'photo',
+        'medium':'text'
+    };
 
 
 module.exports = {
@@ -26,6 +35,13 @@ module.exports = {
      */
     removeTagsRegex: function() {
         return removeTagsRegex;
+    },
+    /**
+     * @param env
+     * @returns {string}
+     */
+    getSiteUrl: function(env) {
+        return (env === 'production') ? 'http://contrepensees.fr' : 'http://localhost:3000';
     },
     /**
      * Randomize arrays in JavaScript with the Fisher-Yates shuffle algorithm
@@ -77,6 +93,73 @@ module.exports = {
         return defaultRandPhotoPath.replace("[ID]", randomPhotoId);
     },
     /**
+     * @param post
+     * @returns {string}
+     */
+    pageTitle: function(post) {
+        var fullTitle = "Post";
+
+        if (typeof post.title === 'string') {
+            fullTitle = post.title;
+        }
+
+        if (post.type === 'quote') {
+            fullTitle = 'Citation';
+        } else if (post.type === 'photo' || post.type === 'gallery') {
+            fullTitle = 'Photographie';
+        }
+
+        return fullTitle;
+    },
+    /**
+     * @param post
+     * @param field
+     * @param length
+     * @returns {*}
+     */
+    brief: function(post, field, length) {
+        return truncate(
+            ent.decode(post[field]),
+            length, {
+                ellipsis: '<a href="' + post.url + '" style="margin-top:0">&nbsp;...</a>'
+            }
+        );
+    },
+    /**
+     * @param post
+     * @returns {string}
+     */
+    postUrl: function(post) {
+        var url = '/dye-pop/post/' + post.slug;
+        if (post.categories && post.categories.length) {
+            post.categories.forEach(function(category) {
+                if (category.name == 'Software') {
+                    url = '/sylvain-artois/software/' + post.slug;
+                }
+            });
+        }
+        return url;
+    },
+    /**
+     * @param post
+     * @returns {*|string}
+     */
+    searchRelated: function(post) {
+
+        var searchString = post.tagsArray;
+
+        if (typeof post.title === "string") {
+            searchString = searchString.concat(post.title.split(' '));
+        }
+
+        if (typeof post.writer === "string") {
+            searchString = searchString.concat(post.writer.split(' '));
+        }
+
+        return this.handleKeyWords(searchString);
+    },
+
+    /**
      * Split 2 words tag
      * One line lowercase, remove coma
      * Remove french stop words
@@ -114,5 +197,92 @@ module.exports = {
                 return frenchStopWords.indexOf(i) === -1;
             }
         );
+    },
+    /**
+     * @param post
+     * @returns {*}
+     */
+    desc: function(post, split) {
+        var field = 'caption',
+            desc = '';
+
+        if (post.type === 'text') {
+            field = 'brief';
+        } else if (post.type === 'quote') {
+            field = 'quote';
+        }
+
+        desc = ent.decode(post[field].replace(removeTagsRegex, ""));
+
+        if (split !== undefined) {
+            desc.slice(0, split);
+        }
+
+        return desc;
+    },
+
+    /**
+     * @param post
+     * @returns {string}
+     */
+    shareOnTumblr: function(post) {
+
+        var baseUrl = 'https://www.tumblr.com/widgets/share/tool?',
+            queryParams = {
+                'posttype': postTypeToTumblr[post.type],
+                'tags': post.tags,
+                'canonicalUrl': this.getSiteUrl('production') + post.url
+            };
+
+        if (post.type === 'text') {
+            queryParams.title = post.title;
+            queryParams.content = post.brief;
+        } else if (post.type === 'quote') {
+            queryParams.content = post.quote;
+            queryParams.caption = post.writer;
+        } else if (post.type === 'photo') {
+            queryParams.content = post.image.url;
+            queryParams.caption = post.caption;
+        } else if (post.type === 'gallery') {
+            var gals = [];
+            post.images.forEach(function(el){
+                gals.push(el.url);
+            });
+            queryParams.content = gals.join(',');
+            queryParams.caption = post.caption;
+        } else {
+            queryParams.content = post.caption;
+        }
+
+        for (var key in queryParams) {
+            baseUrl += key + '=' + encodeURIComponent(queryParams[key]) + '&';
+        }
+
+        //remove last &
+        return baseUrl.slice(0, -1);
+    },
+    /**
+     * @param post
+     * @returns {*}
+     */
+    shareOnPinterest: function(post) {
+        var pinUrl = "https://www.pinterest.com/pin/create/button/?url=[URL]&description=[DESC]"
+            .replace('[URL]', encodeURIComponent(this.getSiteUrl('production')))
+            .replace('[DESC]', encodeURIComponent(post.desc))
+
+        if (post.image.exists || post.type === "gallery") {
+            return pinUrl + '&media=' + (post.image.exists ? post.image.url : post.images[0].url);
+        }
+
+        return false;
+    },
+    /**
+     * @param post
+     */
+    shareOnTwitter: function(post) {
+        return 'https://twitter.com/intent/tweet?text=[text]&url=[url]&hashtags=[tags]&via=dye_pop'
+            .replace('[text]', encodeURIComponent(this.desc(post, 100)))
+            .replace('[url]', encodeURIComponent(this.getSiteUrl('production') + post.url) )
+            .replace('[tags]', encodeURIComponent(post.tagsArray.join('~').split(' ').join('').split('~').join(',')));
     }
 };

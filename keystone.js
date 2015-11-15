@@ -3,6 +3,7 @@ require('dotenv').load();
 var keystone = require('keystone'),
     fileStreamRotator = require('file-stream-rotator'),
     fs = require('fs'),
+    commonlib = require('./models/lib/common'),
     swig = require('swig');
 
 swig.setFilter('truncate', function (input, truncateAt) {
@@ -81,10 +82,10 @@ keystone.set('email locals', {
 
 keystone.set('email rules', [{
     find: '/images/',
-    replace: (keystone.get('env') == 'production') ? 'http://contrepensees.fr/images/' : 'http://localhost:3000/images/'
+    replace: commonlib.getSiteUrl(keystone.get('env')) + '/images/'
 }, {
     find: '/keystone/',
-    replace: (keystone.get('env') == 'production') ? 'http://contrepensees.fr/keystone/' : 'http://localhost:3000/keystone/'
+    replace: commonlib.getSiteUrl(keystone.get('env')) + '/keystone/'
 }]);
 
 // Load your project's email test routes
