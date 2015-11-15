@@ -122,7 +122,7 @@ Post.schema.pre('save', function(next) {
     }
     if (this.quote) {
         this.quoteText = ent.decode(
-            this.caption.replace(commonlib.removeTagsRegex(), "")
+            this.quote.replace(commonlib.removeTagsRegex(), "")
         );
     }
     next();
