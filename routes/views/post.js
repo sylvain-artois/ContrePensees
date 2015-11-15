@@ -12,7 +12,8 @@ exports = module.exports = function(req, res) {
     locals.data = {
         categories: res.locals.categories,
         env: keystone.get('env'),
-        isBlogType: true
+        isBlogType: true,
+        fbId: process.env.FACEBOOK_ID
     };
 
     // Load the current post
@@ -35,6 +36,13 @@ exports = module.exports = function(req, res) {
                 }
 
                 locals.data.mainPost = mainPost;
+                locals.data.mainPost.share = {
+                    tumblr: mainPost.share('tumblr'),
+                    facebook: mainPost.facebookShareUrl(process.env.FACEBOOK_ID),
+                    pinterest: mainPost.share('pinterest'),
+                    twitter:  mainPost.share('twitter'),
+                };
+
                 locals.section = (mainPost.isSoftwareRelated) ? 'code' : 'cogito';
 
                 async.parallel(
@@ -66,7 +74,7 @@ exports = module.exports = function(req, res) {
                                     state: 'published',
                                     publishedDate: { $gt: mainPost.publishedDate }
                                 })
-                                .sort('-publishedDate')
+                                .sort('publishedDate')
                                 .populate('author categories')
                                 .exec(function(nextPostErr, nextPost) {
                                     if (nextPostErr) {
@@ -99,7 +107,7 @@ exports = module.exports = function(req, res) {
                                     //Too much result
                                     if (relatedPosts.length > 3) {
                                         relatedPosts = relatedPosts.slice(0, 3);
-                                    } else if (relatedPosts.length >= 2) {
+                                    } else if (relatedPosts.length <= 2) {
                                         relatedPosts.push(firstRelated);
                                     }
 

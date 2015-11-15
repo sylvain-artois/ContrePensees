@@ -2,19 +2,19 @@
     <h6 class="uppercase">{{ post.type }}</h6>
 
     {% if post.type == 'quote' %}
-        <p>{{ post.quote|striptags|truncate(150) }}</p>
+        <p style="padding: 0.5em">{{ post.quoteText| truncate(150) }}</p>
     {% elif post.type == 'medium' %}
-        <p>{{ post.captionText | truncate(150) }}</p>
+        <p style="padding: 0.5em">{{ post.captionText | truncate(150) }}</p>
     {% elif post.type == 'photo' %}
-        <img src="{{ post._.image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+        <img src="{{ post._.image.fill(200, 142, { 'gravity': 'face:center' }) }}">
     {% elif post.type == 'gallery' %}
         {% for image in post.images %}
-            {% if loop.index == 1 %}
-                <img src="{{ image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+            {% if loop.first %}
+                <img src="{{ image.fill(200, 142, { 'gravity': 'face:center' }) }}">
             {% endif %}
         {% endfor %}
     {% else %}
-        <p>{{ post.title }}</p>
+        <p style="padding: 0.5em">{{ post.title }}</p>
     {% endif %}
 
 {% endmacro %}

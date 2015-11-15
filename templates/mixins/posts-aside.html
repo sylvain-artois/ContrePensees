@@ -1,16 +1,19 @@
-<aside class="section section-colored" data-bg="#3d3d39">
-    <div class="page-section-content" style="padding: 3rem;">
-
-        <h2 class="uppercase text-center" style="margin-bottom: 0">{{ titleBloc }}</h2>
-        <div class="topaz-line" style="margin: 1.5rem auto">
-            <i class="di-separator"></i>
+<aside class="section section-colored">
+    <div class="page-section-content">
+        <div class="container">
+            <h2 class="uppercase text-center">{{ titleBloc }}</h2>
+            <div class="topaz-line">
+                <i class="di-separator"></i>
+            </div>
+            <div class="clear-section"></div>
+            <div class="container">
+                <section class="boxed-blog">
+                    {% for post in posts %}
+                        {% set loopIndex = loop.index %}
+                        {% include "./post-thumbnail.html" %}
+                    {% endfor %}
+                </section>
+            </div>
         </div>
-        <section class="boxed-blog">
-            {% for post in posts %}
-                {% set loopIndex = loop.index %}
-                {% include "./post-thumbnail.html" %}
-            {% endfor %}
-        </section>
-
     </div>
 </aside>

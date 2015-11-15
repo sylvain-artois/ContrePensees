@@ -4,9 +4,11 @@
     {% if post.type == 'quote' %}
         <blockquote class="blog-style">
             <div class="topaz-border"></div>
-            <p>{{ post.quote|safe }}</p>
+            <div>
+                {{ post.quote|safe }}
+            </div>
             {% if post.writer %}
-                <cite>{{ post.writer }}</cite>
+                <cite><a>{{ post.writer }}</a></cite>
             {% endif %}
         </blockquote>
     {% elif post.type == 'medium' %}
@@ -67,7 +69,9 @@
         {% if post.image.exists %}
             <div class="post-img">
                 {% if full %}
-                    <img src="{{ post._.image.fit(1200) }}" />
+                    {#<div class="transparent-border">#}
+                        <img src="{{ post._.image.fit(1200) }}" />
+                    {#</div>#}
                 {% else %}
                     <img src="{{ post._.image.fill(1200, 300, { 'gravity': 'face:center' }) }}" />
                     <div class="link_overlay">
@@ -88,7 +92,7 @@
     <div class="post-meta box">
         <ul>
             <li class="post-on">
-                Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</time>
+                Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</time>&nbsp;|&nbsp;
 
                 {% if post.categories and post.categories.length %}
                     {% for cat in post.categories %}
@@ -97,10 +101,10 @@
                     {% endfor %}
                 {% endif %}
             </li>
-            <li class="post-comments">
+            <li class="post-tags">
                 {% if post.tagsArray and post.tagsArray.length %}
                     {% for tag in post.tagsArray %}
-                        <span class="label" style="color: #5e5d57;">
+                        <span class="label">
                             <i class="fa fa-tag"></i>&nbsp;{{ tag }}
                         </span>
                     {% endfor %}
@@ -131,30 +135,32 @@
             <div class="social-media dima-social-post social-medium">
                 <ul class="inline clearfix">
                     <li>
-                        <a href="#">
+                        <a href="{{ post.share.tumblr }}" target="_blank">
                             <i class="fa fa-tumblr"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ post.share.twitter }}">
                             <i class="fa fa-twitter"></i>
                         </a>
                     </li>
+                    {% if post.share.pinterest %}
                     <li>
-                        <a href="#">
+                        <a href="{{ post.share.pinterest }}" data-pin-do="buttonBookmark" data-pin-custom="true">
                             <i class="fa fa-pinterest"></i>
                         </a>
                     </li>
+                    {% endif %}
                     <li>
-                        <a href="#">
+                        <a href="{{ post.share.facebook }}">
                             <i class="fa fa-facebook"></i>
                         </a>
                     </li>
-                    <li>
+                    {#<li>
                         <a href="#">
                             <i class="fa fa-google-plus"></i>
                         </a>
-                    </li>
+                    </li>#}
                 </ul>
             </div>
         {% endif %}
