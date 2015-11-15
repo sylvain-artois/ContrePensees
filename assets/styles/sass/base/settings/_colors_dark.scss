@@ -41,7 +41,8 @@ $blog-text-color: $body-text-color;
 $blog-header-color: $header-font-color;
 $widget-bg-color: $blog-bg-color;
 $blog-border-color: $border-color;
-$box-bg : #e9e8e2 ;
+$box-bg : $body-bg-color;
+
 /**
  * [menu Colors]
  */

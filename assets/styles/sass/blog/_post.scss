@@ -7,7 +7,7 @@
   }
 
  .post{
-  &.e-post{
+   &.e-post{
       padding: 20px;
       background: $blog-bg-color;
       border: 1px solid $blog-border-color;
@@ -26,10 +26,17 @@
         padding:25px 0px 5px 0px;
       }
       
-  }
-   p{
-    margin-bottom: 0px;
-    color: $blog-text-color;
+   }
+
+   &.related-entry {
+     & > div {
+
+     }
+   }
+
+   p {
+     margin-bottom: 0px;
+     color: $blog-text-color;
    }
   
   .post-img{
@@ -45,26 +52,39 @@
       }
     }
   }
-  .post-meta{
+  .post-meta {
     padding: 20px 25px;
     @include font-size(14,14);
     background: $blog-bg-color;
     margin-bottom: 0;
-    ul{
+    ul {
       text-align: right;
-       li{
+      li {
         display: inline-block;
         color: $blog-text-color;
-        &.post-comments{
+
+        &.post-comments, &.post-tags {
           @include text_align_start();
         }
-        &.post-on{
+
+        &.post-tags {
+          .label {
+            color: $border-color;
+            margin-right: 0.5em;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+
+        &.post-on {
           float: left;
         }
-        &.post-view{
+
+        &.post-view {
            padding-right: 10px;
         }
-       }    
+      }
     }
   }
 
@@ -170,7 +190,7 @@
 }
 
 .nav-slit{
- a {
+  a {
     position: fixed;
     top: 65%;
     display: block;
@@ -178,88 +198,87 @@
     @include text_align_start();
     z-index: 1000;
     @include transform(translateY(-50%));
-    &.prev {      
+    &.prev {
       left: 0;
       div {
         left: 0;
         @include transform(translateX(-100%));
       }
-   }
-  &.next {
-     right: 0;
-     div {
-          right: 0;
-          @include text_align_start();
-          @include transform(translateX(100%));
-     }
+    }
+    &.next {
+      right: 0;
+      div {
+        right: 0;
+        @include text_align_start();
+        @include transform(translateX(100%));
+      }
+    }
+
+    i {
+      display: block;
+      margin: 0 auto;
+      padding: 0;
+      width: 22px;
+      height: 22px;
+      text-align: center;
+    }
+  }
+
+  .slit-wrap {
+    position: relative;
+    display: inline-table;
+    padding: 60px 8px;
+    background-color: $footer-bg-bottom;
   }
 
   i {
-    display: block;
-    margin: 0 auto;
-    padding: 0;
-    width: 22px;
-    height: 22px;
-    text-align: center;
+    -webkit-transition: -webkit-transform 0.3s 0.3s;
+    transition: transform 0.3s 0.3s;
+    color: #fff;
+    @include font-size(22,22);
   }
 
- }
+  div {
+    position: absolute;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    background-color: $footer-bg-bottom;
+    -webkit-transition: -webkit-transform 0.3s 0.3s;
+    transition: transform 0.3s 0.3s;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
 
-.slit-wrap {
-  position: relative;
-  display: inline-table;
-  padding: 60px 8px;
-  background-color: $footer-bg-bottom;
-}
+  h6 {
+    position: absolute;
+    top: 100%;
+    margin: 0;
+    padding: 10px 15px;
+    width: 100%;
+    height: 30%;
+    font-weight:300;
+    background: $footer-bg-bottom;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    @include transform(rotateX(-90deg));
+    -webkit-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    -webki-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    line-height: 25px !important;
+  }
 
-i {
-  -webkit-transition: -webkit-transform 0.3s 0.3s;
-  transition: transform 0.3s 0.3s;
-  color: #fff;
-  @include font-size(22,22);
-}
-
-div {
-  position: absolute;
-  top: 0;
-  width: 200px;
-  height: 100%;
-  background-color: #939a9f;
-  -webkit-transition: -webkit-transform 0.3s 0.3s;
-  transition: transform 0.3s 0.3s;
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
-}
-
-h6 {
-  position: absolute;
-  top: 100%;
-  margin: 0;
-  padding: 10px 15px;
-  width: 100%;
-  height: 30%;
-  font-weight:300;
-  background: $footer-bg-bottom;
-  color: #fff;
-  text-transform: uppercase;
-  white-space: nowrap;
-  -webkit-transition: -webkit-transform 0.3s;
-  transition: transform 0.3s;
-  @include transform(rotateX(-90deg));
-  -webkit-transform-origin: 50% 0;
-  transform-origin: 50% 0;
-  -webki-backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  line-height: 25px !important;
-}
-
- img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
- }
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 }
 
 .nav-slit a:hover i {
