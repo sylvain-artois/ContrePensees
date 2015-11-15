@@ -94,7 +94,15 @@ exports = module.exports = function(req, res) {
                                     }
 
                                     //The first el is often the same as searched
-                                    relatedPosts.shift();
+                                    var firstRelated = relatedPosts.shift();
+
+                                    //Too much result
+                                    if (relatedPosts.length > 3) {
+                                        relatedPosts = relatedPosts.slice(0, 3);
+                                    } else if (relatedPosts.length >= 2) {
+                                        relatedPosts.push(firstRelated);
+                                    }
+
                                     callback(null, relatedPosts);
                                 });
                         },
