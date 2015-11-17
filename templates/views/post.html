@@ -9,7 +9,11 @@
         {% if data.mainPost.image.exists %}
             {% set imageurl = data.mainPost.image.url %}
         {% else %}
-            {% set imageurl = data.mainPost.images[0].url %}
+            {% for image in data.mainPost.images %}
+            {% if loop.first %}
+                {% set imageurl = image.url %}
+            {% endif %}
+            {% endfor %}
         {% endif %}
     {% else %}
         {% set imageurl = false %}
