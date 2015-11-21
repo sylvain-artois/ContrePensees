@@ -2,12 +2,12 @@ var keystone = require('keystone');
 
 exports = module.exports = function(req, res) {
 
-    res.locals.section = 'portfolio';
+    res.locals.section = (req.params.author === 'sylvain-artois') ?  'resume' : 'portfolio';
     res.locals.data = {
         categories: res.locals.categories,
         env: keystone.get('env'),
         isBlogType: false
     };
 
-    new keystone.View(req, res).render('portfolio');
+    new keystone.View(req, res).render(res.locals.section);
 };

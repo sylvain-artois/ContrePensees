@@ -25,10 +25,10 @@ exports.initLocals = function(req, res, next) {
 
     locals.navLinks = [
         { label: 'Home',            key: 'home',        href: '/' },
-        { label: 'Cogito',          key: 'cogito',      href: '/dye-pop' },
+        { label: 'Cogito',          key: 'cogito',      href: '/dye-pop/cogito' },
         { label: '&lt;code /&gt;',  key: 'code',        href: '/sylvain-artois/software' },
-        { label: 'Portfolio',       key: 'portfolio',   href: '/portfolio/dye-pop' },
-        { label: 'CV',              key: 'resume',      href: '/resume/sylvain-artois' },
+        { label: 'Portfolio',       key: 'portfolio',   href: '/dye-pop' },
+        { label: 'CV',              key: 'resume',      href: '/sylvain-artois' },
         { label: 'Contact',         key: 'contact',     href: '/contact' }
     ];
 
@@ -135,7 +135,12 @@ exports.initCategories= function(req, res, next) {
         if (err) {
             return next(err);
         }
-        res.locals.categories = categories;
+        res.locals.categories    = categories;
+        res.locals.categoriesKey = [];
+        categories.forEach(function(el){
+            res.locals.categoriesKey.push(el.key)
+        });
+        res.locals.categoriesKey.push('cogito');
         next();
     });
 };

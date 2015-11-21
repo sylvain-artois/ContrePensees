@@ -24,22 +24,16 @@ keystone.set('404', function(req, res, next) {
 exports = module.exports = function(app) {
 
     app.get('/', routes.views.home);
-
-    app.get('/search/:query?',  routes.views.search);
-
-    app.get('/resume/sylvain-artois', routes.views.resume);
-    app.get('/portfolio/dye-pop', routes.views.portfolio);
-
     app.all('/contact', routes.views.contact);
+    app.get('/search/:query?',  routes.views.search);
 
     app.get('/sitemap.xml', function(req, res) {
         sitemap.create(keystone, req, res);
     });
 
-    app.get('/:author/:category?', routes.views.blog);
-    app.get('/:author/:category?/:post', routes.views.post);
-
-    //app.get('/sylvain-artois/software',  routes.views.code)
-    //app.get('/sylvain-artois/software/:post', routes.views.post);
+    app.get('/:user/:category/:post', routes.views.post);
+    app.get('/:user/:category', routes.views.blog);
+    //Portfolio and CV
+    app.get('/:user', routes.views.user);
 
 };
