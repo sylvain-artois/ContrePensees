@@ -26,7 +26,7 @@
                                 {% for cat in data.categories %}
                                 {% if cat.name != 'Software' %}
                                 <li>
-                                    <a href="/dye-pop/{{ cat.key }}">
+                                    <a href="{{ cat.url }}">
                                         {{ cat.name }}
                                     </a>
                                 </li>

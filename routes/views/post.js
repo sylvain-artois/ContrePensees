@@ -3,6 +3,12 @@ var keystone = require('keystone'),
 
 exports = module.exports = function(req, res) {
 
+    if (res.locals.categoriesKey.indexOf(req.params.category) === -1 ||
+        ['dye-pop', 'sylvain-artois'].indexOf(req.params.user) === -1) {
+
+        return res.status(404).render('errors/404');
+    }
+
     var view = new keystone.View(req, res);
     var locals = res.locals;
 
