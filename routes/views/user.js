@@ -6,7 +6,7 @@ exports = module.exports = function(req, res) {
         return res.status(404).render('errors/404');
     }
 
-    res.locals.section = (req.params.author === 'sylvain-artois') ?  'resume' : 'portfolio';
+    res.locals.section = (req.params.user === 'sylvain-artois') ?  'resume' : 'portfolio';
     res.locals.data = {
         categories: res.locals.categories,
         env: keystone.get('env'),
