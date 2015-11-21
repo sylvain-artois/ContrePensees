@@ -130,15 +130,15 @@ module.exports = {
      * @returns {string}
      */
     postUrl: function(post) {
-        var url = '/dye-pop/post/' + post.slug;
-        if (post.categories && post.categories.length) {
-            post.categories.forEach(function(category) {
-                if (category.name == 'Software') {
-                    url = '/sylvain-artois/software/' + post.slug;
-                }
-            });
+        var urlParts = [post.author.url];
+        if (Array.isArray(post.categories) && post.categories.length > 0) {
+            urlParts.push(post.categories[0].key);
+        } else {
+            //default category ?
+            urlParts.push('inspiration');
         }
-        return url;
+        urlParts.push(post.slug);
+        return urlParts.join('/');
     },
     /**
      * @param post
