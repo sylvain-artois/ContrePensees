@@ -12,11 +12,7 @@ Category.add({
 
 Category.schema.virtual('url').get(function() {
     //Fixme hardcode, how-to load relationship here
-    if (this.name === 'Software') {
-        return '/sylvain-artois/software';
-    } else {
-        return '/dye-pop/' + this.key;
-    }
+    return (this.name === 'Software') ? '/sylvain-artois/software' : '/dye-pop/' + this.key;
 });
 
 Category.relationship({ ref: 'Post', path: 'categoriesPath' });
