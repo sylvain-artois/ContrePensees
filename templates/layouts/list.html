@@ -6,30 +6,7 @@
 <html class="no-js">
 <!--<![endif]-->
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>{{ title|default("Contre Pensées") }}</title>
-
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700,300" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gruppo" />
-
-    <link rel="stylesheet" href="/css/front.css?1" />
-    <link rel="stylesheet" href="/vendor/settings.css" />
-
-    {% block css %}{% endblock %}
-
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-    <![endif]-->
-
-    <script src="/vendor/{% if locals.data.env == 'production' %}modernizr.min.js{% else %}modernizr-build.js{% endif %}"></script>
-
-    {% block head %}{% endblock %}
+    {% include "../mixins/block-head.html" %}
 </head>
 <body class="responsive">
     <div class="all_content">
