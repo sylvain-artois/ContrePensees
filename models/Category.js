@@ -11,11 +11,11 @@ Category.add({
 });
 
 Category.schema.virtual('url').get(function() {
-    if (this.name === 'Software') {
-        return '/sylvain-artois/software';
-    } else {
-        return '/dye-pop/' + this.key;
+    if (this.author) {
+        return this.author.url + '/' + this.key;
     }
+
+    return '/dye-pop/' + this.key;
 });
 
 Category.relationship({ ref: 'Post', path: 'categoriesPath' });
