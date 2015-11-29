@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    {* for navLink in navLinks *}
+    <url>
+        <loc>{{ baseUrl }}{{ navLink.href }}</loc>
+        <lastmod>{{ generatedAt }}</lastmod>
+        <changefreq>{{ navLink.changefreq }}</changefreq>
+        <priority>{{ navLink.priority }}</priority>
+    </url>
+    {% endfor %}
+    {% for category in data.categories %}
+    <url>
+        <loc>{{ baseUrl }}{{ category.url }}</loc>
+        <lastmod>{{ generatedAt }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    {# Paging category #}
+    {% endfor %}
+    {% for post in data.posts %}
+    <url>
+        <loc>{{ baseUrl }}{{ post.url }}</loc>
+        <lastmod>{{ post._.updatedAt.format() }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    {% endfor %}
+</urlset>
