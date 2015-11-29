@@ -11,11 +11,12 @@ Category.add({
 });
 
 Category.schema.virtual('url').get(function() {
-    if (this.author) {
-        return this.author.url + '/' + this.key;
+    //Fixme hardcode, how-to load relationship here
+    if (this.name === 'Software') {
+        return '/sylvain-artois/software';
+    } else {
+        return '/dye-pop/' + this.key;
     }
-
-    return '/dye-pop/' + this.key;
 });
 
 Category.relationship({ ref: 'Post', path: 'categoriesPath' });
