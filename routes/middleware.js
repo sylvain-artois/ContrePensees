@@ -1,6 +1,7 @@
-var _           = require('underscore'),
-    keystone    = require('keystone'),
-    cacheManager = require('cache-manager'),
+var _              = require('underscore'),
+    keystone       = require('keystone'),
+    cacheManager   = require('cache-manager'),
+    commonlib      = require('./../models/lib/common'),
     memcachedStore = require('cache-manager-memcached'),
     memcachedCache = cacheManager.caching({
         store: memcachedStore,
@@ -24,12 +25,12 @@ exports.initLocals = function(req, res, next) {
     var locals = res.locals;
 
     locals.navLinks = [
-        { label: 'Home',            key: 'home',        href: '/' },
-        { label: 'Cogito',          key: 'cogito',      href: '/dye-pop/cogito' },
-        { label: '&lt;code /&gt;',  key: 'code',        href: '/sylvain-artois/software' },
-        { label: 'Portfolio',       key: 'portfolio',   href: '/dye-pop' },
-        { label: 'CV',              key: 'resume',      href: '/sylvain-artois' },
-        { label: 'Contact',         key: 'contact',     href: '/contact' }
+        { label: 'Home',            key: 'home',      changefreq: 'daily',   priority: 0.9, href: '/' },
+        { label: 'Cogito',          key: 'cogito',    changefreq: 'daily',   priority: 0.9, href: '/dye-pop/cogito' },
+        { label: '&lt;code /&gt;',  key: 'code',      changefreq: 'weekly',  priority: 0.8, href: '/sylvain-artois/software' },
+        { label: 'Portfolio',       key: 'portfolio', changefreq: 'monthly', priority: 0.5, href: '/dye-pop' },
+        { label: 'CV',              key: 'resume',    changefreq: 'monthly', priority: 0.5, href: '/sylvain-artois' },
+        { label: 'Contact',         key: 'contact',   changefreq: 'monthly', priority: 0.1, href: '/contact' }
     ];
 
     locals.user = req.user;
@@ -135,12 +136,10 @@ exports.initCategories= function(req, res, next) {
         if (err) {
             return next(err);
         }
+
         res.locals.categories    = categories;
-        res.locals.categoriesKey = [];
-        categories.forEach(function(el){
-            res.locals.categoriesKey.push(el.key)
-        });
-        res.locals.categoriesKey.push('cogito');
+        res.locals.categoriesKey = commonlib.getCategoriesKey(categories);
+
         next();
     });
 };

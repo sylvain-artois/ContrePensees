@@ -1,6 +1,5 @@
 var keystone   = require('keystone'),
-    middleware = require('./middleware'),
-    sitemap    = require('keystone-express-sitemap');
+    middleware = require('./middleware');
 
 var importRoutes = keystone.importer(__dirname),
     // Import Route Controllers
@@ -24,12 +23,11 @@ keystone.set('404', function(req, res, next) {
 exports = module.exports = function(app) {
 
     app.get('/', routes.views.home);
+    app.get('/sitemap.xml', routes.views.sitemap);
+    app.get('/atom.xml', routes.views.syndication);
     app.all('/contact', routes.views.contact);
     app.get('/search/:query?',  routes.views.search);
 
-    app.get('/sitemap.xml', function(req, res) {
-        sitemap.create(keystone, req, res);
-    });
 
     app.get('/:user/:category/:post', routes.views.post);
     app.get('/:user/:category', routes.views.blog);

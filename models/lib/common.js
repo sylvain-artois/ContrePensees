@@ -284,5 +284,17 @@ module.exports = {
             .replace('[text]', encodeURIComponent(this.desc(post, 100)))
             .replace('[url]', encodeURIComponent(this.getSiteUrl('production') + post.url) )
             .replace('[tags]', encodeURIComponent(post.tagsArray.join('~').split(' ').join('').split('~').join(',')));
+    },
+    /**
+     * @param categories
+     * @returns {Array}
+     */
+    getCategoriesKey: function(categories) {
+        var categoriesKey = [];
+        categories.forEach(function(el){
+            categoriesKey.push(el.key);
+        });
+        categoriesKey.push('cogito');
+        return categoriesKey;
     }
 };
