@@ -8,7 +8,7 @@
                 {{ post.quote|safe }}
             </div>
             {% if post.writer %}
-                <cite><a>{{ post.writer }}</a></cite>
+                <cite><a href="{{ post.url }}">{{ post.writer }}</a></cite>
             {% endif %}
         </blockquote>
     {% elif post.type == 'medium' %}

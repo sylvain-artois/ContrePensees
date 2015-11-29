@@ -1,7 +1,6 @@
-var keystone = require('keystone');
-
-var Types = keystone.Field.Types,
-    User = new keystone.List('User');
+var keystone = require('keystone'),
+    Types    = keystone.Field.Types,
+    User     = new keystone.List('User');
 
 User.add({
     name: { type: Types.Name, required: true, index: true },
@@ -13,13 +12,16 @@ User.add({
     isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
 });
 
-// Provide access to Keystone
+User.relationship({ ref: 'Post',     path: 'author' });
+User.relationship({ ref: 'Category', path: 'author' });
+
 User.schema.virtual('canAccessKeystone').get(function() {
     return this.isAdmin;
 });
 
-User.relationship({ ref: 'Post',    path: 'author' });
+User.schema.virtual('url').get(function() {
+    return '/' + this.name.full.split(' ').join('-').toLowerCase();
+});
 
 User.defaultColumns = 'name, avatar, email, isAdmin';
-
 User.register();

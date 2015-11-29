@@ -130,15 +130,15 @@ module.exports = {
      * @returns {string}
      */
     postUrl: function(post) {
-        var url = '/dye-pop/post/' + post.slug;
-        if (post.categories && post.categories.length) {
-            post.categories.forEach(function(category) {
-                if (category.name == 'Software') {
-                    url = '/sylvain-artois/software/' + post.slug;
-                }
-            });
+        var urlParts = [post.author.url];
+        if (Array.isArray(post.categories) && post.categories.length > 0) {
+            urlParts.push(post.categories[0].key);
+        } else {
+            //default category ?
+            urlParts.push('inspiration');
         }
-        return url;
+        urlParts.push(post.slug);
+        return urlParts.join('/');
     },
     /**
      * @param post
@@ -284,5 +284,17 @@ module.exports = {
             .replace('[text]', encodeURIComponent(this.desc(post, 100)))
             .replace('[url]', encodeURIComponent(this.getSiteUrl('production') + post.url) )
             .replace('[tags]', encodeURIComponent(post.tagsArray.join('~').split(' ').join('').split('~').join(',')));
+    },
+    /**
+     * @param categories
+     * @returns {Array}
+     */
+    getCategoriesKey: function(categories) {
+        var categoriesKey = [];
+        categories.forEach(function(el){
+            categoriesKey.push(el.key);
+        });
+        categoriesKey.push('cogito');
+        return categoriesKey;
     }
 };

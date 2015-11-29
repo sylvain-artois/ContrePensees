@@ -7,10 +7,15 @@ var keystone = require('keystone'),
 Category.add({
     name: { type: String, required: true },
     header: { type: Types.Html, wysiwyg: true, height: 200 },
+    author: { type: Types.Relationship, ref: 'User' },
 });
 
 Category.schema.virtual('url').get(function() {
-    return (this.name == 'Software') ? '/sylvain-artois/software' : '/dye-pop/' + this.key;
+    if (this.author) {
+        return this.author.url + '/' + this.key;
+    }
+
+    return '/dye-pop/' + this.key;
 });
 
 Category.relationship({ ref: 'Post', path: 'categoriesPath' });

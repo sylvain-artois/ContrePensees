@@ -3,14 +3,26 @@ var async = require('async');
 
 exports = module.exports = function(req, res) {
 
+    if (res.locals.categoriesKey.indexOf(req.params.category) === -1 ||
+        ['dye-pop', 'sylvain-artois'].indexOf(req.params.user) === -1) {
+
+        return res.status(404).render('errors/404');
+    }
+
     var view = new keystone.View(req, res);
     var locals = res.locals;
 
     // Init locals
     locals.section = 'cogito';
     locals.filters = {
+        user: req.params.user,
         category: req.params.category
     };
+
+    if (locals.filters.category === 'cogito') {
+        delete locals.filters.category;
+    }
+
     locals.data = {
         posts: [],
         categories: res.locals.categories,
@@ -20,7 +32,9 @@ exports = module.exports = function(req, res) {
     // Load the current category filter
     view.on('init', function(next) {
 
-        if (req.params.category) {
+        var category = req.params.category
+
+        if (category && category != 'cogito') {
             keystone.list('Category')
                 .model
                 .findOne({ key: locals.filters.category })

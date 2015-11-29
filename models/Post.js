@@ -12,6 +12,7 @@ var Types = keystone.Field.Types,
     });
 
 Post.add({
+
     key: { type: Types.Text, required: true,  initial: true },
     type: { type: Types.Select, options: 'text, quote, photo, gallery, medium', default: 'photo', index: true, initial: true },
 
@@ -61,7 +62,7 @@ Post.schema.virtual('url').get(function() {
 });
 
 Post.schema.virtual('fullUrl').get(function() {
-    return commonlib.getSiteUrl('production') + commonlib.postUrl(this);
+    return commonlib.getSiteUrl(keystone.get('env')) + this.url;
 });
 
 Post.schema.virtual('shortBrief').get(function() {
