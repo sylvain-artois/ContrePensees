@@ -5,6 +5,8 @@
 {% include "../mixins/title-big.html" %}
 {% endblock %}
 
+{% block pageclass %} portfolio{% endblock %}
+
 {% block content_navigation %}
 {% endblock %}
 
@@ -32,8 +34,25 @@
 {% block post_comment %}
 {% endblock %}
 
+{% set isProd = data.env == 'production' %}
 {% block js %}
-    <script>
-        var application = {options: { slide: {owl: true, flex:true}}};
-    </script>
+
+
+
+        {#<script src="/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
+        <script src="/vendor/hammer.{% if isProd %}min.{% endif %}js"></script>
+        <script src="/vendor/TweenMax.{% if isProd %}min.{% endif %}js"></script>
+        <script src="/vendor/jquery.waitforimages.{% if isProd %}min.{% endif %}js"></script>
+        <script src="/vendor/jquery.sidr.min.js"></script>
+        <script src="/vendor/jquery.themepunch.revolution.js"></script>#}
+        {% if isProd %}
+            {#<script src="/vendor/jquery-plugin-easing-superfish.min.js"></script>#}
+        {% else %}
+            {#<script src="/vendor/jquery.easing.js"></script>
+            <script src="/vendor/superfish.js"></script>#}
+        {% endif %}
+        <script src="/js/vendor/system.js"></script>
+        <script src="/js/config.js"></script>
+        <script>System.import('home.js');</script>
+    {% endblock %}
 {% endblock %}
