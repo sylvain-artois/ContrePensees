@@ -11,15 +11,32 @@
 {% endblock %}
 
 {% block post_content %}
-<div class="container text-center ">
-    <h2 class="uppercase">Coming soon</h2>
+    <h3 class="text-center">Full portfolio coming-soon</h3>
 
     <div class="topaz-line">
         <i class="di-separator"></i>
     </div>
 
-    <p>We're building a great new portfolio</p>
+    <h2 class="text-center">Photographing fairies</h2>
+    <p class="text-center">Entre 2001 et 2006, plus de 70 reportages dans les plus grandes raves d'Europe</p>
     <div class="clear-section"></div>
+
+    {% set looper = [1, 5, 9, 13, 17, 21, 25] %}
+    {% set cols = [0, 1, 2, 3] %}
+
+    {% for row in looper %}
+        {% for col in cols %}
+            {% set currentItem = row+col %}
+            <div class=" di_1_of_4{% if loop.first%} first{% endif %}">
+                {% if currentItem < 10 %}
+                    <p><img src="/images/photographin-faeries/dye-pop_0000{{ currentItem }}.jpg" /></p>
+                {% else %}
+                    <p><img src="/images/photographin-faeries/dye-pop_000{{ currentItem }}.jpg" /></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div class="clear-section"></div>
+    {% endfor %}
 
 </div>
 <div class="clear-section"></div>
@@ -34,25 +51,8 @@
 {% block post_comment %}
 {% endblock %}
 
-{% set isProd = data.env == 'production' %}
 {% block js %}
-
-
-
-        {#<script src="/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
-        <script src="/vendor/hammer.{% if isProd %}min.{% endif %}js"></script>
-        <script src="/vendor/TweenMax.{% if isProd %}min.{% endif %}js"></script>
-        <script src="/vendor/jquery.waitforimages.{% if isProd %}min.{% endif %}js"></script>
-        <script src="/vendor/jquery.sidr.min.js"></script>
-        <script src="/vendor/jquery.themepunch.revolution.js"></script>#}
-        {% if isProd %}
-            {#<script src="/vendor/jquery-plugin-easing-superfish.min.js"></script>#}
-        {% else %}
-            {#<script src="/vendor/jquery.easing.js"></script>
-            <script src="/vendor/superfish.js"></script>#}
-        {% endif %}
-        <script src="/js/vendor/system.js"></script>
-        <script src="/js/config.js"></script>
-        <script>System.import('home.js');</script>
-    {% endblock %}
+    <script src="/js/vendor/system.js"></script>
+    <script src="/js/config.js"></script>
+    <script>System.import('portfolio.js');</script>
 {% endblock %}
