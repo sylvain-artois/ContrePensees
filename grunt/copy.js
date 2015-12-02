@@ -57,6 +57,19 @@ module.exports = {
         src: [ 'assets/vendor/sidr/jquery.sidr.min.js' ],
         dest: 'public/js/vendor/'
     },
+    photoswipeCss:{
+        expand: true,
+        flatten: true,
+        /* Le contenu du dossier n'est pas copié */
+        src: ['assets/vendor/photoswipe/dist/photoswipe.css', 'assets/vendor/photoswipe/dist/default-skin'],
+        dest: 'public/css/vendor/photoswipe'
+    },
+    photoswipeJs:{
+        expand: true,
+        flatten: true,
+        src: ['assets/vendor/photoswipe/dist/photoswipe.js', 'assets/vendor/photoswipe/dist/photoswipe-ui-default.js'],
+        dest: 'public/js/vendor/'
+    },
     revolutionSliderScript: {
         expand: true,
         flatten: true,
