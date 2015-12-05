@@ -10,7 +10,8 @@ System.config({
     "sidr": "vendor/jquery.sidr.min.js",
     "sliderrevolution": "vendor/jquery.themepunch.revolution.js",
     "photoswipe": "vendor/photoswipe.js",
-    "photoswipeui": "vendor/photoswipe-ui-default.js"
+    "photoswipeui": "vendor/photoswipe-ui-default.js",
+    "uri": "vendor/URI.js"
   },
   meta: {
     'vendor/hammer.js': {
