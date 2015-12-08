@@ -8,7 +8,10 @@ System.config({
     "greensock": "vendor/TweenMax.js",
     "waitforimages": "vendor/jquery.waitforimages.js",
     "sidr": "vendor/jquery.sidr.min.js",
-    "sliderrevolution": "vendor/jquery.themepunch.revolution.js"
+    "sliderrevolution": "vendor/jquery.themepunch.revolution.js",
+    "photoswipe": "vendor/photoswipe.js",
+    "photoswipeui": "vendor/photoswipe-ui-default.js",
+    "uri": "vendor/URI.js"
   },
   meta: {
     'vendor/hammer.js': {

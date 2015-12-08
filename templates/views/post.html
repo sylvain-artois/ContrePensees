@@ -99,5 +99,7 @@
 {% endblock %}
 
 {% block js %}
-<script>var application = {options: { slide: {owl: true, flex:true}}};</script>
+    {% include "../mixins/block-javascript.html" %}
+    <script>var application = {options: { slide: {owl: true, flex:true}}};</script>
+    <script src="/js/main.js?time=256747936"></script>
 {% endblock %}

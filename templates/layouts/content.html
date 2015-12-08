@@ -6,9 +6,11 @@
 <html class="no-js">
 <!--<![endif]-->
 <head>
+    {% block head %}{% endblock %}
     {% include "../mixins/block-head.html" %}
+    {% block css %}{% endblock %}
 </head>
-<body class="responsive">
+<body class="responsive{% block pageclass %}{% endblock %}">
     <div class="all_content">
 
         {% include "../mixins/block-navbar.html" %}
@@ -45,8 +47,10 @@
         </footer>
     </div>
 
-    {% include "../mixins/block-javascript.html" %}
-    {% block js %}{% endblock %}
-    <script src="/js/main.js?time=256747936"></script>
+    {% block js %}
+        {% include "../mixins/block-javascript.html" %}
+        <script src="/js/main.js?time=256747936"></script>
+    {% endblock %}
+
 </body>
 </html>
