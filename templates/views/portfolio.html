@@ -1,8 +1,7 @@
 {% extends "../layouts/content.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="/css/vendor/photoswipe/photoswipe.css" />
-    <link rel="stylesheet" href="/css/vendor/photoswipe/defaut-skin/defaut-skin.css" />
+    <link rel="stylesheet" href="/css/gallery.css" />
 {% endblock %}
 
 {% block page_title %}
@@ -16,23 +15,22 @@
 {% endblock %}
 
 {% block post_content %}
-    <h2 class="text-center">Photographing fairies</h2>
-    <p class="text-center">Entre 2001 et 2006, plus de 70 reportages dans les plus grandes raves d'Europe</p>
+    <h2 class="text-center">Early analogs reports</h2>
+    <p class="text-center">Between 2002 and 2003, just before the numeric revolution, I shot for <strong>ravest.net</strong>, some major electronic festival.
+        <br/>With my <strong>Pentax MZN</strong>, I pushed  <strong>Kodak Ektachrome</strong> iso to the limit to capture a dancing night...
+        <br/>Today I search my bags and scan old negatives. Here are some experimentation under Lightroom.
+    </p>
     <div class="clear-section"></div>
 
-    {% set looper = [1, 5, 9, 13, 17, 21, 25] %}
-    {% set cols = [0, 1, 2, 3] %}
-
     <article class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
-    {% for row in looper %}
-        {% for col in cols %}
-            {% set currentItem = row+col %}
+    {% for rows in data.items %}
+        {% for photo in rows %}
             <div class=" di_1_of_4{% if loop.first%} first{% endif %}">
                 <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                    <a href="/images/photographin-faeries/dye-pop_000{% if currentItem < 10 %}0{% endif %}{{ currentItem }}.jpg" itemprop="contentUrl" data-size="1200x900">
-                        <img src="/images/photographin-faeries/dye-pop_000{% if currentItem < 10 %}0{% endif %}{{ currentItem }}.jpg" itemprop="thumbnail" alt="Image description" />
+                    <a href="{{ photo.src }}" itemprop="contentUrl" data-size="{{ photo.w }}x{{ photo.h }}">
+                        <img src="{{ photo.small }}" itemprop="thumbnail" alt="Dye Pop - Early analogs reports" />
                     </a>
-                    {#<figcaption itemprop="caption description">Image caption</figcaption>#}
+                    <figcaption itemprop="caption description">{{ photo.title }}</figcaption>
                 </figure>
             </div>
         {% endfor %}
