@@ -22,7 +22,8 @@ Post.add({
     isSoftwareRelated: { type: Types.Boolean, default: false },
 
     title: { type: Types.Text, dependsOn: { type: 'text' } },
-    image: { type: Types.CloudinaryImage, autoCleanup : true, select : true, dependsOn: { type: ['text', 'photo'] } },
+    image: { type: Types.CloudinaryImage, autoCleanup : true, dependsOn: { type: ['text', 'photo'] } },
+    credit: { type: Types.Text, dependsOn: { type: ['text', 'photo'] } },
     medium: { type: Types.Html, wysiwyg: true, height: 150,  dependsOn: { type: 'medium' } },
     brief: { type: Types.Html, wysiwyg: true, height: 150,  dependsOn: { type: 'text' } },
     content: { type: Types.Html, wysiwyg: true, height: 400, dependsOn: { type: 'text' } },
