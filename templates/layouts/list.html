@@ -6,7 +6,9 @@
 <html class="no-js">
 <!--<![endif]-->
 <head>
+    {% block head %}{% endblock %}
     {% include "../mixins/block-head.html" %}
+    {% block css %}{% endblock %}
 </head>
 <body class="responsive">
     <div class="all_content">

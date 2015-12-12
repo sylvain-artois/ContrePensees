@@ -6,7 +6,9 @@
 <html class="no-js">
 <!--<![endif]-->
 <head>
+    {% block head %}{% endblock %}
     {% include "../mixins/block-head.html" %}
+    {% block css %}{% endblock %}
 </head>
 <body class="responsive">
     <div class="all_content">
@@ -20,13 +22,13 @@
     </div>
 
     {% set isProd = data.env == 'production' %}
-    <script src="/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
-    <script src="/vendor/jquery.themepunch.min.js"></script>
+    <script src="/js/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
+    <script src="/js/vendor/jquery.themepunch.min.js"></script>
     {% if isProd %}
-    <script src="/vendor/jquery-plugin-easing-superfish.min.js"></script>
+    <script src="/js/vendor/jquery-plugin-easing-superfish.min.js"></script>
     {% else %}
-    <script src="/vendor/jquery.easing.js"></script>
-    <script src="/vendor/superfish.js"></script>
+    <script src="/js/vendor/jquery.easing.js"></script>
+    <script src="/js/vendor/superfish.js"></script>
     {% endif %}
     <script>
     var application = {options: {slide: {revolution: true}}};
