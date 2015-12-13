@@ -84,3 +84,9 @@
         </div>
     </aside>
 {% endblock %}
+
+{% block js %}
+    {% include "../mixins/block-javascript.html" %}
+    <script>var application = {options: { slide: {owl: false, flex: false}}};</script>
+    <script src="/js/main.js?4"></script>
+{% endblock %}
