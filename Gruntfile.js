@@ -45,6 +45,11 @@ module.exports = function(grunt) {
         'uglify:revolutionSlider'
     ]);
 
+    grunt.registerTask('prodcss', [
+        'compass:prod',
+        'postcss'
+    ]);
+
     grunt.registerTask('prod', [
         'compass:prod',
         'postcss',
