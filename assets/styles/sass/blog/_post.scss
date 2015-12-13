@@ -29,8 +29,19 @@
    }
 
    &.related-entry {
+
      & > div.box:first-child {
        min-height: 204px;
+       background-color: $quote-bg;
+     }
+
+     blockquote.blog-style {
+       padding: 30px 35px;
+       min-height: 204px;
+
+       cite:after {
+         content: "";
+       }
      }
    }
 
@@ -194,6 +205,25 @@
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid; /* Firefox */
     break-inside: avoid;
+  }
+}
+
+/* responsive iframe */
+
+.video-container {
+  position: relative;
+  /* video's aspect ratio of 16*9, so 9 divided by 16 = 0.5625 or 56.25%, full explanation http://alistapart.com/article/creating-intrinsic-ratios-for-video */
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  min-height: 204px;
+
+  iframe, object, embed {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
   }
 }
 
