@@ -29,7 +29,12 @@ module.exports = function(grunt) {
         'jshint'
     ]);
 
-    grunt.registerTask('dev', [
+    grunt.registerTask('devcss', [
+        'compass:dev',
+        'postcss'
+    ]);
+
+    grunt.registerTask('devfull', [
         'compass:dev',
         'postcss',
         'copy:modernizr',
