@@ -29,8 +29,8 @@
    }
 
    &.related-entry {
-     & > div {
-
+     & > div.box:first-child {
+       min-height: 204px;
      }
    }
 
@@ -166,7 +166,36 @@
   }
   } 
 }
+/* Fixme */
+@media only screen and (min-width: $DesktopExtraLarge) {
+  .post-page .post .post-content section {
+    columns: 400px;
+    column-gap: 2em;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid; /* Firefox */
+    break-inside: avoid;
+  }
+}
 
+@media only screen and (min-width: $DesktopLarge) {
+  .post-page .post .post-content section {
+    columns: 400px;
+    column-gap: 2em;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid; /* Firefox */
+    break-inside: avoid;
+  }
+}
+
+@media only screen and (min-width: $TabletPortraitMin) and (max-width: $TabletPortraitMax) {
+  .post-page .post .post-content section{
+    columns: 300px;
+    column-gap: 2em;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid; /* Firefox */
+    break-inside: avoid;
+  }
+}
 
 /*-------------------------*/
 /* Slit (inspired by Jam3) */

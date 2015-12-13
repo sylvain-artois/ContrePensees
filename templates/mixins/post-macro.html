@@ -1,5 +1,6 @@
 {% macro post(post, full) %}
-<article role="article" class="post" itemscope itemType="http://schema.org/BlogPosting">
+<article role="article" class="post" itemscope itemType="http://schema.org/BlogPosting"
+         xmlns="http://www.w3.org/1999/html">
 
     {% if post.type == 'quote' %}
         <blockquote class="blog-style">
@@ -117,22 +118,23 @@
     <div class="post-content box">
 
         {% if post.type == 'text' %}
-
             <h4 itemprop="headline">
                 <a href="{{ post.url }}">{{ post.title }}</a>
             </h4>
-            <p>{{ post.brief|safe }}</p>
 
-            {% if full %}
-            {{ post.content|safe }}
-            {% endif %}
+            <section>
+                <p>{{ post.brief|safe }}</p>
 
+                {% if full %}
+                    {{ post.content|safe }}
+                {% endif %}
+            </section>
         {% elif post.caption %}
             {{ post.caption|safe }}
         {% endif %}
 
         {% if full %}
-            <div class="social-media dima-social-post social-medium">
+            <div class="social-media dima-social-post social-medium" {% if post.type == 'quote' and post.caption == false %}style="margin-top: 0px;border-top-width: 0px; padding-top: 0px;"{% endif %}>
                 <ul class="inline clearfix">
                     <li>
                         <a href="{{ post.share.tumblr }}" target="_blank">
