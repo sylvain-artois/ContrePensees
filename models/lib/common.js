@@ -130,14 +130,17 @@ module.exports = {
      * @returns {string}
      */
     postUrl: function(post) {
-        var urlParts = [post.author.url];
+        var urlParts = [];
+
         if (Array.isArray(post.categories) && post.categories.length > 0) {
             urlParts.push(post.categories[0].key);
-        } else {
-            //default category ?
+        } else { //default category ?
             urlParts.push('inspiration');
         }
+
+        urlParts.push(post.author.url.substr(1));
         urlParts.push(post.slug);
+
         return urlParts.join('/');
     },
     /**

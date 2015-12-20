@@ -6,11 +6,17 @@
     </div>
     <div class="di_2_of_3 hidden-tm">
         <ul class="dima-menu">
-            {% for link in navLinks %}
-            <li class="{% if link.key == section %}current{% endif %}">
-                <a href="{{ link.href }}">{{ link.label }}</a>
-            </li>
-            {% endfor %}
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/sylvain-artois">CV</a></li>
+            <li><a href="/dye-pop">Portfolio</a></li>
+            {% if user %}
+                {% if user.canAccessKeystone %}
+                    <li><a href="/keystone" rel="nofollow">BO</a></li>
+                {% endif %}
+                <li><a href="/keystone/signout" rel="nofollow">Out</a></li>
+            {% else %}
+                <li><a href="/keystone/signin" rel="nofollow">In</a></li>
+            {% endif %}
         </ul>
     </div>
 </div>

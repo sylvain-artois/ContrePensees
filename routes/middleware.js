@@ -24,14 +24,25 @@ exports.initLocals = function(req, res, next) {
 
     var locals = res.locals;
 
+    if (! "categories" in locals) {
+        return next("initLocals must be called after init catageory");
+    }
+
     locals.navLinks = [
-        { label: 'Home',            key: 'home',      changefreq: 'daily',   priority: 0.9, href: '/' },
-        { label: 'Cogito',          key: 'cogito',    changefreq: 'daily',   priority: 0.9, href: '/dye-pop/cogito' },
-        { label: '&lt;code /&gt;',  key: 'code',      changefreq: 'weekly',  priority: 0.8, href: '/sylvain-artois/software' },
-        { label: 'Portfolio',       key: 'portfolio', changefreq: 'monthly', priority: 0.5, href: '/dye-pop' },
-        { label: 'CV',              key: 'resume',    changefreq: 'monthly', priority: 0.5, href: '/sylvain-artois' },
-        { label: 'Contact',         key: 'contact',   changefreq: 'monthly', priority: 0.1, href: '/contact' }
+        { label: 'Home', key: 'home', changefreq: 'daily', priority: 0.9, href: '/' }
     ];
+
+    locals.categories.sort(function(category1, category2){
+        return parseFloat(category1.rank) - parseFloat(category2.rank);
+    }).forEach(function(category){
+        locals.navLinks.push({
+            label: category.name,
+            key: category.key,
+            href: category.url,
+            changefreq: 'daily',
+            priority: 0.9
+        });
+    });
 
     locals.user = req.user;
 

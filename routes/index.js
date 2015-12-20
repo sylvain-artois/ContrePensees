@@ -8,9 +8,9 @@ var importRoutes = keystone.importer(__dirname),
     };
 
 // Common Middleware
+keystone.pre('routes', middleware.initCategories);
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('routes', middleware.initErrorHandlers);
-keystone.pre('routes', middleware.initCategories);
 keystone.pre('routes', middleware.loadPinned);
 keystone.pre('render', middleware.flashMessages);
 
@@ -23,15 +23,16 @@ keystone.set('404', function(req, res, next) {
 exports = module.exports = function(app) {
 
     app.get('/', routes.views.home);
+
     app.get('/sitemap.xml', routes.views.sitemap);
     app.get('/atom.xml', routes.views.syndication);
+
     app.all('/contact', routes.views.contact);
+
+    app.get('/dye-pop', routes.views.user);
+    app.get('/sylvain-artois', routes.views.user);
+
     app.get('/search/:query?',  routes.views.search);
-
-
-    app.get('/:user/:category/:post', routes.views.post);
-    app.get('/:user/:category', routes.views.blog);
-    //Portfolio and CV
-    app.get('/:user', routes.views.user);
-
+    app.get('/:category/:user/:post', routes.views.post);
+    app.get('/:category', routes.views.blog);
 };
