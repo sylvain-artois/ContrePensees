@@ -16,13 +16,26 @@ module.exports = function(grunt) {
         config: {
             src: './grunt/*.js'
         },
-        pkg: grunt.file.readJSON('package.json')
+        pkg: grunt.file.readJSON('package.json'),
+        nodemon: {
+            serve: {
+                script: 'keystone.js',
+                options: {
+                    ignore: ['node_modules/**']
+                }
+            }
+        }
     };
 
     var configs = require('load-grunt-configs')(grunt, options);
 
     // Project configuration.
     grunt.initConfig(configs);
+
+    grunt.registerTask('dev', [
+        'sass',
+        'watch'
+    ]);
 
     // load jshint
     grunt.registerTask('lint', [
