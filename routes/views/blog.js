@@ -16,8 +16,18 @@ exports = module.exports = function(req, res) {
         env: keystone.get('env')
     };
 
+    var categoryFilter = res.locals.categories.filter(function(category) {
+        return category.name === locals.filters.category
+    });
+
+    if (categoryFilter.length <= 1) {
+        return res.status(404).render('errors/404');
+    }
+
     // Load the current category filter
     view.on('init', function(next) {
+
+        console.log(locals.filters.category);
 
         keystone.list('Category')
             .model
