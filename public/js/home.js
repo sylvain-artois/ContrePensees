@@ -1,5 +1,5 @@
 import {OffCanvasMenu} from 'lib/OffCanvasMenu.js'
-import {Slider} from 'lib/Slider.js'
+/*import {Slider} from 'lib/Slider.js'*/
 
 new OffCanvasMenu({
         name: 'sidr-main',
@@ -7,5 +7,5 @@ new OffCanvasMenu({
     })
     .init('.dima-btn-nav');
 
-new Slider()
-    .init('.fullscreenOnePage');
+/*new Slider()
+    .init('.fullscreenOnePage');*/

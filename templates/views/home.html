@@ -1,10 +1,38 @@
 {% extends "../layouts/home.html" %}
 
-{% block css %}
+{% block sections %}
+    {% set colors = ['#31312E','#3D3D39','#3C3C3C','#31312E','#3C3C3C','#3D3D39', '#31312E', '#3C3C3C', '#3D3D39'] %}
+    {% for name, category in data.postByCategory %}
+        <section class="section" style="background-color: {{ colors[loop.index0] }}">
+            <div class="page-section-content">
+                <div class="container text-center">
+                    <h2 class="uppercase">{{ category.name }}</h2>
+                    <div class="topaz-line">
+                        <i class="di-separator"></i>
+                    </div>
+                    <div class="container">
+                        {% for post in category.posts %}
+                            {% set loopIndex = loop.index %}
+                            {% include "./../mixins/post-thumbnail.html" %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script src="/js/vendor/system.js"></script>
+    <script src="/js/config.js"></script>
+    <script>System.import('home.js');</script>
+{% endblock %}
+
+{% block css_old %}
     <link rel="stylesheet" href="/css/vendor/settings.css" />
 {% endblock %}
 
-{% block slider %}
+{% block slider_old %}
 <div class="tp-banner fullscreenOnePage">
     <ul>
 

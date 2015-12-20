@@ -19,20 +19,21 @@
             {% block slider %}{% endblock %}
         </div>
 
+        <div class="dima-main">
+            {% block sections %}{% endblock %}
+        </div>
+
+        <footer role="contentinfo" class="dima-footer">
+            <div class="container">
+                {% include "../mixins/footer-second.html" %}
+            </div>
+        </footer>
+
     </div>
 
-    {% set isProd = data.env == 'production' %}
-    <script src="/js/vendor/jquery.{% if isProd %}min.{% endif %}js"></script>
-    <script src="/js/vendor/jquery.themepunch.min.js"></script>
-    {% if isProd %}
-    <script src="/js/vendor/jquery-plugin-easing-superfish.min.js"></script>
-    {% else %}
-    <script src="/js/vendor/jquery.easing.js"></script>
-    <script src="/js/vendor/superfish.js"></script>
-    {% endif %}
-    <script>
-    var application = {options: {slide: {revolution: true}}};
-    </script>
-    <script src="/js/main.js?4"></script>
+    {% block js %}
+        {% include "../mixins/block-javascript.html" %}
+        <script src="/js/main.js?4"></script>
+    {% endblock %}
 </body>
 </html>
