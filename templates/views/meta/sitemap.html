@@ -9,19 +9,30 @@
         <priority>{{ navLink.priority }}</priority>
     </url>
     {% endfor %}
-    {% for category in data.categories %}
+
     <url>
-        <loc>{{ data.baseUrl }}{{ category.url }}</loc>
+        <loc>{{ data.baseUrl }}/sylvain-artois</loc>
         <lastmod>{{ data.generatedAt }}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
     </url>
-    {# Paging category #}
-    {% endfor %}
+    <url>
+        <loc>{{ data.baseUrl }}/dye-pop</loc>
+        <lastmod>{{ data.generatedAt }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>{{ data.baseUrl }}/contact</loc>
+        <lastmod>{{ data.generatedAt }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
     {% for post in data.posts %}
     <url>
         <loc>{{ data.baseUrl }}{{ post.url }}</loc>
-        <lastmod>{{ post._.updatedAt.format() }}</lastmod>
+        <lastmod>{{ post._.updatedAt.format('YYYY-MM-DDTHH:mm:ssZ') }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
