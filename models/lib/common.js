@@ -141,7 +141,7 @@ module.exports = {
         urlParts.push(post.author.url.substr(1));
         urlParts.push(post.slug);
 
-        return urlParts.join('/');
+        return '/' + urlParts.join('/');
     },
     /**
      * @param post
