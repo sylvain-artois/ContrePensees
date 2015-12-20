@@ -16,4 +16,5 @@ Category.schema.virtual('url').get(function() {
 });
 
 Category.relationship({ ref: 'Post', path: 'categoriesPath' });
+Category.defaultColumns = 'name, author, header';
 Category.register();
