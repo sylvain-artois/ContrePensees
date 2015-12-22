@@ -1,0 +1,87 @@
+{% macro boxedPost(post, isInLoop, index) %}
+    <article role="article" class="post related-entry{% if isInLoop %} di_1_of_3{% endif %}{% if index == 1 %} first{% endif %}">
+        {% if post.type == 'photo' %}
+            <div class="post-img">
+                <img src="{{ post._.image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+                <div class="link_overlay">
+                    <ul class="icons-media">
+                        <li>
+                            <a href="{{ post.url }}">
+                                <i class="fa fa-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="topaz-hover"></span>
+                </div>
+            </div>
+        {% elif post.type == 'quote' %}
+            <div>
+                <blockquote class="blog-style">
+                    <div class="topaz-border"></div>
+                    <div>
+                        {{ post.quoteBrief | safe }}
+                    </div>
+                    {% if post.writer %}
+                        <cite><a href="{{ post.url }}">{{ post.writer }}</a></cite>
+                    {% endif %}
+                </blockquote>
+            </div>
+        {% elif post.type == 'text' %}
+            <div class="box" style="border-bottom-width: 0;">
+                <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+                <p>{{ post.shortBrief | safe }}</p>
+            </div>
+        {% elif post.type == 'gallery' %}
+            <div class="post-img">
+                {% for image in post.images %}
+                    {% if loop.first %}
+                        <img src="{{ image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+                    {% endif %}
+                {% endfor %}
+                <div class="link_overlay">
+                    <ul class="icons-media">
+                        <li>
+                            <a href="{{ post.url }}">
+                                <i class="fa fa-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="topaz-hover"></span>
+                </div>
+            </div>
+        {% elif post.type == 'medium' %}
+            <div class="post-img">
+                <div class="video-container">
+                    {{ post.medium | safe }}
+                </div>
+                <div class="link_overlay">
+                    <ul class="icons-media">
+                        <li>
+                            <a href="{{ post.url }}">
+                                <i class="fa fa-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="topaz-hover"></span>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="post-meta box">
+            <ul>
+                <li class="post-on">
+                    Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</time>
+                </li>
+                <li class="post-tags">
+                    {% if post.categories and post.categories.length %}
+                        {% for cat in post.categories %}
+                            <a href="{{ cat.url }}">{{ cat.name }}</a>
+                            {% if loop.index < post.categories.length %},&nbsp;{% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+
+    </article>
+{% endmacro %}

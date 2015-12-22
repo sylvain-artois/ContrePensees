@@ -17,30 +17,15 @@ exports = module.exports = function(req, res) {
     };
 
     var categoryFilter = res.locals.categories.filter(function(category) {
-        return category.name === locals.filters.category
+        return category.key === locals.filters.category;
     });
 
-    if (categoryFilter.length <= 1) {
+    if (categoryFilter.length < 1) {
         return res.status(404).render('errors/404');
     }
 
-    // Load the current category filter
-    view.on('init', function(next) {
-
-        console.log(locals.filters.category);
-
-        keystone.list('Category')
-            .model
-            .findOne({ key: locals.filters.category })
-            .exec(function(err, result) {
-                if (err) {
-                    return next(err);
-                }
-                locals.data.category = result;
-                locals.section = result.name;
-                next();
-            });
-    });
+    locals.data.category = categoryFilter[0];
+    locals.section = locals.data.category.name;
 
     // Load the posts
     view.on('init', function(next) {
