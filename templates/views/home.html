@@ -2,17 +2,18 @@
 
 {% block sections %}
     {% set colors = ['#31312E','#3D3D39','#3C3C3C','#31312E','#3C3C3C','#3D3D39', '#31312E', '#3C3C3C', '#3D3D39'] %}
-    {% for name, category in data.postByCategory %}
+    {% for category in data.postByCategory %}
         <section class="section" style="background-color: {{ colors[loop.index0] }}">
             <div class="page-section-content">
-                <div class="container text-center">
-                    <h2 class="uppercase">{{ category.name }}</h2>
+                <div class="container">
+                    <h2 class="text-center">{{ category.name }}</h2>
                     <div class="topaz-line">
                         <i class="di-separator"></i>
                     </div>
                     <div class="container">
                         {% for post in category.posts %}
                             {% set loopIndex = loop.index %}
+                            {% set isHome = true %}
                             {% include "./../mixins/post-thumbnail.html" %}
                         {% endfor %}
                     </div>
@@ -26,73 +27,4 @@
     <script src="/js/vendor/system.js"></script>
     <script src="/js/config.js"></script>
     <script>System.import('home.js');</script>
-{% endblock %}
-
-{% block css_old %}
-    <link rel="stylesheet" href="/css/vendor/settings.css" />
-{% endblock %}
-
-{% block slider_old %}
-<div class="tp-banner fullscreenOnePage">
-    <ul>
-
-        <li data-transition="random-static" data-slotamount="7" data-masterspeed="500" data-saveperformance="on" data-title="Intro Slide">
-            <img alt="slidebg1" src="/images/dummy.png"
-                 data-lazyload="/images/frontSlider/2015-07-20-1.jpg"
-                 data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" />
-            <h1 class="uppercase undertitle tp-caption skewfromleft customout rs-parallaxlevel-0"
-                data-x="center" data-y="center"
-                data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-                data-speed="530" data-start="700" data-easing="Power3.easeInOut"
-                data-elementdelay="0.1" data-endelementdelay="0.1">
-                Dye<span class="theme-color"> Pop</span>
-            </h1>
-            <div class="flex-caption undertitle tp-caption skewfromleft customout rs-parallaxlevel-0"
-                 data-x="center" data-y="385"
-                 data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-                 data-speed="530" data-start="900" data-easing="Power3.easeInOut"
-                 data-elementdelay="0.1" data-endelementdelay="0.1">
-                <p class="undertitle hide-on-m text-center">Photography - Feminist noveler - Gender studying</p>
-            </div>
-
-            <div class="pattern-slider"></div>
-        </li>
-
-        <li data-transition="fade" data-slotamount="7" data-masterspeed="500" data-saveperformance="on" data-title="Intro Slide">
-            <img alt="slidebg2" src="/images/dummy.png"
-                 data-lazyload="/images/frontSlider/2015-07-20-2.jpg"
-                 data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" />
-            <h1 class="uppercase undertitle tp-caption skewfromleft customout rs-parallaxlevel-0"
-                data-x="center" data-y="center"
-                data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-                data-speed="530" data-start="700" data-easing="Power3.easeInOut"
-                data-elementdelay="0.1" data-endelementdelay="0.1">
-                <span class="theme-color">Sylvain</span> Artois
-            </h1>
-            <div class="flex-caption undertitle tp-caption skewfromleft customout rs-parallaxlevel-0" data-x="center" data-y="385" data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;" data-speed="530" data-start="900" data-easing="Power3.easeInOut" data-elementdelay="0.1" data-endelementdelay="0.1">
-                <p class="undertitle hide-on-m text-center">Software developer</p>
-            </div>
-            <div class="pattern-slider"></div>
-        </li>
-
-        {#<li data-transition="fade" data-slotamount="7" data-masterspeed="500" data-saveperformance="on" data-title="Intro Slide">
-            <img alt="slidebg3" src="/images/dummy.png"
-                 data-lazyload="/images/frontSlider/2015-07-20-3.jpg"
-                 data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" />
-            <h1 class="uppercase undertitle tp-caption skewfromleft customout rs-parallaxlevel-0"
-                data-x="center" data-y="center"
-                data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-                data-speed="530" data-start="700" data-easing="Power3.easeInOut"
-                data-elementdelay="0.1" data-endelementdelay="0.1">
-                <span class="theme-color">100%</span> fully responsive
-            </h1>
-            <div class="flex-caption undertitle tp-caption skewfromleft customout rs-parallaxlevel-0" data-x="center" data-y="385" data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;" data-speed="530" data-start="900" data-easing="Power3.easeInOut" data-elementdelay="0.1" data-endelementdelay="0.1">
-                <p class="undertitle hide-on-m text-center">Okab is fully responsive on all devices and platforms, perfect solution for users
-                    <br>browsing your site on many different devices and browsers</p>
-            </div>
-            <div class="pattern-slider"></div>
-        </li>#}
-
-    </ul>
-</div>
 {% endblock %}

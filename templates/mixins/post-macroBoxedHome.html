@@ -19,7 +19,7 @@
                 <blockquote class="blog-style">
                     <div class="topaz-border"></div>
                     <div>
-                        {{ post.quoteBrief | safe }}
+                        {{ post.quote | safe }}
                     </div>
                     {% if post.writer %}
                         <cite><a href="{{ post.url }}">{{ post.writer }}</a></cite>
@@ -27,9 +27,16 @@
                 </blockquote>
             </div>
         {% elif post.type == 'text' %}
-            <div class="box" style="border-bottom-width: 0;">
-                <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
-                <p>{{ post.shortBrief | safe }}</p>
+            <div style="position:relative">
+                {% if post._.image.exists %}
+                    <div style="position:absolute;opacity: 0.5">
+                        <img src="{{ post._.image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+                    </div>
+                {% endif %}
+                <div class="box" style="border-bottom-width: 0;">
+                    <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+                    <p>{{ post.brief | safe }}</p>
+                </div>
             </div>
         {% elif post.type == 'gallery' %}
             <div class="post-img">
