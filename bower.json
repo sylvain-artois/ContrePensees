@@ -27,7 +27,8 @@
     "slider-revolution": "~4.3.7",
     "superfish": "~1.7.6",
     "systemjs": "*",
-    "waypoints": "~3.1.1"
+    "waypoints": "~3.1.1",
+    "Scrollax.js": "~1.0.0"
   },
   "resolutions": {
     "jquery": ">= 1.8.3"

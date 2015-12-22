@@ -39,18 +39,6 @@ module.exports = {
         ],
         dest: 'public/js/vendor/'
     },
-    greensock:{
-        expand: true,
-        flatten: true,
-        src: [ 'assets/vendor/gsap/src/uncompressed/TweenMax.js' ],
-        dest: 'public/js/vendor/'
-    },
-    wait4image: {
-        expand: true,
-        flatten: true,
-        src: [ 'assets/vendor/waitForImages/dist/jquery.waitforimages.js' ],
-        dest: 'public/js/vendor/'
-    },
     sidr:{
         expand: true,
         flatten: true,
@@ -67,26 +55,20 @@ module.exports = {
     photoswipeJs:{
         expand: true,
         flatten: true,
-        src: ['assets/vendor/photoswipe/dist/photoswipe.js', 'assets/vendor/photoswipe/dist/photoswipe-ui-default.js'],
+        src: ['assets/vendor/photoswipe/dist/photoswipe.js'],
         dest: 'public/js/vendor/'
     },
-    revolutionSliderScript: {
+    scrollaxdev:{
         expand: true,
         flatten: true,
-        src: ['assets/vendor/slider-revolution/src/js/jquery.themepunch.revolution.js'],
-        dest: 'public/css/vendor/'
+        src: ['assets/vendor/Scrollax.js/scrollax.js'],
+        dest: 'public/js/vendor/'
     },
-    revolutionSliderStyle: {
+    scrollaxprod:{
         expand: true,
         flatten: true,
-        src: ['assets/vendor/slider-revolution/src/css/settings.css'],
-        dest: 'public/css/vendor/'
-    },
-    revolutionSliderAssets: {
-        expand: true,
-        flatten: true,
-        src: ['assets/vendor/slider-revolution/src/assets/*'],
-        dest: 'public/assets'
+        src: ['assets/vendor/Scrollax.js/scrollax.min.js'],
+        dest: 'public/js/vendor/'
     },
     allDev: {
         expand: true,
