@@ -1,7 +1,7 @@
 {% macro boxedPost(post, isInLoop, index) %}
     <article role="article" class="post related-entry{% if isInLoop %} di_1_of_3{% endif %}{% if index == 1 %} first{% endif %}">
         {% if post.type == 'photo' %}
-            <div class="post-img">
+            <div class="post-img" style="box-shadow: 0px 0px 5px black;">
                 <img src="{{ post._.image.fill(400, 400, { 'gravity': 'face:center' }) }}" />
                 <div class="link_overlay">
                     <ul class="icons-media">
@@ -73,6 +73,7 @@
             </div>
         {% endif %}
 
+        {#
         {% if post.type != 'text' %}
         <div class="post-meta box">
             <ul>
@@ -91,6 +92,6 @@
             </ul>
         </div>
         {% endif %}
-
+#}
     </article>
 {% endmacro %}
