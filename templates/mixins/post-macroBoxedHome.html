@@ -1,0 +1,97 @@
+{% macro boxedPost(post, isInLoop, index) %}
+    <article role="article" class="post related-entry{% if isInLoop %} di_1_of_3{% endif %}{% if index == 1 %} first{% endif %}">
+        {% if post.type == 'photo' %}
+            <div class="post-img" style="box-shadow: 0px 0px 5px black;">
+                <img src="{{ post._.image.fill(400, 400, { 'gravity': 'face:center' }) }}" />
+                <div class="link_overlay">
+                    <ul class="icons-media">
+                        <li>
+                            <a href="{{ post.url }}">
+                                <i class="fa fa-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="topaz-hover"></span>
+                </div>
+            </div>
+        {% elif post.type == 'quote' %}
+            <div>
+                <blockquote class="blog-style">
+                    <div class="topaz-border"></div>
+                    <div>
+                        {{ post.quoteBrief | safe }}
+                    </div>
+                    {% if post.writer %}
+                        <cite><a href="{{ post.url }}">{{ post.writer }}</a></cite>
+                    {% endif %}
+                </blockquote>
+            </div>
+        {% elif post.type == 'text' %}
+            <div style="border: 1px solid #5E5D57;">
+                {% if post._.image.exists %}
+                    <img src="{{ post._.image.fill(400, 400, { 'gravity': 'face:center' }) }}" />
+                {% endif %}
+                <article class="box" style="border-bottom-width: 0; border-left-width: 0; border-right-width: 0;">
+                    <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+                    <p>Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</time></p>
+                    <p>{{ post.shortBrief | safe }}</p>
+                </article>
+            </div>
+        {% elif post.type == 'gallery' %}
+            <div class="post-img">
+                {% for image in post.images %}
+                    {% if loop.first %}
+                        <img src="{{ image.fill(400, 400, { 'gravity': 'face:center' }) }}" />
+                    {% endif %}
+                {% endfor %}
+                <div class="link_overlay">
+                    <ul class="icons-media">
+                        <li>
+                            <a href="{{ post.url }}">
+                                <i class="fa fa-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="topaz-hover"></span>
+                </div>
+            </div>
+        {% elif post.type == 'medium' %}
+            <div class="post-img">
+                <div class="video-container">
+                    {{ post.medium | safe }}
+                </div>
+                <div class="link_overlay">
+                    <ul class="icons-media">
+                        <li>
+                            <a href="{{ post.url }}">
+                                <i class="fa fa-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="topaz-hover"></span>
+                </div>
+            </div>
+        {% endif %}
+
+        {#
+        {% if post.type != 'text' %}
+        <div class="post-meta box">
+            <ul>
+                <li class="post-on">
+                    Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</time>
+                </li>
+                <li class="post-tags">
+                    {% if post.tagsArray and post.tagsArray.length %}
+                        {% for tag in post.tagsArray %}
+                            <span class="label">
+                            <i class="fa fa-tag"></i>&nbsp;{{ tag }}
+                        </span>
+                        {% endfor %}
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+#}
+    </article>
+{% endmacro %}

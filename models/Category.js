@@ -8,12 +8,13 @@ Category.add({
     name: { type: String, required: true },
     header: { type: Types.Html, wysiwyg: true, height: 200 },
     author: { type: Types.Relationship, ref: 'User' },
+    rank: { type: Types.Number }
 });
 
 Category.schema.virtual('url').get(function() {
-    //Fixme hardcode, how-to load relationship here
-    return (this.name === 'Software') ? '/sylvain-artois/software' : '/dye-pop/' + this.key;
+    return  '/' + this.key;
 });
 
 Category.relationship({ ref: 'Post', path: 'categoriesPath' });
+Category.defaultColumns = 'name, rank, author, header';
 Category.register();

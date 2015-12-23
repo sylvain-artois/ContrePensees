@@ -1,5 +1,5 @@
 import {OffCanvasMenu} from 'lib/OffCanvasMenu.js'
-import {Slider} from 'lib/Slider.js'
+import {TopbarShrink} from 'lib/TopbarShrink.js'
 
 new OffCanvasMenu({
         name: 'sidr-main',
@@ -7,5 +7,10 @@ new OffCanvasMenu({
     })
     .init('.dima-btn-nav');
 
-new Slider()
-    .init('.fullscreenOnePage');
+new TopbarShrink({
+        el: ".logo",
+        root: window,
+        doc: document,
+        height: 110,
+    })
+    .shrink();

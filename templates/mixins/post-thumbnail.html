@@ -1,3 +1,7 @@
-{% import "./post-macroBoxed.html" as postHelper %}
+{% if isHome %}
+    {% import "./post-macroBoxedHome.html" as postHelper %}
+{% else %}
+    {% import "./post-macroBoxed.html" as postHelper %}
+{% endif %}
 
 {{ postHelper.boxedPost(post, true, loopIndex) }}
