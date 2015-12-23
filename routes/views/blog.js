@@ -21,7 +21,7 @@ exports = module.exports = function(req, res) {
     });
 
     if (categoryFilter.length < 1) {
-        return res.status(404).render('errors/404');
+        return res.notfound();
     }
 
     locals.data.category = categoryFilter[0];

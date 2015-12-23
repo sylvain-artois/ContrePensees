@@ -3,7 +3,7 @@ var keystone = require('keystone');
 exports = module.exports = function(req, res) {
 
     if (['dye-pop', 'sylvain-artois'].indexOf(req.params.user) === -1) {
-        return res.status(404).render('errors/404');
+        return res.notfound();
     }
 
     res.locals.section = (req.params.user === 'sylvain-artois') ?  'resume' : 'portfolio';
