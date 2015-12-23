@@ -1,6 +1,6 @@
 <header role="banner">
     <div class="dima-navbar-wrap">
-        <div class="dima-navbar fix-one">
+        <div class="dima-navbar fix-one fix_nav fixed">
             <div class="clearfix dima-nav-fixed"></div>
             <div class="relative full-wrapper">
 
@@ -18,29 +18,20 @@
 
                 <nav role="navigation" class="clearfix">
                     <ul class="dima-nav sf-menu">
-                        {% for link in navLinks %}
-                        <li class="{% if link.key == section %}current{% endif %}">
-                            <a href="{{ link.href }}">{{ link.label }}</a>
-                            {% if link.label == 'Cogito' %}
-                            <ul class="sub-menu nav-menu sf-menu">
-                                {% for cat in data.categories %}
-                                {% if cat.name != 'Software' %}
-                                <li>
-                                    <a href="{{ cat.url }}">
-                                        {{ cat.name }}
-                                    </a>
-                                </li>
-                                {% endif %}
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        </li>
-                        {% endfor %}
 
-                        <li class="search-btn">
+                        <li data-nav="home" class="{% if 'home' == section %}current{% endif %}">
+                            <a href="/"><i class="fa fa-home"></i></a>
+                        </li>
+
+                        <li data-nav="search" class="search-btn">
                             <a href="#"><i class="fa fa-search"></i></a>
                         </li>
 
+                        {% for link in navLinks %}
+                        <li class="{% if link.key == section %}current{% endif %}">
+                            <a href="{{ link.href }}">{{ link.label }}</a>
+                        </li>
+                        {% endfor %}
 
                     </ul>
                 </nav>

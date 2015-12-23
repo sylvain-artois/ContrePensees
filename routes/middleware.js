@@ -28,9 +28,7 @@ exports.initLocals = function(req, res, next) {
         return next("initLocals must be called after init catageory");
     }
 
-    locals.navLinks = [
-        { label: 'Home', key: 'home', changefreq: 'daily', priority: 0.9, href: '/' }
-    ];
+    locals.navLinks = [];
 
     locals.categories.sort(function(category1, category2){
         return parseFloat(category1.rank) - parseFloat(category2.rank);
