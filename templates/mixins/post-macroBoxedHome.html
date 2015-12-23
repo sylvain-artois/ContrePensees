@@ -2,7 +2,7 @@
     <article role="article" class="post related-entry{% if isInLoop %} di_1_of_3{% endif %}{% if index == 1 %} first{% endif %}">
         {% if post.type == 'photo' %}
             <div class="post-img">
-                <img src="{{ post._.image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+                <img src="{{ post._.image.fill(400, 400, { 'gravity': 'face:center' }) }}" />
                 <div class="link_overlay">
                     <ul class="icons-media">
                         <li>
@@ -19,7 +19,7 @@
                 <blockquote class="blog-style">
                     <div class="topaz-border"></div>
                     <div>
-                        {{ post.quote | safe }}
+                        {{ post.quoteBrief | safe }}
                     </div>
                     {% if post.writer %}
                         <cite><a href="{{ post.url }}">{{ post.writer }}</a></cite>
@@ -27,22 +27,21 @@
                 </blockquote>
             </div>
         {% elif post.type == 'text' %}
-            <div style="position:relative">
+            <div style="border: 1px solid #5E5D57;">
                 {% if post._.image.exists %}
-                    <div style="position:absolute;opacity: 0.5">
-                        <img src="{{ post._.image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
-                    </div>
+                    <img src="{{ post._.image.fill(400, 400, { 'gravity': 'face:center' }) }}" />
                 {% endif %}
-                <div class="box" style="border-bottom-width: 0;">
+                <article class="box" style="border-bottom-width: 0; border-left-width: 0; border-right-width: 0;">
                     <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
-                    <p>{{ post.brief | safe }}</p>
-                </div>
+                    <p>Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</time></p>
+                    <p>{{ post.shortBrief | safe }}</p>
+                </article>
             </div>
         {% elif post.type == 'gallery' %}
             <div class="post-img">
                 {% for image in post.images %}
                     {% if loop.first %}
-                        <img src="{{ image.fill(200, 100, { 'gravity': 'face:center' }) }}" />
+                        <img src="{{ image.fill(400, 400, { 'gravity': 'face:center' }) }}" />
                     {% endif %}
                 {% endfor %}
                 <div class="link_overlay">
@@ -74,21 +73,24 @@
             </div>
         {% endif %}
 
+        {% if post.type != 'text' %}
         <div class="post-meta box">
             <ul>
                 <li class="post-on">
                     Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</time>
                 </li>
                 <li class="post-tags">
-                    {% if post.categories and post.categories.length %}
-                        {% for cat in post.categories %}
-                            <a href="{{ cat.url }}">{{ cat.name }}</a>
-                            {% if loop.index < post.categories.length %},&nbsp;{% endif %}
+                    {% if post.tagsArray and post.tagsArray.length %}
+                        {% for tag in post.tagsArray %}
+                            <span class="label">
+                            <i class="fa fa-tag"></i>&nbsp;{{ tag }}
+                        </span>
                         {% endfor %}
                     {% endif %}
                 </li>
             </ul>
         </div>
+        {% endif %}
 
     </article>
 {% endmacro %}
