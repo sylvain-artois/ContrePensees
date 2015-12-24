@@ -2,10 +2,10 @@
 
 {% block sections %}
     {% set colors = ['#31312E','#3D3D39','#31312E','#31312E','#3C3C3C','#3D3D39', '#31312E', '#3C3C3C', '#3D3D39'] %}
-    {% set bkgImg = ['/images/frontSlider/2015-07-20-1.jpg', '/images/frontSlider/2015-07-20-2.jpg', '/images/frontSlider/2015-07-20-3.jpg', '/images/frontSlider/2015-07-20-5.jpg','/images/frontSlider/2015-07-20-1.jpg', '/images/frontSlider/2015-07-20-2.jpg', '/images/frontSlider/2015-07-20-3.jpg', '/images/frontSlider/2015-07-20-5.jpg' ] %}
+    {% set bkgImg = ['/images/frontSlider/2015-07-20-1.jpg', '/images/frontSlider/2015-07-20-2.jpg', '/images/frontSlider/2015-07-20-3.jpg', '/images/frontSlider/2015-07-20-5.jpg', '/images/frontSlider/2015-07-20-1.jpg', '/images/frontSlider/2015-07-20-2.jpg', '/images/frontSlider/2015-07-20-3.jpg', '/images/frontSlider/2015-07-20-6.jpg' ] %}
 
     {% for category in data.postByCategory %}
-        <section class="section" style="{% if category.key == "genre" or category.key == "lire" or category.key == "edito" %}background: black url('{{ bkgImg[loop.index0] }}') center center / cover no-repeat;{% else %}background-color: {{ colors[loop.index0] }}{% endif %}">
+        <section class="section" style="{% if category.key == "genre" or category.key == "lire" or category.key == "edito" or category.key == "code" %}background: black url('{{ bkgImg[loop.index0] }}') center center / cover no-repeat;{% else %}background-color: {{ colors[loop.index0] }}{% endif %}">
             <div class="page-section-content">
                 <div class="container">
                     <h2 class="text-center"><a href="{{ category.url }}">{{ category.name }}</a></h2>

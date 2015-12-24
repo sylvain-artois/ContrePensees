@@ -71,27 +71,10 @@
                     <span class="topaz-hover"></span>
                 </div>
             </div>
+            <div class="post-meta box">
+                {{ post.caption | safe }}
+            </div>
         {% endif %}
 
-        {#
-        {% if post.type != 'text' %}
-        <div class="post-meta box">
-            <ul>
-                <li class="post-on">
-                    Le <time datetime="{{ post._.publishedDate.format() }}">{{ post._.publishedDate.moment().locale("fr").format("Do MMM YYYY") }}</time>
-                </li>
-                <li class="post-tags">
-                    {% if post.tagsArray and post.tagsArray.length %}
-                        {% for tag in post.tagsArray %}
-                            <span class="label">
-                            <i class="fa fa-tag"></i>&nbsp;{{ tag }}
-                        </span>
-                        {% endfor %}
-                    {% endif %}
-                </li>
-            </ul>
-        </div>
-        {% endif %}
-#}
     </article>
 {% endmacro %}
