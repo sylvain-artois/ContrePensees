@@ -4,22 +4,28 @@ module.exports = {
             'model/**/*.js',
             'routes/**/*.js'
         ],
-        tasks: ['jshint:all']
+        tasks: ['concurrent:dev']
     },
     express: {
         files: [
-            'keystone.js',
-            'public/js/lib/**/*.{js,json}'
+            'keystone.js'
         ],
-        tasks: ['jshint:server', 'concurrent:dev']
+        tasks: ['concurrent:dev']
     },
-    sass: {
-        files: ['public/styles/**/*.scss'],
-        tasks: ['sass']
+    html: {
+        files: [
+            'templates/**/*.html'
+        ],
+        tasks: ['concurrent:html']
+    },
+    compass: {
+        files: ['assets/styles/sass/**/*.scss'],
+        tasks: ['compass:dev']
     },
     livereload: {
         files: [
-            'public/styles/**/*.css',
+            'public/css/**/*.css',
+            'public/js/**/*.js'
         ],
         options: {
             livereload: true

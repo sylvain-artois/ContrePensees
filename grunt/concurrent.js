@@ -4,5 +4,11 @@ module.exports = {
         options: {
             logConcurrentOutput: true
         }
+    },
+    html: {
+        tasks: ['watch'],
+        options: {
+            logConcurrentOutput: true
+        }
     }
 };
