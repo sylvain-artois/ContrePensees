@@ -1,3 +1,7 @@
-/**
- * Created by sartois on 12/01/2016.
- */
+import {OffCanvasMenu}  from 'lib/OffCanvasMenu.js';
+
+new OffCanvasMenu({
+        name: 'sidr-main',
+        source: '.dima-navbar nav'
+    })
+    .init('.dima-btn-nav');

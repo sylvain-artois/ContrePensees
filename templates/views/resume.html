@@ -173,7 +173,7 @@
 {% endblock %}
 
 {% block js %}
-    {% include "../mixins/block-javascript.html" %}
-    <script>var application = {options: { slide: {owl: true, flex:true}}};</script>
-    <script src="/js/main.js?4"></script>
+    <script src="/js/vendor/system.js"></script>
+    <script src="/js/config.js"></script>
+    <script>System.import('resume.js');</script>
 {% endblock %}
