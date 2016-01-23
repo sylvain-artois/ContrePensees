@@ -58,6 +58,10 @@ module.exports = function(grunt) {
         'uglify:revolutionSlider'
     ]);
 
+    grunt.registerTask('es6', [
+        'systemjs'
+    ]);
+
     grunt.registerTask('prodcss', [
         'compass:prod',
         'postcss'
