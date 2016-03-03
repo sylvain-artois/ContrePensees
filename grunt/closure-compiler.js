@@ -1,16 +1,21 @@
 module.exports = {
-    my_target: {
+    home: {
         files: {
-            'dest/output.min.js': ['src/js/**/*.js']
+            'public/js/bundle/home.min.js': [
+                'public/js/home.js',
+                'public/js/lib/OffCanvasMenu.js',
+                'public/js/lib/TopbarShrink.js'
+            ]
         },
         options: {
-            js: '/node_modules/google-closure-library/**.js',
-            externs: compilerPackage.compiler.CONTRIB_PATH + '/externs/jquery-1.9.js',
             compilation_level: 'SIMPLE',
-            manage_closure_dependencies: true,
-            language_in: 'ECMASCRIPT5_STRICT',
-            create_source_map: 'dest/output.min.js.map',
-            output_wrapper: '(function(){\n%output%\n}).call(this)\n//# sourceMappingURL=output.min.js.map'
+            language_in: 'ECMASCRIPT6_STRICT',
+            language_out: 'ECMASCRIPT5_STRICT',
+            create_source_map: 'public/js/bundle/home.min.js.map',
+            externs: [
+                'public/js/vendor/jquery.min.js',
+                'public/js/vendor/jquery.sidr.min.js'
+            ]
         }
     }
 };

@@ -1,5 +1,5 @@
-import $    from 'jquery';
-import sidr from 'sidr';
+//import $    from 'jquery';
+//import sidr from 'sidr';
 
 /**
  * Handle Sidr off canvas menu behavior
