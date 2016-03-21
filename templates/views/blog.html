@@ -41,3 +41,9 @@
 
 {% block pinned %}
 {% endblock %}
+
+{% block js %}
+    <script src="/js/vendor/system.js"></script>
+    <script src="/js/config.js"></script>
+    <script>System.import('blog.js');</script>
+{% endblock %}

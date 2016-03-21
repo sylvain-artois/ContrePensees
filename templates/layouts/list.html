@@ -37,10 +37,11 @@
         </footer>
     </div>
 
-    {% include "../mixins/block-javascript.html" %}
     {% block js %}
-    <script>var application = {options: { slide: {owl: true}}};</script>
+        {% include "../mixins/block-javascript.html" %}
+        <script>var application = {options: { slide: {owl: true}}};</script>
+        <script src="/js/main.js?4"></script>
     {% endblock %}
-    <script src="/js/main.js?4"></script>
+
 </body>
 </html>
