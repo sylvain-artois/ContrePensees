@@ -2,9 +2,6 @@ var keystone = require('keystone');
 
 exports = module.exports = function(req, res) {
 
-    if (['/dye-pop', '/sylvain-artois'].indexOf(req.url) === -1) {
-        return res.notfound();
-    }
 
     res.locals.section = (req.url === '/sylvain-artois') ?  'resume' : 'portfolio';
     res.locals.data = {

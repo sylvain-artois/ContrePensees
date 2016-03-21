@@ -54,7 +54,7 @@ exports = module.exports = function(req, res) {
                     callback();
                 });
         }, function(err) {
-            if  (err) {
+            if (err) {
                 return next(err);
             }
             next();

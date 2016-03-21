@@ -25,7 +25,7 @@ exports.initLocals = function(req, res, next) {
     var locals = res.locals;
 
     if (! "categories" in locals) {
-        return next("initLocals must be called after init catageory");
+        return next("initLocals must be called after init category");
     }
 
     locals.navLinks = [];
@@ -96,8 +96,8 @@ exports.initErrorHandlers = function(req, res, next) {
 
     res.serverError = function(err) {
 
-        var title = "Le serveur a planté",
-            message = "J'ai encore voulu coder trop vite";
+        var title = "Error occured",
+            message = "Please reload or come back later";
 
         if (err instanceof Error) {
             message = err.message;

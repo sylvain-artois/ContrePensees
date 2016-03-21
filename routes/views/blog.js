@@ -6,7 +6,6 @@ exports = module.exports = function(req, res) {
         locals = res.locals;
 
     locals.filters = {
-        user: req.params.user,
         category: req.params.category
     };
 
