@@ -1,14 +1,13 @@
 <div class="container">
     <div class="di_1_of_3 first no-bottom-margin">
         <div class="copyright dima-center-full">
-            <p>&copy; 2015 Sylvain Artois. Base theme by <a href="http://www.PixelDima.com">PixelDima</a></p>
+            <p>&copy; 2016 Dye Pop. Base theme by <a href="http://www.PixelDima.com">PixelDima</a></p>
         </div>
     </div>
     <div class="di_2_of_3 hidden-tm">
         <ul class="dima-menu">
             <li><a href="/contact" {% if section == 'contact' %}class="current"{% endif %}>Contact</a></li>
-            <li><a href="/sylvain-artois" {% if section == 'resume' %}class="current"{% endif %}>CV</a></li>
-            <li><a href="/dye-pop" {% if section == 'portfolio' %}class="current"{% endif %}>Portfolio</a></li>
+            <li><a href="/portfolio" {% if section == 'portfolio' %}class="current"{% endif %}>Portfolio</a></li>
             {% if user %}
                 {% if user.canAccessKeystone %}
                     <li><a href="/keystone" rel="nofollow">BO</a></li>
