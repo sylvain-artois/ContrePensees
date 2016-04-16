@@ -3,12 +3,11 @@ var keystone = require('keystone'),
 
 exports = module.exports = function(req, res) {
 
-    if (res.locals.categoriesKey.indexOf(req.params.category) === -1 ||
-        ['dye-pop', 'sylvain-artois'].indexOf(req.params.user) === -1) {
-
+    //If get category doesn't exist in category cache
+    if (res.locals.categoriesKey.indexOf(req.params.category) === -1) {
         return res.notfound();
     }
-
+    
     var view = new keystone.View(req, res);
     var locals = res.locals;
 
@@ -49,7 +48,7 @@ exports = module.exports = function(req, res) {
                     twitter:  mainPost.share('twitter'),
                 };
 
-                locals.section = (mainPost.isSoftwareRelated) ? 'code' : 'cogito';
+                locals.section = 'cogito';
 
                 async.parallel(
                     [

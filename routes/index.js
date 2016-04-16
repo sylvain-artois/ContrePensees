@@ -29,10 +29,9 @@ exports = module.exports = function(app) {
 
     app.all('/contact', routes.views.contact);
 
-    app.get('/dye-pop', routes.views.user);
-    app.get('/sylvain-artois', routes.views.user);
+    app.get('/portfolio', routes.views.portfolio);
 
     app.get('/search/:query?',  routes.views.search);
-    app.get('/:category/:user/:post', routes.views.post);
+    app.get('/:category/:post', routes.views.post);
     app.get('/:category', routes.views.blog);
 };

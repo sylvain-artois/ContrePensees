@@ -19,7 +19,6 @@ Post.add({
     state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
     publishedDate: { type: Types.Datetime, index: true, dependsOn: { state: 'published' } },
     pinned: { type: Types.Boolean, default: false },
-    isSoftwareRelated: { type: Types.Boolean, default: false },
 
     title: { type: Types.Text, dependsOn: { type: 'text' } },
     image: { type: Types.CloudinaryImage, autoCleanup : true, dependsOn: { type: ['text', 'photo'] } },
