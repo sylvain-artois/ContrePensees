@@ -31,10 +31,8 @@
 
     </div>
 
+    {% include "../mixins/block-tracking-ga.html" %}
     {% block js %}
-        {% include "../mixins/block-tracking-ga.html" %}
-        {% include "../mixins/block-javascript.html" %}
-        <script src="/js/main.js?4"></script>
     {% endblock %}
 </body>
 </html>

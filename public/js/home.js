@@ -1,5 +1,5 @@
-import {OffCanvasMenu} from 'lib/OffCanvasMenu.js'
-import {TopbarShrink} from 'lib/TopbarShrink.js'
+import {OffCanvasMenu} from './lib/OffCanvasMenu'
+import {TopbarShrink} from './lib/TopbarShrink'
 
 new OffCanvasMenu({
         name: 'sidr-main',

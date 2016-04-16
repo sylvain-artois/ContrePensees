@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
-
+    require('google-closure-compiler').grunt(grunt);
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
 
@@ -37,7 +37,6 @@ module.exports = function(grunt) {
         'watch'
     ]);
 
-    // load jshint
     grunt.registerTask('lint', [
         'jshint'
     ]);
@@ -71,6 +70,10 @@ module.exports = function(grunt) {
         'copy:revolutionSliderAssets',
         'uglify:revolutionSlider',
         'uglify:prod'
+    ]);
+
+    grunt.registerTask('trans', [
+        'closure-compiler:home'
     ]);
 
     // default option to connect server
