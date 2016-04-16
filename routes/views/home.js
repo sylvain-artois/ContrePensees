@@ -32,6 +32,11 @@ exports = module.exports = function(req, res) {
                         return callback(err);
                     }
 
+                    //Remove code category from homepage
+                    if (category.key === 'code') {
+                        return callback();
+                    }
+
                     //Not written by me category
                     if (dyePopCategoryKey.indexOf(category.key) === -1) {
 
