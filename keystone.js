@@ -14,6 +14,7 @@ swig.setFilter('truncate', function (input, truncateAt) {
 });
 
 keystone.init({
+    'port': 3001,
     'name': 'Contre Pensées',
     'brand': 'Contre Pensées',
     'static': 'public',

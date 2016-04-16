@@ -41,7 +41,7 @@ module.exports = {
      * @returns {string}
      */
     getSiteUrl: function(env) {
-        return (env === 'production') ? 'http://contrepensees.fr' : 'http://localhost:3000';
+        return (env === 'production') ? 'http://dye-pop.com' : 'http://localhost:3001';
     },
     /**
      * Randomize arrays in JavaScript with the Fisher-Yates shuffle algorithm
