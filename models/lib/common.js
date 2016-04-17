@@ -293,11 +293,8 @@ module.exports = {
      * @returns {Array}
      */
     getCategoriesKey: function(categories) {
-        var categoriesKey = [];
-        categories.forEach(function(el){
-            categoriesKey.push(el.key);
+        return categories.map(function(category){
+            return category.key;
         });
-        categoriesKey.push('cogito');
-        return categoriesKey;
     }
 };
