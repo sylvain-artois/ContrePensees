@@ -31,7 +31,7 @@ keystone.init({
     'logger options': {
         stream: getLogStream(__dirname + '/logs')
     },
-    'session store':'mongo',
+    //'session store':'mongo',
     'wysiwyg images': true,
     'wysiwyg cloudinary images': true,
     'wysiwyg menubar': true,

@@ -128,10 +128,12 @@ exports.initErrorHandlers = function(req, res, next) {
  */
 exports.initCategories= function(req, res, next) {
 
-    var cacheKey = 'contrepensees_category';
+    var cacheKey = 'dyepop_category';
     var cacheTtl = 3600*24*365;
     var getCategories = function(cacheCallback) {
         keystone.list('Category').model.find()
+            .where('key')
+            .ne('code')
             .sort('name')
             .exec(function(err, results) {
                 if (err) {
