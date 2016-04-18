@@ -138,7 +138,6 @@ module.exports = {
             urlParts.push('inspiration');
         }
 
-        urlParts.push(post.author.url.substr(1));
         urlParts.push(post.slug);
 
         return '/' + urlParts.join('/');
