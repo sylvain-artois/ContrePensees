@@ -1,6 +1,6 @@
 # ContrePensees
 
-Sylvain Artois new blog - built from Keystone
+Use KeystoneJS to build a weblog
 
 NodeJS, MongoDB, Express.
 
